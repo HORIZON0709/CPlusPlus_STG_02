@@ -16,12 +16,12 @@
 //***************************
 //定数の定義
 //***************************
-const float CBullet::BULLET_SIZE = 50.0f;	//サイズ
+const float CBullet::BULLET_SIZE = 30.0f;	//サイズ
 
 //================================================
 //生成
 //================================================
-CBullet* CBullet::Create(D3DXVECTOR3 pos)
+CBullet* CBullet::Create(D3DXVECTOR3 pos, CObject::OBJ_TYPE haveType)
 {
 	CBullet* pBullet = nullptr;	//ポインタ
 
@@ -38,6 +38,8 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos)
 
 	pBullet->SetPos(pos);	//位置を設定
 
+	pBullet->SetHaveType(haveType);	//所有者を設定
+
 	return pBullet;	//動的確保したものを返す
 }
 
@@ -45,7 +47,7 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos)
 //コンストラクタ
 //================================================
 CBullet::CBullet():
-	m_move(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+	m_haveType(CObject::OBJ_TYPE::NONE)
 {
 	//タイプの設定
 	CObject::SetObjType(CObject::OBJ_TYPE::BULLET);
@@ -69,7 +71,8 @@ HRESULT CBullet::Init()
 	CObject2D::SetSize(BULLET_SIZE);
 
 	//移動量を設定
-	m_move = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+	D3DXVECTOR3 move = D3DXVECTOR3(10.0f, 10.0f, 0.0f);
+	CObject2D::SetMove(move);
 
 	// テクスチャの設定
 	CObject2D::SetTexture(CTexture::TEXTURE_circle_sakura2);
@@ -92,9 +95,11 @@ void CBullet::Update()
 {
 	CObject2D::Update();	//親クラス
 
-	D3DXVECTOR3 pos = CObject2D::GetPos();	//位置設定用
+	D3DXVECTOR3 pos = CObject2D::GetPos();		//位置設定用
+	D3DXVECTOR3 move = CObject2D::GetMove();	//移動量設定用
 
-	pos.y -= m_move.y;	//位置を更新
+	pos.x += move.x;
+	//pos.y -= move.y;	//位置を更新
 
 	CObject2D::SetPos(pos);	//更新した位置を設定
 
@@ -131,7 +136,7 @@ void CBullet::Collision()
 	{
 		CObject* pObject = GetObjects(i);	//オブジェクト情報の取得
 
-		if (pObject == nullptr)
+		if (pObject == nullptr || pObject == this)
 		{//NULLチェック
 			continue;
 		}
@@ -140,12 +145,26 @@ void CBullet::Collision()
 
 		CObject::OBJ_TYPE type = pObject->GetObjType();	//タイプの取得
 
-		if (type != CObject::OBJ_TYPE::ENEMY)
-		{//「 タイプ：敵 」ではない場合
+		//if (type != objType)
+		//{//指定したタイプ以外の場合
+		//	continue;
+		//}
+
+		//if (type == GetHaveType())
+		//{//対象と所有者が同じの場合
+		//	continue;
+		//}
+
+		if (!((GetHaveType() == CObject::PLAYER) && (type == CObject::ENEMY) || 
+			(GetHaveType() == CObject::ENEMY) && (type == CObject::PLAYER)))
+			/*
+			「所有者がプレイヤー　かつ　対象が敵」ではない
+			もしくは
+			「所有者が敵　かつ　対象がプレイヤー」
+			*/
+		{
 			continue;
 		}
-
-		/* 「 タイプ：敵 」の場合 */
 
 		/* 自身の判定用 */
 		float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
@@ -160,7 +179,7 @@ void CBullet::Collision()
 		float fLeftTarget	= (posTarget.x - (fSizeTarget * 0.5f));	//左端
 		float fRightTarget	= (posTarget.x + (fSizeTarget * 0.5f));	//右端
 		float fTopTarget	= (posTarget.y - (fSizeTarget * 0.5f));	//上端
-		float fBottomTarget	= (posTarget.y + (fSizeTarget * 0.5f));	//下端
+		float fBottomTarget = (posTarget.y + (fSizeTarget * 0.5f));	//下端
 
 		if (fLeft <= fRightTarget
 			&& fRight >= fLeftTarget
@@ -169,9 +188,27 @@ void CBullet::Collision()
 		{//弾が対象の範囲内に来た場合
 			//爆発の生成
 			CExplosion* pExplosion = CExplosion::Create(posTarget);
-			
+
 			pObject->Release();	//対象の解放
+
+			Release();	//自身の解放
 			break;
 		}
 	}
+}
+
+//================================================
+//所有者を設定
+//================================================
+void CBullet::SetHaveType(CObject::OBJ_TYPE haveType)
+{
+	m_haveType = haveType;
+}
+
+//================================================
+//所有者を取得
+//================================================
+CObject::OBJ_TYPE CBullet::GetHaveType()
+{
+	return m_haveType;
 }

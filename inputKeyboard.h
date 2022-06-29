@@ -44,12 +44,14 @@ public: /* メンバ関数 */
 	void Update();									//更新
 public: /* Get系 */
 	bool GetPress(int nKey);	//プレス
+	bool GetRelease(int nKey);	//リリース
 	bool GetTrigger(int nKey);	//トリガー
 
 private: /* メンバ変数 */
 	LPDIRECTINPUT8 m_pInput;				//DirectInputオブジェクトへのポインタ
 	LPDIRECTINPUTDEVICE8 m_pDevKeyboard;	//入力デバイス（キーボード（コントローラー用は別に作る））へのポインタ
 	BYTE m_aKeyStatePress[MAX_KEY];			//プレス情報
+	BYTE m_aKeyStateRelease[MAX_KEY];		//リリース情報
 	BYTE m_aKeyStateTrigger[MAX_KEY];		//トリガー情報
 };
 

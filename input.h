@@ -42,6 +42,7 @@ public: /* 仮想関数 */
 	void Update();									//更新
 public: /* メンバ関数 */
 	bool Press(STANDARD_KEY key);	//プレス
+	bool Release(STANDARD_KEY key);	//リリース
 	bool Trigger(STANDARD_KEY key);	//トリガー
 
 private: /* 静的メンバ変数 */

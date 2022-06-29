@@ -51,6 +51,10 @@ public: /* オーバーライド関数 */
 	void SetSize(const float &fSize) override;	//サイズを設定
 	float GetSize() override;					//サイズを取得
 
+	/* Move */
+	void SetMove(const D3DXVECTOR3 &move) override;	//移動量を設定
+	D3DXVECTOR3 GetMove() override;					//移動量を取得
+
 public: /* メンバ関数 */
 	void SetTexture(CTexture::TEXTURE texture);				//テクスチャの設定
 	void SetTexUV(const int &nDivNum,const int &nPtnAnim);	//テクスチャ座標の設定(アニメーション対応)
@@ -62,6 +66,7 @@ private: /* メンバ変数 */
 
 	D3DXVECTOR3 m_pos;	//位置
 	D3DXVECTOR3 m_rot;	//向き
+	D3DXVECTOR3 m_move;	//移動量
 	float m_fSize;		//サイズ
 };
 

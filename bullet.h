@@ -21,7 +21,7 @@ private: /* 定数の定義 */
 	static const float BULLET_SIZE;	//サイズ
 
 public: /* 静的メンバ関数 */
-	static CBullet* Create(D3DXVECTOR3 pos);	//生成
+	static CBullet* Create(D3DXVECTOR3 pos, CObject::OBJ_TYPE haveType);	//生成
 
 public: /* コンストラクタ・デストラクタ */
 	CBullet();
@@ -33,10 +33,14 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 	
-public: /* メンバ関数 */
+private: /* メンバ関数 */
 	void Collision();
 
+public:	/* Set・Get系 */
+	void SetHaveType(CObject::OBJ_TYPE haveType);
+	CObject::OBJ_TYPE GetHaveType();
+
 private: /* メンバ変数 */
-	D3DXVECTOR3 m_move;	//移動量
+	CObject::OBJ_TYPE m_haveType;	//所有者
 };
 #endif

@@ -59,6 +59,10 @@ public: /* Set,Get系 */
 	virtual void SetSize(const float &fSize) = 0;	//サイズを設定
 	virtual float GetSize() = 0;					//サイズを取得
 
+	/* Move */
+	virtual void SetMove(const D3DXVECTOR3 &move) = 0;	//移動量を設定
+	virtual D3DXVECTOR3 GetMove() = 0;					//移動量を取得
+
 public: /* メンバ関数 */
 	CObject* GetObjects(int nIdx);	//オブジェクト情報の取得
 

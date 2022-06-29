@@ -167,6 +167,61 @@ bool CInput::Press(STANDARD_KEY key)
 }
 
 //================================================
+//リリース
+//================================================
+bool CInput::Release(STANDARD_KEY key)
+{
+	switch (key)
+	{
+	case STANDARD_KEY::UP: /* 上 */
+		if (m_pInputKeyboard->GetRelease(DIK_W) ||
+			m_pInputKeyboard->GetRelease(DIK_UP))
+		{
+			return true;
+		}
+		break;
+	case STANDARD_KEY::DOWN: /* 下 */
+		if (m_pInputKeyboard->GetRelease(DIK_S) ||
+			m_pInputKeyboard->GetRelease(DIK_DOWN))
+		{
+			return true;
+		}
+		break;
+	case STANDARD_KEY::LEFT: /* 左 */
+		if (m_pInputKeyboard->GetRelease(DIK_A) ||
+			m_pInputKeyboard->GetRelease(DIK_LEFT))
+		{
+			return true;
+		}
+		break;
+	case STANDARD_KEY::RIGHT: /* 右 */
+		if (m_pInputKeyboard->GetRelease(DIK_D) ||
+			m_pInputKeyboard->GetRelease(DIK_RIGHT))
+		{
+			return true;
+		}
+		break;
+	case STANDARD_KEY::DECISION: /* 決定 */
+		if (m_pInputKeyboard->GetRelease(DIK_RETURN))
+		{
+			return true;
+		}
+		break;
+	case STANDARD_KEY::SHOT: /* 発射 */
+		if (m_pInputKeyboard->GetRelease(DIK_SPACE))
+		{
+			return true;
+		}
+		break;
+	default: /* それ以外 */
+		assert(false);
+		break;
+	}
+
+	return false;
+}
+
+//================================================
 //トリガー
 //================================================
 bool CInput::Trigger(STANDARD_KEY key)

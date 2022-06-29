@@ -99,7 +99,10 @@ void CInputKeyboard::Update()
 		for (int nCntKey = 0; nCntKey < MAX_KEY; nCntKey++)
 		{
 			//トリガー情報を保存
-			m_aKeyStateTrigger[nCntKey] = (m_aKeyStatePress[nCntKey] ^ aKeyState[nCntKey]) & aKeyState[nCntKey];
+			m_aKeyStateTrigger[nCntKey] = ~m_aKeyStatePress[nCntKey] & aKeyState[nCntKey];
+
+			//リリース情報を保存
+			m_aKeyStateRelease[nCntKey] = m_aKeyStatePress[nCntKey] & ~aKeyState[nCntKey];
 
 			//プレス情報を保存
 			m_aKeyStatePress[nCntKey] = aKeyState[nCntKey];
@@ -117,6 +120,14 @@ void CInputKeyboard::Update()
 bool CInputKeyboard::GetPress(int nKey)
 {
 	return (m_aKeyStatePress[nKey] & 0x80) ? true : false;
+}
+
+//================================================
+//リリース情報の取得
+//================================================
+bool CInputKeyboard::GetRelease(int nKey)
+{
+	return (m_aKeyStateRelease[nKey] & 0x80) ? true : false;
 }
 
 //================================================

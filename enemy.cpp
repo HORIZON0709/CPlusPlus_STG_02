@@ -9,6 +9,7 @@
 //***************************
 #include "enemy.h"
 #include "renderer.h"
+#include "bullet.h"
 
 #include <assert.h>
 
@@ -35,7 +36,7 @@ CEnemy* CEnemy::Create()
 
 	pEnemy->Init();	//初期化
 
-	D3DXVECTOR3 pos = D3DXVECTOR3((CRenderer::SCREEN_WIDTH * 0.5f), (CRenderer::SCREEN_HEIGHT * 0.2f), 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3((CRenderer::SCREEN_WIDTH * 0.8f), (CRenderer::SCREEN_HEIGHT * 0.5f), 0.0f);
 	pEnemy->SetPos(pos);	//位置を設定
 
 	return pEnemy;	//動的確保したものを返す
@@ -44,7 +45,8 @@ CEnemy* CEnemy::Create()
 //================================================
 //コンストラクタ
 //================================================
-CEnemy::CEnemy()
+CEnemy::CEnemy():
+	m_nTimerInterval(0)
 {
 	//タイプの設定
 	CObject::SetObjType(CObject::OBJ_TYPE::ENEMY);
@@ -79,6 +81,8 @@ HRESULT CEnemy::Init()
 void CEnemy::Uninit()
 {
 	CObject2D::Uninit();	//親クラス
+
+
 }
 
 //================================================
@@ -87,6 +91,15 @@ void CEnemy::Uninit()
 void CEnemy::Update()
 {
 	CObject2D::Update();	//親クラス
+
+	D3DXVECTOR3 pos = CObject2D::GetPos();	//位置情報を取得
+
+	m_nTimerInterval++;	//タイマーを進める
+
+	if (m_nTimerInterval % SHOT_INTERVAL == 0)
+	{//タイマーが一定時間になったら
+		CBullet::Create(pos, CObject::OBJ_TYPE::ENEMY);	//弾の生成
+	}
 }
 
 //================================================

@@ -20,6 +20,8 @@ class CEnemy : public CObject2D
 private: /* 定数の定義 */
 	static const float ENEMY_SIZE;	//サイズ
 
+	static const int SHOT_INTERVAL = 20;	//弾の連続発射の間隔
+
 public: /* 静的メンバ関数 */
 	static CEnemy* Create();	//生成
 
@@ -32,5 +34,8 @@ public: /* オーバーライド関数 */
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
+
+private: /* メンバ変数 */
+	int m_nTimerInterval;	//弾の連続発射の間隔
 };
 #endif

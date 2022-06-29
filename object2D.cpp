@@ -47,6 +47,7 @@ CObject2D::CObject2D() :
 	m_pVtxBuff(nullptr),
 	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
+	m_move(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_fSize(0.0f),
 	m_texture(CTexture::TEXTURE_NONE)
 {
@@ -73,6 +74,7 @@ HRESULT CObject2D::Init()
 	//ÉÅÉìÉoïœêîÇÃèâä˙ê›íË
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_fSize = 0.0f;
 	m_texture = CTexture::TEXTURE_NONE;
 
@@ -248,4 +250,20 @@ void CObject2D::SetSize(const float &fSize)
 float CObject2D::GetSize()
 {
 	return m_fSize;
+}
+
+//================================================
+//à⁄ìÆó ÇÃê›íË
+//================================================
+void CObject2D::SetMove(const D3DXVECTOR3 &move)
+{
+	m_move = move;
+}
+
+//================================================
+//à⁄ìÆó ÇÃéÊìæ
+//================================================
+D3DXVECTOR3 CObject2D::GetMove()
+{
+	return m_move;
 }
