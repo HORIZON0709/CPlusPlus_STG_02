@@ -27,9 +27,6 @@ public: /* 構造体の定義 */
 		D3DXVECTOR2 tex;	//テクスチャ座標
 	};
 
-protected: /* 定数の定義 */
-	static const float ROTATION_SPEED;	//回転スピード
-
 public: /* 静的メンバ関数 */
 	static CObject2D* Create();	//生成
 

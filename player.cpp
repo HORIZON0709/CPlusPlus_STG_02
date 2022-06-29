@@ -111,7 +111,7 @@ void CPlayer::Draw()
 //================================================
 void CPlayer::Move()
 {
-	CInput* pInput = CInput::GetKey();		//キーボード情報を取得
+	CInput* pInput = CInput::GetKey();	//キーボード情報を取得
 
 	D3DXVECTOR3 pos = CObject2D::GetPos();		//位置を取得
 	D3DXVECTOR3 move = CObject2D::GetMove();	//移動量を取得
@@ -202,7 +202,8 @@ void CPlayer::Move()
 //================================================
 void CPlayer::Shot()
 {
-	CInput* pInput = CInput::GetKey();		//キーボード情報を取得
+	CInput* pInput = CInput::GetKey();	//キーボード情報を取得
+
 	D3DXVECTOR3 pos = CObject2D::GetPos();	//位置情報を取得
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::SHOT))
