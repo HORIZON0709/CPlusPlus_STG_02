@@ -1,13 +1,13 @@
 //================================================
 //
-//制作実践基礎[object2D.cpp]
+//制作実践基礎[object3D.cpp]
 //Author:Kishimoto Eiji
 //
 //================================================
 //***************************
 //インクルード
 //***************************
-#include "object2D.h"
+#include "object3D.h"
 #include "application.h"
 #include "renderer.h"
 
@@ -16,42 +16,43 @@
 //================================================
 //生成
 //================================================
-CObject2D* CObject2D::Create()
+CObject3D* CObject3D::Create()
 {
-	CObject2D* pObject2D = nullptr;	//ポインタ
+	CObject3D* pObject3D = nullptr;	//ポインタ
 
-	if (pObject2D != nullptr)
+	if (pObject3D != nullptr)
 	{//NULLチェック
 		assert(false);
 	}
 
 	/* nullptrの場合 */
 
-	pObject2D = new CObject2D;	//メモリの動的確保
+	pObject3D = new CObject3D;	//メモリの動的確保
 
-	pObject2D->Init();	//初期化
+	pObject3D->Init();	//初期化
 
-	return pObject2D;	//動的確保したものを返す
+	return pObject3D;	//動的確保したものを返す
 }
 
 //================================================
 //コンストラクタ
 //================================================
-CObject2D::CObject2D() : 
+CObject3D::CObject3D() :
 	m_pTexture(nullptr),
 	m_pVtxBuff(nullptr),
+	m_texture(CTexture::TEXTURE_NONE),
 	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_move(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
-	m_fSize(0.0f),
-	m_texture(CTexture::TEXTURE_NONE)
+	m_fSize(0.0f)
 {
+	memset(m_mtxWorld, 0, sizeof(m_mtxWorld));
 }
 
 //================================================
 //デストラクタ
 //================================================
-CObject2D::~CObject2D()
+CObject3D::~CObject3D()
 {
 	/* 解放漏れの確認 */
 	assert(m_pTexture == nullptr);
@@ -61,7 +62,7 @@ CObject2D::~CObject2D()
 //================================================
 //初期化
 //================================================
-HRESULT CObject2D::Init()
+HRESULT CObject3D::Init()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
@@ -74,14 +75,14 @@ HRESULT CObject2D::Init()
 	m_texture = CTexture::TEXTURE_NONE;
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4,
 								D3DUSAGE_WRITEONLY,
-								FVF_VERTEX_2D,
+								FVF_VERTEX_3D,
 								D3DPOOL_MANAGED,
 								&m_pVtxBuff,
 								NULL);
 
-	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+	VERTEX_3D *pVtx;	//頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -92,11 +93,11 @@ HRESULT CObject2D::Init()
 	pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//rhwの設定
-	pVtx[0].rhw = 1.0f;
-	pVtx[1].rhw = 1.0f;
-	pVtx[2].rhw = 1.0f;
-	pVtx[3].rhw = 1.0f;
+	//法線ベクトルの設定
+	pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
+	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
+	pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
+	pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
 
 	//頂点カラーの設定
 	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -119,7 +120,7 @@ HRESULT CObject2D::Init()
 //================================================
 //終了
 //================================================
-void CObject2D::Uninit()
+void CObject3D::Uninit()
 {
 	//頂点バッファの破棄
 	if (m_pVtxBuff != nullptr)
@@ -139,7 +140,7 @@ void CObject2D::Uninit()
 //================================================
 //更新
 //================================================
-void CObject2D::Update()
+void CObject3D::Update()
 {
 	
 }
@@ -147,16 +148,32 @@ void CObject2D::Update()
 //================================================
 //描画
 //================================================
-void CObject2D::Draw()
+void CObject3D::Draw()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
+	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
+
+	//ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&m_mtxWorld);
+
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+	//位置を反映
+	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+	//ワールドマトリックスの設定
+	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
+	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
 
 	//頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
+	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	CTexture* pTexture = CApplication::GetTexture();	//テクスチャを取得
 
@@ -167,16 +184,19 @@ void CObject2D::Draw()
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
 							0,					//描画する最初の頂点インデックス
 							2);					//描画するプリミティブ数
+
+	//テクスチャの設定
+	pDevice->SetTexture(0, nullptr);
 }
 
 //================================================
 //位置を設定
 //================================================
-void CObject2D::SetPos(const D3DXVECTOR3 &pos)
+void CObject3D::SetPos(const D3DXVECTOR3 &pos)
 {
 	m_pos = pos;	//位置を設定
 
-	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+	VERTEX_3D *pVtx;	//頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -196,7 +216,7 @@ void CObject2D::SetPos(const D3DXVECTOR3 &pos)
 //================================================
 //位置を取得
 //================================================
-D3DXVECTOR3 CObject2D::GetPos()
+D3DXVECTOR3 CObject3D::GetPos()
 {
 	return m_pos;
 }
@@ -204,7 +224,7 @@ D3DXVECTOR3 CObject2D::GetPos()
 //================================================
 //テクスチャの設定
 //================================================
-void CObject2D::SetTexture(CTexture::TEXTURE texture)
+void CObject3D::SetTexture(CTexture::TEXTURE texture)
 {
 	m_texture = texture;
 }
@@ -212,9 +232,9 @@ void CObject2D::SetTexture(CTexture::TEXTURE texture)
 //================================================
 //テクスチャ座標の設定(アニメーションに対応)
 //================================================
-void CObject2D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
+void CObject3D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
 {
-	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+	VERTEX_3D *pVtx;	//頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -234,11 +254,11 @@ void CObject2D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
 //================================================
 //サイズの設定
 //================================================
-void CObject2D::SetSize(const float &fSize)
+void CObject3D::SetSize(const float &fSize)
 {
-	m_fSize = fSize;	//サイズの設定
+	m_fSize = fSize;	//サイズを設定
 
-	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+	VERTEX_3D *pVtx;	//頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -258,7 +278,7 @@ void CObject2D::SetSize(const float &fSize)
 //================================================
 //サイズの取得
 //================================================
-float CObject2D::GetSize()
+float CObject3D::GetSize()
 {
 	return m_fSize;
 }
@@ -266,7 +286,7 @@ float CObject2D::GetSize()
 //================================================
 //移動量の設定
 //================================================
-void CObject2D::SetMove(const D3DXVECTOR3 &move)
+void CObject3D::SetMove(const D3DXVECTOR3 &move)
 {
 	m_move = move;
 }
@@ -274,7 +294,7 @@ void CObject2D::SetMove(const D3DXVECTOR3 &move)
 //================================================
 //移動量の取得
 //================================================
-D3DXVECTOR3 CObject2D::GetMove()
+D3DXVECTOR3 CObject3D::GetMove()
 {
 	return m_move;
 }

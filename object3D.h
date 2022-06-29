@@ -1,11 +1,11 @@
 //================================================
 //
-//制作実践基礎[object2D.h]
+//制作実践基礎[object3D.h]
 //Author:Kishimoto Eiji
 //
 //================================================
-#ifndef _OBJECT2D_H_
-#define _OBJECT2D_H_
+#ifndef _OBJECT3D_H_
+#define _OBJECT3D_H_
 
 //***************************
 //インクルード
@@ -14,30 +14,37 @@
 #include "texture.h"
 
 //***************************
+//前方宣言
+//***************************
+class CTexture;
+
+//***************************
 //定数の定義
 //***************************
-const DWORD FVF_VERTEX_2D = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);	//頂点フォーマット
+
+/* 頂点フォーマット */
+const DWORD FVF_VERTEX_3D = (D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
 //***************************
 //オブジェクトクラスの定義
 //***************************
-class CObject2D : public CObject
+class CObject3D : public CObject
 {/* CObjectの派生クラス */
 public: /* 構造体の定義 */
-	struct VERTEX_2D
+	struct VERTEX_3D
 	{//頂点データ
 		D3DXVECTOR3 pos;	//位置
-		float rhw;			//法線
+		D3DXVECTOR3 nor;	//法線ベクトル 
 		D3DCOLOR col;		//色
 		D3DXVECTOR2 tex;	//テクスチャ座標
 	};
 
 public: /* 静的メンバ関数 */
-	static CObject2D* Create();	//生成
+	static CObject3D* Create();	//生成
 
 public: /* コンストラクタ・デストラクタ */
-	CObject2D();
-	~CObject2D() override;
+	CObject3D();
+	~CObject3D() override;
 
 public: /* オーバーライド関数 */
 	HRESULT Init() override;	//初期化
@@ -64,6 +71,7 @@ public: /* メンバ関数 */
 private: /* メンバ変数 */
 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	//頂点バッファへのポインタ
+	D3DXMATRIX	m_mtxWorld;				//ワールドマトリックス
 	CTexture::TEXTURE m_texture;		//テクスチャの列挙型
 
 	D3DXVECTOR3 m_pos;	//位置

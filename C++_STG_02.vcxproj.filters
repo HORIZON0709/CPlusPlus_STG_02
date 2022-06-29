@@ -25,14 +25,20 @@
     <Filter Include="ヘッダー ファイル\Object\2D">
       <UniqueIdentifier>{ae7b5298-30d2-4b4a-bb17-74747aa21c4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\3D">
+      <UniqueIdentifier>{61d13126-d099-46e3-80bc-2b32a528af4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object\3D">
+      <UniqueIdentifier>{b57549a8-6c73-4e5f-9861-694f10c3c20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{54c1d88d-5310-4619-b7eb-0d84ad0ae29d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Input">
+      <UniqueIdentifier>{01153262-b8d8-4f81-8018-7357f3a1db61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="inputKeyboard.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -63,14 +69,17 @@
     <ClCompile Include="player.cpp">
       <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
+    <ClCompile Include="object3D.cpp">
+      <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="inputKeyboard.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="input.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inputKeyboard.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -100,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>ヘッダー ファイル\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="object3D.h">
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inputKeyboard.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
