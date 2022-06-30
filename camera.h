@@ -1,38 +1,53 @@
-//============================================================================================================
+//================================================
 //
-//ミツケテネ[camera.h]
+//制作実践基礎[camera.h]
 //Author:Kishimoto Eiji
 //
-//============================================================================================================
+//================================================
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-#include "main.h"
+//***************************
+//インクルード
+//***************************
+#include <d3dx9.h>
 
-//============================================================================================================
-//カメラ構造体の定義
-//============================================================================================================
-typedef struct
-{
-	D3DXVECTOR3 posV;			//現在の視点
-	D3DXVECTOR3 posR;			//現在の注視点
-	D3DXVECTOR3 posVDest;		//目的の視点
-	D3DXVECTOR3 posRDest;		//目的の注視点
-	D3DXVECTOR3 vecU;			//上方向ベクトル
-	D3DXVECTOR3 rot;			//向き
-	D3DXMATRIX mtxProjection;	//プロジェクションマトリックス
-	D3DXMATRIX mtxView;			//ビューマトリックス
-	float fDistance;			//視点から注視点の距離
-}Camera;
+//***************************
+//カメラクラスの定義
+//***************************
+class CCamera
+{/* 基本クラス */
+private: /* 定数の定義 */
+	static const float CAMERA_MOVE;	//移動量
+	static const float CAMERA_ROT;	//旋回量
 
-//============================================================================================================
-//プロトタイプ宣言
-//============================================================================================================
-void InitCamera(void);
-void UninitCamera(void);
-void UpdateCamera(void);
-void DrawCamera(void);
-void SetCamera(void);
-Camera *GetCamera(void);
+public: /* コンストラクタ・デストラクタ */
+	CCamera();
+	~CCamera();
+
+public: /* メンバ関数 */
+	void Init();	//初期化
+	void Uninit();	//終了
+	void Update();	//更新
+	void Set();		//設定
+private:
+	void Move();	//移動
+	void Turn();	//旋回
+
+	void NormalizeAngle();	//角度の正規化
+
+private: /* メンバ変数 */
+	D3DXVECTOR3 m_posV;		//現在の視点
+	D3DXVECTOR3 m_posR;		//現在の注視点
+	D3DXVECTOR3 m_posVDest;	//目的の視点
+	D3DXVECTOR3 m_posRDest;	//目的の注視点
+	D3DXVECTOR3 m_vecU;		//上方向ベクトル
+	D3DXVECTOR3 m_rot;		//向き
+
+	D3DXMATRIX m_mtxProjection;	//プロジェクションマトリックス
+	D3DXMATRIX m_mtxView;		//ビューマトリックス
+
+	float m_fDistance;	//視点から注視点の距離
+};
 
 #endif

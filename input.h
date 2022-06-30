@@ -36,11 +36,11 @@ public: /* コンストラクタ・デストラクタ */
 	CInput();
 	~CInput();
 
-public: /* 仮想関数 */
+public: /* メンバ関数 */
 	HRESULT Init(HINSTANCE hInstance,HWND hWnd);	//初期化
 	void Uninit();									//終了
 	void Update();									//更新
-public: /* メンバ関数 */
+
 	bool Press(STANDARD_KEY key);	//プレス
 	bool Release(STANDARD_KEY key);	//リリース
 	bool Trigger(STANDARD_KEY key);	//トリガー

@@ -34,6 +34,8 @@ class CInputKeyboard
 private: /* 定数の定義 */
 	static const int MAX_KEY = 256;	//キーの最大数
 
+public: /* 静的メンバ関数 */
+
 public: /* コンストラクタ・デストラクタ */
 	CInputKeyboard();
 	~CInputKeyboard();
