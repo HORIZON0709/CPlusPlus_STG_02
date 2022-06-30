@@ -31,9 +31,8 @@ public: /* メンバ関数 */
 	void Update();	//更新
 	void Set();		//設定
 private:
-	void Move();	//移動
-	void Turn();	//旋回
-
+	void Move();			//移動
+	void Turn();			//旋回
 	void NormalizeAngle();	//角度の正規化
 
 private: /* メンバ変数 */

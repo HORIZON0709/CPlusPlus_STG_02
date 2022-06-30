@@ -19,6 +19,7 @@ class CInput;
 class CInputKeyboard;
 class CRenderer;
 class CTexture;
+class CCamera;
 class CPlayer;
 class CEnemy;
 
@@ -30,8 +31,9 @@ class CApplication
 public: /* 静的メンバ関数 */
 	static CInputKeyboard* GetInputKeyboard();	//キーボード情報を取得
 
-	static CRenderer* GetRenderer();	//レンダラー情報を取得
 	static CTexture* GetTexture();		//テクスチャ情報を取得
+	static CRenderer* GetRenderer();	//レンダラー情報を取得
+	static CCamera* GetCamera();		//カメラ情報を取得
 
 	static CPlayer* GetPlayer();	//プレイヤー情報を取得
 	static CEnemy* GetEnemy();		//敵情報を取得
@@ -51,8 +53,9 @@ private: /* 静的メンバ変数 */
 	static CInput* m_pInput;					//インプットのポインタ
 	static CInputKeyboard* m_pInputKeyboard;	//キーボードのポインタ
 
-	static CRenderer* m_pRenderer;	//レンダラーのポインタ
 	static CTexture* m_pTexture;	//テクスチャのポインタ
+	static CRenderer* m_pRenderer;	//レンダラーのポインタ
+	static CCamera* m_pCamera;		//カメラのポインタ
 
 	static CPlayer* m_pPlayer;	//プレイヤーのポインタ
 	static CEnemy* m_pEnemy;	//敵のポインタ

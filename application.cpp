@@ -11,6 +11,8 @@
 #include "input.h"
 #include "renderer.h"
 #include "texture.h"
+#include "camera.h"
+
 #include "player.h"
 #include "enemy.h"
 
@@ -22,8 +24,9 @@
 CInput* CApplication::m_pInput = nullptr;					//インプット
 CInputKeyboard* CApplication::m_pInputKeyboard = nullptr;	//キーボード
 
-CRenderer* CApplication::m_pRenderer = nullptr;	//レンダラー
 CTexture* CApplication::m_pTexture = nullptr;	//テクスチャ
+CRenderer* CApplication::m_pRenderer = nullptr;	//レンダラー
+CCamera* CApplication::m_pCamera = nullptr;		//カメラ
 
 CPlayer* CApplication::m_pPlayer = nullptr;	//プレイヤー
 CEnemy* CApplication::m_pEnemy = nullptr;	//敵
@@ -37,6 +40,14 @@ CInputKeyboard* CApplication::GetInputKeyboard()
 }
 
 //================================================
+//テクスチャ情報を取得
+//================================================
+CTexture* CApplication::GetTexture()
+{
+	return m_pTexture;
+}
+
+//================================================
 //レンダラー情報を取得
 //================================================
 CRenderer* CApplication::GetRenderer()
@@ -45,11 +56,11 @@ CRenderer* CApplication::GetRenderer()
 }
 
 //================================================
-// テクスチャ情報を取得
+//カメラ情報を取得
 //================================================
-CTexture* CApplication::GetTexture()
+CCamera* CApplication::GetCamera()
 {
-	return m_pTexture;
+	return m_pCamera;
 }
 
 //================================================
@@ -99,6 +110,13 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 		return E_FAIL;
 	}
 
+	/* テクスチャ */
+
+	if (m_pTexture == nullptr)
+	{//NULLチェック
+		m_pTexture = new CTexture;	//メモリの動的確保
+	}
+
 	/* レンダラー */
 
 	if (m_pRenderer == nullptr)
@@ -111,11 +129,11 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 		return E_FAIL;
 	}
 
-	/* テクスチャ */
+	/* カメラ */
 
-	if (m_pTexture == nullptr)
+	if (m_pCamera == nullptr)
 	{//NULLチェック
-		m_pTexture = new CTexture;	//メモリの動的確保
+		m_pCamera = new CCamera;	//メモリの動的確保
 	}
 
 	/* プレイヤー */
@@ -146,6 +164,24 @@ void CApplication::Uninit()
 
 	m_pEnemy = nullptr;	//nullptrにする
 
+	/* カメラ */
+
+	if (m_pCamera != nullptr)
+	{//NULLチェック
+		m_pCamera->Uninit();	//終了
+		delete m_pCamera;		//メモリの解放
+		m_pCamera = nullptr;	//nullptrにする
+	}
+
+	/* レンダラー */
+
+	if (m_pRenderer != nullptr)
+	{//NULLチェック
+		m_pRenderer->Uninit();	//終了処理
+		delete m_pRenderer;		//メモリの解放
+		m_pRenderer = nullptr;	//nullptrにする
+	}
+
 	/* テクスチャ */
 
 	if (m_pTexture != nullptr)
@@ -168,14 +204,6 @@ void CApplication::Uninit()
 
 	m_pInput->Uninit();	//終了処理
 
-	/* レンダラー */
-
-	if (m_pRenderer != nullptr)
-	{//NULLチェック
-		m_pRenderer->Uninit();	//終了処理
-		delete m_pRenderer;		//メモリの解放
-		m_pRenderer = nullptr;	//nullptrにする
-	}
 }
 
 //================================================
@@ -185,7 +213,7 @@ void CApplication::Update()
 {
 	if (m_pInput != nullptr)
 	{//NULLチェック
-		m_pInput->Update();	//キーボード
+		m_pInput->Update();	//インプット
 	}
 
 	if (m_pInputKeyboard != nullptr)
@@ -196,6 +224,11 @@ void CApplication::Update()
 	if (m_pRenderer != nullptr)
 	{//NULLチェック
 		m_pRenderer->Update();	//レンダラー
+	}
+
+	if (m_pCamera != nullptr)
+	{//NULLチェック
+		m_pCamera->Update();	//カメラ
 	}
 }
 
