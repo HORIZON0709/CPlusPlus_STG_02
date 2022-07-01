@@ -155,6 +155,7 @@
     <ClCompile Include="explosion.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inputKeyboard.cpp" />
+    <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2D.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="explosion.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="inputKeyboard.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2D.h" />
