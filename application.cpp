@@ -110,6 +110,18 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 		return E_FAIL;
 	}
 
+	/* キーボード */
+
+	if (m_pInputKeyboard == nullptr)
+	{//NULLチェック
+		m_pInputKeyboard = new CInputKeyboard;	//メモリの動的確保
+	}
+
+	if (FAILED(m_pInputKeyboard->Init(hInstance, hWnd)))
+	{//初期化処理が失敗した場合
+		return E_FAIL;
+	}
+
 	/* テクスチャ */
 
 	if (m_pTexture == nullptr)
