@@ -17,6 +17,7 @@
 #include "enemy.h"
 
 #include "player_3D.h"
+#include "enemy_3D.h"
 
 #include "object2D.h"
 #include "object3D.h"
@@ -35,6 +36,7 @@ CPlayer* CApplication::m_pPlayer = nullptr;	//プレイヤー
 CEnemy* CApplication::m_pEnemy = nullptr;	//敵
 
 CPlayer3D* CApplication::m_pPlayer3D = nullptr;	//プレイヤー(3D)
+CEnemy3D* CApplication::m_pEnemy3D = nullptr;	//敵(3D)
 
 //================================================
 //キーボード情報を取得
@@ -90,6 +92,14 @@ CEnemy* CApplication::GetEnemy()
 CPlayer3D* CApplication::GetPlayer3D()
 {
 	return m_pPlayer3D;
+}
+
+//================================================
+//敵(3D)情報を取得
+//================================================
+CEnemy3D* CApplication::GetEnemy3D()
+{
+	return m_pEnemy3D;
 }
 
 //================================================
@@ -164,7 +174,7 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* プレイヤー */
 
-	//m_pPlayer = CPlayer::Create();	//生成
+	m_pPlayer = CPlayer::Create();	//生成
 
 	/* 敵 */
 
@@ -172,7 +182,11 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* プレイヤー(3D) */
 
-	m_pPlayer3D = CPlayer3D::Create();	//生成
+	//m_pPlayer3D = CPlayer3D::Create();	//生成
+
+	/* 敵(3D) */
+
+	//m_pEnemy3D = CEnemy3D::Create();
 
 	return S_OK;
 }
@@ -188,7 +202,7 @@ void CApplication::Uninit()
 	
 	/* プレイヤー */
 
-	//m_pPlayer = nullptr;	//nullptrにする
+	m_pPlayer = nullptr;	//nullptrにする
 
 	/* 敵 */
 
@@ -196,7 +210,11 @@ void CApplication::Uninit()
 
 	/* プレイヤー(3D) */
 
-	m_pPlayer3D = nullptr;	//nullptrにする
+	//m_pPlayer3D = nullptr;	//nullptrにする
+
+	/* 敵(3D) */
+
+	//m_pEnemy3D = nullptr;	//nullptrにする
 
 	/* カメラ */
 

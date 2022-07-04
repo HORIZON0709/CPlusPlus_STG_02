@@ -23,6 +23,7 @@ class CCamera;
 class CPlayer;
 class CEnemy;
 class CPlayer3D;
+class CEnemy3D;
 
 //***************************
 //アプリケーションクラスの定義
@@ -40,6 +41,7 @@ public: /* 静的メンバ関数 */
 	static CEnemy* GetEnemy();		//敵情報を取得
 
 	static CPlayer3D* GetPlayer3D();	//プレイヤー(3D)情報を取得
+	static CEnemy3D* GetEnemy3D();		//敵(3D)情報を取得
 
 public: /* コンストラクタ・デストラクタ */
 	CApplication();
@@ -64,6 +66,7 @@ private: /* 静的メンバ変数 */
 	static CEnemy* m_pEnemy;	//敵のポインタ
 
 	static CPlayer3D* m_pPlayer3D;	//プレイヤー(3D)のポインタ
+	static CEnemy3D* m_pEnemy3D;	//敵(3D)のポインタ
 };
 
 #endif

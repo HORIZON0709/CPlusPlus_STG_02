@@ -11,7 +11,7 @@
 #include "application.h"
 #include "renderer.h"
 #include "input.h"
-#include "bullet.h"
+#include "bullet_3D.h"
 
 #include <assert.h>
 
@@ -69,7 +69,7 @@ HRESULT CPlayer3D::Init()
 	CObject3D::SetSize(PLAYER_SIZE);
 
 	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(-50.0f, 0.0f, 0.0f);
 	CObject3D::SetPos(pos);
 
 	// テクスチャの設定
@@ -175,25 +175,23 @@ void CPlayer3D::Move()
 	float fTop		= (pos.y + fSizeHalf);	//上端
 	float fBottom	= (pos.y - fSizeHalf);	//下端
 
-	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.09f);	//移動制限(上下)
-	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.275f);		//移動制限(左右)
+	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.3f);	//移動制限(上下)
+	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.278f);	//移動制限(左右)
 
-	if (fTop < -fRimitHeight)
+	if (fTop > fRimitHeight)
 	{//移動上限(上)
-		pos.y = -fRimitHeight - fSizeHalf;
+		pos.y = fRimitHeight - fSizeHalf;
 	}
-
-	if (fBottom > fRimitHeight)
+	else if (fBottom < -fRimitHeight)
 	{//移動上限(下)
-		pos.y = fRimitHeight + fSizeHalf;
+		pos.y = -fRimitHeight + fSizeHalf;
 	}
 
 	if (fLeft < -fRimitWidth)
 	{//移動上限(左)
 		pos.x = -fRimitWidth + fSizeHalf;
 	}
-
-	if (fRight > fRimitWidth)
+	else if (fRight > fRimitWidth)
 	{//移動上限(右)
 		pos.x = fRimitWidth - fSizeHalf;
 	}
@@ -212,7 +210,7 @@ void CPlayer3D::Shot()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::SHOT))
 	{//単押し
-		CBullet::Create(pos, CObject::OBJ_TYPE::PLAYER);	//弾の生成
+		CBullet3D::Create(pos, CObject::OBJ_TYPE::PLAYER);	//弾の生成
 	}
 	else if (pInput->Press(CInput::STANDARD_KEY::SHOT))
 	{//長押し(押しっぱなし)
@@ -225,7 +223,7 @@ void CPlayer3D::Shot()
 
 		/* 間隔タイマーが規定値に達したら */
 
-		CBullet::Create(pos,CObject::OBJ_TYPE::PLAYER);	//弾の生成
+		CBullet3D::Create(pos,CObject::OBJ_TYPE::PLAYER);	//弾の生成
 	}
 
 	if (pInput->Release(CInput::STANDARD_KEY::SHOT))
