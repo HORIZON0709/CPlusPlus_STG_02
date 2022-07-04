@@ -58,6 +58,8 @@ void CCamera::Init()
 
 	//三平方で距離を計算
 	m_fDistance = sqrtf((fX * fX) + (fZ * fZ));
+
+	Set();	//カメラをセット
 }
 
 //================================================
@@ -114,11 +116,18 @@ void CCamera::Set()
 	D3DXMatrixIdentity(&m_mtxProjection);
 
 	//プロジェクションマトリックスの作成
-	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
+	/*D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
 								D3DXToRadian(45.0f),
 								(float)CRenderer::SCREEN_WIDTH / (float)CRenderer::SCREEN_HEIGHT,
 								10.0f,
-								3000.0f);
+								3000.0f);*/
+
+	// プロジェクションマトリックスの作成(平行投影)
+	D3DXMatrixOrthoLH(&m_mtxProjection,						//プロジェクションマトリックス
+						(float)CRenderer::SCREEN_WIDTH,		//幅
+						(float)CRenderer::SCREEN_HEIGHT,	//高さ
+						10.0f,								//ニア
+						3000.0f);							//ファー
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);

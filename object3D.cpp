@@ -94,10 +94,10 @@ HRESULT CObject3D::Init()
 	pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//法線ベクトルの設定
-	pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
-	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
-	pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
-	pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);;
+	pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	//頂点カラーの設定
 	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -154,6 +154,9 @@ void CObject3D::Draw()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
+
+	//ライトを切る
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);

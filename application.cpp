@@ -164,7 +164,7 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* プレイヤー */
 
-	m_pPlayer = CPlayer::Create();	//生成
+	//m_pPlayer = CPlayer::Create();	//生成
 
 	/* 敵 */
 
@@ -188,7 +188,7 @@ void CApplication::Uninit()
 	
 	/* プレイヤー */
 
-	m_pPlayer = nullptr;	//nullptrにする
+	//m_pPlayer = nullptr;	//nullptrにする
 
 	/* 敵 */
 
