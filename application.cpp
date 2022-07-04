@@ -16,7 +16,10 @@
 #include "player.h"
 #include "enemy.h"
 
+#include "player_3D.h"
+
 #include "object2D.h"
+#include "object3D.h"
 
 //***************************
 //静的メンバ変数
@@ -30,6 +33,8 @@ CCamera* CApplication::m_pCamera = nullptr;		//カメラ
 
 CPlayer* CApplication::m_pPlayer = nullptr;	//プレイヤー
 CEnemy* CApplication::m_pEnemy = nullptr;	//敵
+
+CPlayer3D* CApplication::m_pPlayer3D = nullptr;	//プレイヤー(3D)
 
 //================================================
 //キーボード情報を取得
@@ -77,6 +82,14 @@ CPlayer* CApplication::GetPlayer()
 CEnemy* CApplication::GetEnemy()
 {
 	return m_pEnemy;
+}
+
+//================================================
+//プレイヤー(3D)情報を取得
+//================================================
+CPlayer3D* CApplication::GetPlayer3D()
+{
+	return m_pPlayer3D;
 }
 
 //================================================
@@ -146,6 +159,7 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 	if (m_pCamera == nullptr)
 	{//NULLチェック
 		m_pCamera = new CCamera;	//メモリの動的確保
+		m_pCamera->Init();			//初期化
 	}
 
 	/* プレイヤー */
@@ -155,6 +169,10 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 	/* 敵 */
 
 	m_pEnemy = CEnemy::Create();	//生成
+
+	/* プレイヤー(3D) */
+
+	m_pPlayer3D = CPlayer3D::Create();	//生成
 
 	return S_OK;
 }
@@ -175,6 +193,10 @@ void CApplication::Uninit()
 	/* 敵 */
 
 	m_pEnemy = nullptr;	//nullptrにする
+
+	/* プレイヤー(3D) */
+
+	m_pPlayer3D = nullptr;	//nullptrにする
 
 	/* カメラ */
 

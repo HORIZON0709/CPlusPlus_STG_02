@@ -204,10 +204,10 @@ void CObject3D::SetPos(const D3DXVECTOR3 &pos)
 	float fSizeHalf = (m_fSize * 0.5f);	//サイズの半分
 
 	//頂点情報を設定
-	pVtx[0].pos = m_pos + D3DXVECTOR3(-fSizeHalf, -fSizeHalf, 0.0f);
-	pVtx[1].pos = m_pos + D3DXVECTOR3(+fSizeHalf, -fSizeHalf, 0.0f);
-	pVtx[2].pos = m_pos + D3DXVECTOR3(-fSizeHalf, +fSizeHalf, 0.0f);
-	pVtx[3].pos = m_pos + D3DXVECTOR3(+fSizeHalf, +fSizeHalf, 0.0f);
+	pVtx[0].pos = m_pos + D3DXVECTOR3(-fSizeHalf, +fSizeHalf, 0.0f);
+	pVtx[1].pos = m_pos + D3DXVECTOR3(+fSizeHalf, +fSizeHalf, 0.0f);
+	pVtx[2].pos = m_pos + D3DXVECTOR3(-fSizeHalf, -fSizeHalf, 0.0f);
+	pVtx[3].pos = m_pos + D3DXVECTOR3(+fSizeHalf, -fSizeHalf, 0.0f);
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();
@@ -266,10 +266,10 @@ void CObject3D::SetSize(const float &fSize)
 	float fSizeHalf = (m_fSize * 0.5f);	//サイズの半分
 
 	//頂点情報を設定
-	pVtx[0].pos = m_pos + D3DXVECTOR3(-fSizeHalf, -fSizeHalf, 0.0f);
-	pVtx[1].pos = m_pos + D3DXVECTOR3(+fSizeHalf, -fSizeHalf, 0.0f);
-	pVtx[2].pos = m_pos + D3DXVECTOR3(-fSizeHalf, +fSizeHalf, 0.0f);
-	pVtx[3].pos = m_pos + D3DXVECTOR3(+fSizeHalf, +fSizeHalf, 0.0f);
+	pVtx[0].pos = m_pos + D3DXVECTOR3(-fSizeHalf, +fSizeHalf, 0.0f);
+	pVtx[1].pos = m_pos + D3DXVECTOR3(+fSizeHalf, +fSizeHalf, 0.0f);
+	pVtx[2].pos = m_pos + D3DXVECTOR3(-fSizeHalf, -fSizeHalf, 0.0f);
+	pVtx[3].pos = m_pos + D3DXVECTOR3(+fSizeHalf, -fSizeHalf, 0.0f);
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();
