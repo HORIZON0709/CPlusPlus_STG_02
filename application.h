@@ -68,5 +68,4 @@ private: /* 静的メンバ変数 */
 	static CPlayer3D* m_pPlayer3D;	//プレイヤー(3D)のポインタ
 	static CEnemy3D* m_pEnemy3D;	//敵(3D)のポインタ
 };
-
 #endif

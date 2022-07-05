@@ -69,7 +69,7 @@ HRESULT CPlayer3D::Init()
 	CObject3D::SetSize(PLAYER_SIZE);
 
 	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(-50.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
 	CObject3D::SetPos(pos);
 
 	// テクスチャの設定

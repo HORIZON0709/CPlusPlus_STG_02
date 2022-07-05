@@ -9,7 +9,7 @@
 //***************************
 #include "bullet_3D.h"
 #include "renderer.h"
-#include "explosion.h"
+#include "explosion_3D.h"
 
 #include <assert.h>
 
@@ -101,9 +101,9 @@ void CBullet3D::Update()
 	pos.x += move.x;
 	//pos.y -= move.y;	//位置を更新
 
-	Collision();	//当たり判定
-
 	CObject3D::SetPos(pos);	//更新した位置を設定
+
+	Collision();	//当たり判定
 
 	float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
 	float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//右端
@@ -119,7 +119,7 @@ void CBullet3D::Update()
 		(fBottom < -fRimitHeight))	//下端
 	{//指定した範囲から出たら
 		//爆発の生成
-		CExplosion* pExplosion = CExplosion::Create(pos);
+		CExplosion3D::Create(pos);
 
 		Release();	//解放
 	}
@@ -185,7 +185,7 @@ void CBullet3D::Collision()
 			&& fBottom <= fTopTarget)
 		{//弾が対象の範囲内に来た場合
 			//爆発の生成
-			CExplosion* pExplosion = CExplosion::Create(posTarget);
+			CExplosion3D::Create(posTarget);
 
 			pObject->Release();	//対象の解放
 

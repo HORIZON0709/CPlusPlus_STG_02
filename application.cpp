@@ -174,19 +174,19 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* プレイヤー */
 
-	m_pPlayer = CPlayer::Create();	//生成
+	//m_pPlayer = CPlayer::Create();	//生成
 
 	/* 敵 */
 
-	m_pEnemy = CEnemy::Create();	//生成
+	//m_pEnemy = CEnemy::Create();	//生成
 
 	/* プレイヤー(3D) */
 
-	//m_pPlayer3D = CPlayer3D::Create();	//生成
+	m_pPlayer3D = CPlayer3D::Create();	//生成
 
 	/* 敵(3D) */
 
-	//m_pEnemy3D = CEnemy3D::Create();
+	m_pEnemy3D = CEnemy3D::Create();
 
 	return S_OK;
 }
@@ -198,23 +198,24 @@ void CApplication::Uninit()
 {
 	/* オブジェクト */
 
-	CObject2D::ReleaseAll();	//全ての解放
+	CObject2D::ReleaseAll();	//全ての解放(2D)
+	CObject3D::ReleaseAll();	//全ての解放(3D)
 	
 	/* プレイヤー */
 
-	m_pPlayer = nullptr;	//nullptrにする
+	//m_pPlayer = nullptr;	//nullptrにする
 
 	/* 敵 */
 
-	m_pEnemy = nullptr;	//nullptrにする
+	//m_pEnemy = nullptr;	//nullptrにする
 
 	/* プレイヤー(3D) */
 
-	//m_pPlayer3D = nullptr;	//nullptrにする
+	m_pPlayer3D = nullptr;	//nullptrにする
 
 	/* 敵(3D) */
 
-	//m_pEnemy3D = nullptr;	//nullptrにする
+	m_pEnemy3D = nullptr;	//nullptrにする
 
 	/* カメラ */
 

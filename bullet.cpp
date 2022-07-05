@@ -111,7 +111,7 @@ void CBullet::Update()
 		(pos.y > CRenderer::SCREEN_HEIGHT))		//‰º’[
 	{//w’è‚µ‚½”ÍˆÍ‚©‚ço‚½‚ç
 		//”š”­‚Ì¶¬
-		CExplosion* pExplosion = CExplosion::Create(pos);
+		CExplosion::Create(pos);
 
 		Release();	//‰ğ•ú
 	}
@@ -187,7 +187,7 @@ void CBullet::Collision()
 			&& fBottom >= fTopTarget)
 		{//’e‚ª‘ÎÛ‚Ì”ÍˆÍ“à‚É—ˆ‚½ê‡
 			//”š”­‚Ì¶¬
-			CExplosion* pExplosion = CExplosion::Create(posTarget);
+			CExplosion::Create(posTarget);
 
 			pObject->Release();	//‘ÎÛ‚Ì‰ğ•ú
 

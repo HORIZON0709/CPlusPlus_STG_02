@@ -1,77 +1,78 @@
 //================================================
 //
-//制作実践基礎[enemy_3D.cpp]
+//制作実践基礎[explosion_3D.cpp]
 //Author:Kishimoto Eiji
 //
 //================================================
 //***************************
 //インクルード
 //***************************
-#include "enemy_3D.h"
+#include "explosion_3D.h"
 #include "renderer.h"
-#include "bullet_3D.h"
 
 #include <assert.h>
 
 //***************************
 //定数の定義
 //***************************
-const float CEnemy3D::ENEMY_SIZE = 120.0f;	//サイズ
+const float CExplosion3D::EXPLOSION_SIZE = 60.0f;	//サイズ
 
 //================================================
 //生成
 //================================================
-CEnemy3D* CEnemy3D::Create()
+CExplosion3D* CExplosion3D::Create(D3DXVECTOR3 pos)
 {
-	CEnemy3D* pEnemy3D = nullptr;	//ポインタ
+	CExplosion3D* pExplosion3D = nullptr;	//ポインタ
 
-	if (pEnemy3D != nullptr)
+	if (pExplosion3D != nullptr)
 	{//NULLチェック
 		assert(false);
 	}
 
 	/* nullptrの場合 */
 
-	pEnemy3D = new CEnemy3D;	//メモリの動的確保
+	pExplosion3D = new CExplosion3D;	//メモリの動的確保
 
-	pEnemy3D->Init();	//初期化
+	pExplosion3D->Init();	//初期化
 
-	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(200.0f, 0.0f, 0.0f);
-	pEnemy3D->SetPos(pos);
+	pExplosion3D->SetPos(pos);	//位置を設定
 
-	return pEnemy3D;	//動的確保したものを返す
+	return pExplosion3D;	//動的確保したものを返す
 }
 
 //================================================
 //コンストラクタ
 //================================================
-CEnemy3D::CEnemy3D():
-	m_nTimerInterval(0)
+CExplosion3D::CExplosion3D():
+	m_nCntAnim(0),
+	m_nPtnAnim(0)
 {
 	//タイプの設定
-	CObject::SetObjType(CObject::OBJ_TYPE::ENEMY);
+	CObject::SetObjType(CObject::OBJ_TYPE::EXPLOSION);
 }
 
 //================================================
 //デストラクタ
 //================================================
-CEnemy3D::~CEnemy3D()
+CExplosion3D::~CExplosion3D()
 {
 }
 
 //================================================
 //初期化
 //================================================
-HRESULT CEnemy3D::Init()
+HRESULT CExplosion3D::Init()
 {
 	CObject3D::Init();	//親クラス
 
 	//サイズを設定
-	CObject3D::SetSize(ENEMY_SIZE);
+	CObject3D::SetSize(EXPLOSION_SIZE);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::TEXTURE_全部違う);
+	CObject3D::SetTexture(CTexture::TEXTURE_explosion000);
+
+	//テクスチャ座標の設定
+	CObject3D::SetTexUV(DIVIDE_TEX_U, 0);
 
 	return S_OK;
 }
@@ -79,7 +80,7 @@ HRESULT CEnemy3D::Init()
 //================================================
 //終了
 //================================================
-void CEnemy3D::Uninit()
+void CExplosion3D::Uninit()
 {
 	CObject3D::Uninit();	//親クラス
 }
@@ -87,24 +88,31 @@ void CEnemy3D::Uninit()
 //================================================
 //更新
 //================================================
-void CEnemy3D::Update()
+void CExplosion3D::Update()
 {
 	CObject3D::Update();	//親クラス
 
-	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
+	m_nCntAnim++;	//カウントアップ
 
-	m_nTimerInterval++;	//タイマーを進める
+	if (m_nCntAnim % 5 == 0)
+	{//一定間隔
+		//パターン番号を更新する
+		m_nPtnAnim = (m_nPtnAnim + 1) % DIVIDE_TEX_U;
 
-	if (m_nTimerInterval % SHOT_INTERVAL == 0)
-	{//タイマーが一定時間になったら
-		CBullet3D::Create(pos, CObject::OBJ_TYPE::ENEMY);	//弾の生成
+		//テクスチャ座標の設定
+		CObject3D::SetTexUV(DIVIDE_TEX_U, m_nPtnAnim);
+	}
+
+	if (m_nPtnAnim == (DIVIDE_TEX_U - 1))
+	{//アニメーションが終わったら
+ 		Release();	//解放
 	}
 }
 
 //================================================
 //描画
 //================================================
-void CEnemy3D::Draw()
+void CExplosion3D::Draw()
 {
 	CObject3D::Draw();	//親クラス
 }

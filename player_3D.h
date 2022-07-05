@@ -43,5 +43,4 @@ private: /* ƒƒ“ƒoŠÖ” */
 private: /* ƒƒ“ƒo•Ï” */
 	int m_nTimerInterval;	//’e‚Ì˜A‘±”­Ë‚ÌŠÔŠu
 };
-
 #endif
