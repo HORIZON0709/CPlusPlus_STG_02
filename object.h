@@ -24,6 +24,7 @@ public: /* —ñ‹“Œ^‚Ì’è‹` */
 		ENEMY,		//“G
 		BULLET,		//’e
 		EXPLOSION,	//”š”­
+		BG,			//”wŒi
 		MAX,
 		NONE
 	};

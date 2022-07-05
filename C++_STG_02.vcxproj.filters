@@ -78,9 +78,6 @@
     <ClCompile Include="player_3D.cpp">
       <Filter>ソース ファイル\Application\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="bg.cpp">
-      <Filter>ソース ファイル\Application\Object</Filter>
-    </ClCompile>
     <ClCompile Include="bullet_3D.cpp">
       <Filter>ソース ファイル\Application\Object\3D</Filter>
     </ClCompile>
@@ -103,6 +100,9 @@
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
     <ClCompile Include="explosion_3D.cpp">
+      <Filter>ソース ファイル\Application\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="bg_3D.cpp">
       <Filter>ソース ファイル\Application\Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,9 +140,6 @@
     <ClInclude Include="player_3D.h">
       <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="bg.h">
-      <Filter>ヘッダー ファイル\Application\Object</Filter>
-    </ClInclude>
     <ClInclude Include="bullet_3D.h">
       <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
     </ClInclude>
@@ -165,6 +162,9 @@
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
     <ClInclude Include="explosion_3D.h">
+      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="bg_3D.h">
       <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
     </ClInclude>
   </ItemGroup>

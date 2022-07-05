@@ -1,69 +1,71 @@
 //================================================
 //
-//制作実践基礎[bg.cpp]
+//制作実践基礎[bg_3D.cpp]
 //Author:Kishimoto Eiji
 //
 //================================================
 //***************************
 //インクルード
 //***************************
-#include "bg.h"
-#include "object2D.h"
+#include "bg_3D.h"
 #include "application.h"
 #include "renderer.h"
 
 #include <assert.h>
 
-//***************************
-//静的メンバ変数
-//***************************
-LPDIRECT3DTEXTURE9 CBg::m_apTexture[MAX_OBJECT] = {};	//テクスチャのポインタ
-
 //================================================
 //生成
 //================================================
-CBg* CBg::Create()
+CBg3D* CBg3D::Create()
 {
-	CBg* pBg = nullptr;	//ポインタ
+	CBg3D* pBg3D = nullptr;	//ポインタ
 
-	if (pBg != nullptr)
+	if (pBg3D != nullptr)
 	{//NULLチェック
 		assert(false);
 	}
 
 	/* nullptrの場合 */
 
-	//pBg = new CBg;	//メモリの動的確保
+	pBg3D = new CBg3D;	//メモリの動的確保
 
-	pBg->Init();	//初期化
+	pBg3D->Init();	//初期化
 
-	return pBg;	//動的確保したものを返す
+	return pBg3D;	//動的確保したものを返す
 }
 
 //================================================
 //コンストラクタ
 //================================================
-CBg::CBg()
+CBg3D::CBg3D()
 {
-	//メンバ変数のクリア
-	memset(&m_apTexture[0], 0, sizeof(m_apTexture));
-	memset(&m_apObject2D[0], 0, sizeof(m_apObject2D));
+	//タイプの設定
+	CObject::SetObjType(CObject::OBJ_TYPE::BG);
 }
 
 //================================================
 //デストラクタ
 //================================================
-CBg::~CBg()
+CBg3D::~CBg3D()
 {
 }
 
 //================================================
 //初期化
 //================================================
-HRESULT CBg::Init()
+HRESULT CBg3D::Init()
 {
-	//テクスチャの設定
-	m_apObject2D[0]->SetTexture(CTexture::TEXTURE::TEXTURE_universe);
+	CObject3D::Init();	//親クラス
+
+	//サイズを設定
+	//CObject3D::SetSize(PLAYER_SIZE);
+
+	//位置を設定
+	D3DXVECTOR3 pos = D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
+	CObject3D::SetPos(pos);
+
+	// テクスチャの設定
+	CObject3D::SetTexture(CTexture::TEXTURE_百鬼あやめ_8);
 
 	return S_OK;
 }
@@ -71,7 +73,7 @@ HRESULT CBg::Init()
 //================================================
 //終了
 //================================================
-void CBg::Uninit()
+void CBg3D::Uninit()
 {
 	
 }
@@ -79,7 +81,7 @@ void CBg::Uninit()
 //================================================
 //更新
 //================================================
-void CBg::Update()
+void CBg3D::Update()
 {
 	
 }
@@ -87,7 +89,7 @@ void CBg::Update()
 //================================================
 //描画
 //================================================
-void CBg::Draw()
+void CBg3D::Draw()
 {
 	
 }

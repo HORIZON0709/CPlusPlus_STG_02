@@ -175,8 +175,8 @@ void CPlayer3D::Move()
 	float fTop		= (pos.y + fSizeHalf);	//上端
 	float fBottom	= (pos.y - fSizeHalf);	//下端
 
-	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.3f);	//移動制限(上下)
-	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.278f);	//移動制限(左右)
+	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.5f);	//移動制限(上下)
+	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.5f);	//移動制限(左右)
 
 	if (fTop > fRimitHeight)
 	{//移動上限(上)

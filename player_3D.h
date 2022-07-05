@@ -16,7 +16,7 @@
 //プレイヤー(3D)クラスの定義
 //***************************
 class CPlayer3D : public CObject3D
-{/* CObject2Dの派生クラス */
+{/* CObject3Dの派生クラス */
 private: /* 定数の定義 */
 	static const float PLAYER_SIZE;	//サイズ
 	static const float MOVE_SPEED;	//移動速度

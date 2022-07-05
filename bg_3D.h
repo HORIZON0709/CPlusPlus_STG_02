@@ -1,46 +1,33 @@
 //================================================
 //
-//制作実践基礎[bg.h]
+//制作実践基礎[bg_3D.h]
 //Author:Kishimoto Eiji
 //
 //================================================
-#ifndef _BG_H_
-#define _BG_H_
+#ifndef _BG_3D_H_
+#define _BG_3D_H_
 
 //***************************
 //インクルード
 //***************************
-#include "object.h"
-
-//***************************
-//前方宣言
-//***************************
-class CObject2D;
+#include "object3D.h"
 
 //***************************
 //背景クラスの定義
 //***************************
-class CBg : public CObject
-{/* Cobjectの派生クラス */
+class CBg3D : public CObject3D
+{/* Cobject3Dの派生クラス */
 public: /* 静的メンバ関数 */
-	static CBg* Create();	//生成
+	static CBg3D* Create();	//生成
 
 public: /* コンストラクタ・デストラクタ */
-	CBg();
-	~CBg() override;
+	CBg3D();
+	~CBg3D() override;
 
 public: /* オーバーライド関数 */
 	HRESULT Init() override;	//初期化
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
-
-private: /* 静的メンバ変数 */
-	static LPDIRECT3DTEXTURE9 m_apTexture[MAX_OBJECT];
-
-private: /* メンバ変数 */
-	CObject2D* m_apObject2D[MAX_OBJECT];
 };
-
-
 #endif

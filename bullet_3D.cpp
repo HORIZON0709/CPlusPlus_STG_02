@@ -154,9 +154,10 @@ void CBullet3D::Collision()
 		if (!((GetHaveType() == CObject::PLAYER) && (type == CObject::ENEMY) || 
 			(GetHaveType() == CObject::ENEMY) && (type == CObject::PLAYER)))
 			/*
-			「所有者がプレイヤー　かつ　対象が敵」ではない
+			『「所有者がプレイヤー　かつ　対象が敵」
 			もしくは
-			「所有者が敵　かつ　対象がプレイヤー」
+			「所有者が敵　かつ　対象がプレイヤー」』
+			ではない
 			*/
 		{
 			continue;
