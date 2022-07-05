@@ -19,7 +19,7 @@
 //定数の定義
 //***************************
 const float CPlayer3D::PLAYER_SIZE = 150.0f;	//サイズ
-const float CPlayer3D::MOVE_SPEED = 13.0f;		//移動速度
+const float CPlayer3D::MOVE_SPEED = 5.0f;		//移動速度
 
 //================================================
 //生成
@@ -208,9 +208,11 @@ void CPlayer3D::Shot()
 
 	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
 
+	D3DXVECTOR3 move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);	//移動量設定用
+
 	if (pInput->Trigger(CInput::STANDARD_KEY::SHOT))
 	{//単押し
-		CBullet3D::Create(pos, CObject::OBJ_TYPE::PLAYER);	//弾の生成
+		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);	//弾の生成
 	}
 	else if (pInput->Press(CInput::STANDARD_KEY::SHOT))
 	{//長押し(押しっぱなし)
@@ -223,7 +225,7 @@ void CPlayer3D::Shot()
 
 		/* 間隔タイマーが規定値に達したら */
 
-		CBullet3D::Create(pos,CObject::OBJ_TYPE::PLAYER);	//弾の生成
+		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);	//弾の生成
 	}
 
 	if (pInput->Release(CInput::STANDARD_KEY::SHOT))

@@ -21,7 +21,7 @@ const float CBullet3D::BULLET_SIZE = 30.0f;	//サイズ
 //================================================
 //生成
 //================================================
-CBullet3D* CBullet3D::Create(D3DXVECTOR3 pos, CObject::OBJ_TYPE haveType)
+CBullet3D* CBullet3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CObject::OBJ_TYPE haveType)
 {
 	CBullet3D* pBullet3D = nullptr;	//ポインタ
 
@@ -37,6 +37,8 @@ CBullet3D* CBullet3D::Create(D3DXVECTOR3 pos, CObject::OBJ_TYPE haveType)
 	pBullet3D->Init();	//初期化
 
 	pBullet3D->SetPos(pos);	//位置を設定
+
+	pBullet3D->SetMove(move);	//移動量を設定
 
 	pBullet3D->SetHaveType(haveType);	//所有者を設定
 
@@ -70,12 +72,8 @@ HRESULT CBullet3D::Init()
 	//サイズを設定
 	CObject3D::SetSize(BULLET_SIZE);
 
-	//移動量を設定
-	D3DXVECTOR3 move = D3DXVECTOR3(10.0f, 10.0f, 0.0f);
-	CObject3D::SetMove(move);
-
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::TEXTURE_circle_sakura2);
+	//CObject3D::SetTexture(CTexture::TEXTURE_circle_sakura2);
 
 	return S_OK;
 }
@@ -108,10 +106,10 @@ void CBullet3D::Update()
 	float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
 	float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//右端
 	float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
-	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端]
+	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
 
 	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.5f);	//制限(上下)
-	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.25f);		//制限(左右)
+	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.25f);	//制限(左右)
 
 	if ((fLeft < -fRimitWidth) ||	//左端
 		(fRight > fRimitWidth) ||	//右端
@@ -179,10 +177,10 @@ void CBullet3D::Collision()
 		float fTopTarget	= (posTarget.y + (fSizeTarget * 0.5f));	//上端
 		float fBottomTarget = (posTarget.y - (fSizeTarget * 0.5f));	//下端
 
-		if (fLeft <= fRightTarget
-			&& fRight >= fLeftTarget
-			&& fTop >= fBottomTarget
-			&& fBottom <= fTopTarget)
+		if (fLeft < fRightTarget
+			&& fRight > fLeftTarget
+			&& fTop > fBottomTarget
+			&& fBottom < fTopTarget)
 		{//弾が対象の範囲内に来た場合
 			//爆発の生成
 			CExplosion3D::Create(posTarget);

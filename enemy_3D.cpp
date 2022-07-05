@@ -97,7 +97,9 @@ void CEnemy3D::Update()
 
 	if (m_nTimerInterval % SHOT_INTERVAL == 0)
 	{//タイマーが一定時間になったら
-		CBullet3D::Create(pos, CObject::OBJ_TYPE::ENEMY);	//弾の生成
+		D3DXVECTOR3 move = D3DXVECTOR3(-4.0f, 0.0f, 0.0f);	//移動量設定用
+
+		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::ENEMY);	//弾の生成
 	}
 }
 

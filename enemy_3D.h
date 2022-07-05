@@ -20,7 +20,7 @@ class CEnemy3D : public CObject3D
 private: /* 定数の定義 */
 	static const float ENEMY_SIZE;	//サイズ
 
-	static const int SHOT_INTERVAL = 20;	//弾の連続発射の間隔
+	static const int SHOT_INTERVAL = 40;	//弾の連続発射の間隔
 
 public: /* 静的メンバ関数 */
 	static CEnemy3D* Create();	//生成

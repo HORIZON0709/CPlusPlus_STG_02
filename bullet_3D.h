@@ -21,7 +21,8 @@ private: /* 定数の定義 */
 	static const float BULLET_SIZE;	//サイズ
 
 public: /* 静的メンバ関数 */
-	static CBullet3D* Create(D3DXVECTOR3 pos, CObject::OBJ_TYPE haveType);	//生成
+	/* 生成 */
+	static CBullet3D* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CObject::OBJ_TYPE haveType);
 
 public: /* コンストラクタ・デストラクタ */
 	CBullet3D();
