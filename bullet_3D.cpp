@@ -70,7 +70,8 @@ HRESULT CBullet3D::Init()
 	CObject3D::Init();	//親クラス
 
 	//サイズを設定
-	CObject3D::SetSize(BULLET_SIZE);
+	D3DXVECTOR2 size = D3DXVECTOR2(BULLET_SIZE, BULLET_SIZE);
+	CObject3D::SetSize(size);
 
 	// テクスチャの設定
 	//CObject3D::SetTexture(CTexture::TEXTURE_circle_sakura2);
@@ -169,14 +170,14 @@ void CBullet3D::Collision()
 		float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
 		float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
 
-		D3DXVECTOR3 posTarget = pObject->GetPos();	//対象の位置を取得
-		float fSizeTarget = pObject->GetSize();		//対象のサイズを取得
+		D3DXVECTOR3 posTarget = pObject->GetPos();		//対象の位置を取得
+		D3DXVECTOR2 sizeTarget = pObject->GetSize();	//対象のサイズを取得
 
 		/* 対象の判定用 */
-		float fLeftTarget	= (posTarget.x - (fSizeTarget * 0.5f));	//左端
-		float fRightTarget	= (posTarget.x + (fSizeTarget * 0.5f));	//右端
-		float fTopTarget	= (posTarget.y + (fSizeTarget * 0.5f));	//上端
-		float fBottomTarget = (posTarget.y - (fSizeTarget * 0.5f));	//下端
+		float fLeftTarget	= (posTarget.x - (sizeTarget.x * 0.5f));	//左端
+		float fRightTarget	= (posTarget.x + (sizeTarget.x * 0.5f));	//右端
+		float fTopTarget	= (posTarget.y + (sizeTarget.y * 0.5f));	//上端
+		float fBottomTarget = (posTarget.y - (sizeTarget.y * 0.5f));	//下端
 
 		if (fLeft < fRightTarget
 			&& fRight > fLeftTarget

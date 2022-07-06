@@ -66,7 +66,8 @@ HRESULT CPlayer::Init()
 	CObject2D::Init();	//親クラス
 
 	//サイズを設定
-	CObject2D::SetSize(PLAYER_SIZE);
+	D3DXVECTOR2 size = D3DXVECTOR2(PLAYER_SIZE, PLAYER_SIZE);
+	CObject2D::SetSize(size);
 
 	//位置を設定
 	D3DXVECTOR3 pos = D3DXVECTOR3((CRenderer::SCREEN_WIDTH * 0.2f), (CRenderer::SCREEN_HEIGHT * 0.5f), 0.0f);

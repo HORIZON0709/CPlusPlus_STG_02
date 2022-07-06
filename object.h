@@ -52,8 +52,8 @@ public: /* Set,Get系 */
 	virtual D3DXVECTOR3 GetPos() = 0;					//位置を取得
 
 	/* Size */
-	virtual void SetSize(const float &fSize) = 0;	//サイズを設定
-	virtual float GetSize() = 0;					//サイズを取得
+	virtual void SetSize(const D3DXVECTOR2 &size) = 0;	//サイズを設定
+	virtual D3DXVECTOR2 GetSize() = 0;					//サイズを取得
 
 	/* Move */
 	virtual void SetMove(const D3DXVECTOR3 &move) = 0;	//移動量を設定

@@ -66,7 +66,8 @@ HRESULT CExplosion::Init()
 	CObject2D::Init();	//親クラス
 
 	//サイズを設定
-	CObject2D::SetSize(EXPLOSION_SIZE);
+	D3DXVECTOR2 size = D3DXVECTOR2(EXPLOSION_SIZE, EXPLOSION_SIZE);
+	CObject2D::SetSize(size);
 
 	// テクスチャの設定
 	CObject2D::SetTexture(CTexture::TEXTURE_explosion000);

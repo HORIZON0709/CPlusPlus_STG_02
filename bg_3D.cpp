@@ -13,6 +13,12 @@
 
 #include <assert.h>
 
+//***************************
+//定数の定義
+//***************************
+const float CBg3D::BG_WIDTH = CRenderer::SCREEN_WIDTH - 100.0f;		//横幅
+const float CBg3D::BG_HEIGHT = CRenderer::SCREEN_HEIGHT - 50.0f;	//縦幅
+
 //================================================
 //生成
 //================================================
@@ -58,14 +64,15 @@ HRESULT CBg3D::Init()
 	CObject3D::Init();	//親クラス
 
 	//サイズを設定
-	//CObject3D::SetSize(PLAYER_SIZE);
+	D3DXVECTOR2 size = D3DXVECTOR2(BG_WIDTH, BG_HEIGHT);
+	CObject3D::SetSize(size);
 
 	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.1f);
 	CObject3D::SetPos(pos);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::TEXTURE_百鬼あやめ_8);
+	CObject3D::SetTexture(CTexture::TEXTURE_universe);
 
 	return S_OK;
 }
@@ -75,7 +82,7 @@ HRESULT CBg3D::Init()
 //================================================
 void CBg3D::Uninit()
 {
-	
+	CObject3D::Uninit();	//親クラス
 }
 
 //================================================
@@ -83,7 +90,7 @@ void CBg3D::Uninit()
 //================================================
 void CBg3D::Update()
 {
-	
+	CObject3D::Update();	//親クラス
 }
 
 //================================================
@@ -91,5 +98,5 @@ void CBg3D::Update()
 //================================================
 void CBg3D::Draw()
 {
-	
+	CObject3D::Draw();	//親クラス
 }

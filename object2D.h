@@ -50,8 +50,8 @@ public: /* オーバーライド関数 */
 	D3DXVECTOR3 GetPos() override;					//位置を取得
 
 	/* Size */
-	void SetSize(const float &fSize) override;	//サイズを設定
-	float GetSize() override;					//サイズを取得
+	void SetSize(const D3DXVECTOR2 &size) override;	//サイズを設定
+	D3DXVECTOR2 GetSize() override;					//サイズを取得
 
 	/* Move */
 	void SetMove(const D3DXVECTOR3 &move) override;	//移動量を設定
@@ -69,7 +69,7 @@ private: /* メンバ変数 */
 	D3DXVECTOR3 m_pos;	//位置
 	D3DXVECTOR3 m_rot;	//向き
 	D3DXVECTOR3 m_move;	//移動量
-	float m_fSize;		//サイズ
+	D3DXVECTOR2 m_size;	//サイズ
 };
 
 #endif

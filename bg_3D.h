@@ -17,6 +17,10 @@
 //***************************
 class CBg3D : public CObject3D
 {/* Cobject3Dの派生クラス */
+private: /* 定数の定義 */
+	static const float BG_WIDTH;	//横幅
+	static const float BG_HEIGHT;	//縦幅
+
 public: /* 静的メンバ関数 */
 	static CBg3D* Create();	//生成
 

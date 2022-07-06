@@ -18,6 +18,7 @@
 
 #include "player_3D.h"
 #include "enemy_3D.h"
+#include "bg_3D.h"
 
 #include "object2D.h"
 #include "object3D.h"
@@ -37,6 +38,15 @@ CEnemy* CApplication::m_pEnemy = nullptr;	//敵
 
 CPlayer3D* CApplication::m_pPlayer3D = nullptr;	//プレイヤー(3D)
 CEnemy3D* CApplication::m_pEnemy3D = nullptr;	//敵(3D)
+CBg3D* CApplication::m_pBg3D = nullptr;			//背景(3D)
+
+//================================================
+//インプット情報を取得
+//================================================
+CInput* CApplication::GetInput()
+{
+	return m_pInput;
+}
 
 //================================================
 //キーボード情報を取得
@@ -186,7 +196,11 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* 敵(3D) */
 
-	m_pEnemy3D = CEnemy3D::Create();
+	m_pEnemy3D = CEnemy3D::Create();	//生成
+
+	/* 背景(3D) */
+
+	m_pBg3D = CBg3D::Create();	//生成
 
 	return S_OK;
 }
@@ -216,6 +230,10 @@ void CApplication::Uninit()
 	/* 敵(3D) */
 
 	m_pEnemy3D = nullptr;	//nullptrにする
+
+	/* 背景(3D) */
+
+	m_pBg3D = nullptr;	//nullptrにする
 
 	/* カメラ */
 

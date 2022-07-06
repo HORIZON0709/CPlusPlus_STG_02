@@ -68,7 +68,8 @@ HRESULT CEnemy3D::Init()
 	CObject3D::Init();	//親クラス
 
 	//サイズを設定
-	CObject3D::SetSize(ENEMY_SIZE);
+	D3DXVECTOR2 size = D3DXVECTOR2(ENEMY_SIZE, ENEMY_SIZE);
+	CObject3D::SetSize(size);
 
 	// テクスチャの設定
 	CObject3D::SetTexture(CTexture::TEXTURE_全部違う);
