@@ -109,8 +109,8 @@ void CBullet3D::Update()
 	float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
 	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
 
-	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.5f);	//制限(上下)
-	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.25f);	//制限(左右)
+	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.75f);	//制限(上下)
+	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.5f);	//制限(左右)
 
 	if ((fLeft < -fRimitWidth) ||	//左端
 		(fRight > fRimitWidth) ||	//右端

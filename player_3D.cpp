@@ -19,7 +19,7 @@
 //定数の定義
 //***************************
 const float CPlayer3D::PLAYER_SIZE = 150.0f;	//サイズ
-const float CPlayer3D::MOVE_SPEED = 5.0f;		//移動速度
+const float CPlayer3D::MOVE_SPEED = 10.0f;		//移動速度
 
 //================================================
 //生成

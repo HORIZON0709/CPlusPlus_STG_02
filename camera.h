@@ -19,7 +19,6 @@ class CCamera
 {/* 基本クラス */
 private: /* 定数の定義 */
 	static const float CAMERA_MOVE;	//移動量
-	static const float CAMERA_ROT;	//旋回量
 
 public: /* コンストラクタ・デストラクタ */
 	CCamera();
@@ -32,7 +31,6 @@ public: /* メンバ関数 */
 	void Set();		//設定
 private:
 	void Move();			//移動
-	void Turn();			//旋回
 	void NormalizeAngle();	//角度の正規化
 
 private: /* メンバ変数 */
@@ -45,8 +43,6 @@ private: /* メンバ変数 */
 
 	D3DXMATRIX m_mtxProjection;	//プロジェクションマトリックス
 	D3DXMATRIX m_mtxView;		//ビューマトリックス
-
-	float m_fDistance;	//視点から注視点の距離
 };
 
 #endif
