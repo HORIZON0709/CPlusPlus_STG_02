@@ -21,7 +21,6 @@ CCamera::CCamera():
 	m_posV(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_posR(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_vecU(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
-	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_move(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {
 	//メンバ変数のクリア
@@ -47,9 +46,6 @@ void CCamera::Init()
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//向きの初期設定
-	m_rot = D3DXVECTOR3((-D3DX_PI * 0.1f), 0.0f, 0.0f);
-
 	Set();	//カメラをセット
 }
 
@@ -65,7 +61,7 @@ void CCamera::Uninit()
 //================================================
 void CCamera::Update()
 {
-	//m_move.x = 0.1f;
+	m_move.x = 0.1f;
 
 #ifdef _DEBUG
 
@@ -98,7 +94,7 @@ void CCamera::Set()
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();	//デバイスの取得
 
 	//ビューマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxView);
+	D3DXMatrixIdentity(&m_mtxView);  
 
 	//ビューマトリックスの作成
 	D3DXMatrixLookAtLH(&m_mtxView, &m_posV, &m_posR, &m_vecU);
@@ -125,22 +121,6 @@ void CCamera::Set()
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
-}
-
-//================================================
-//視点の位置を取得
-//================================================
-D3DXVECTOR3 CCamera::GetPosV()
-{
-	return m_posV;
-}
-
-//================================================
-//ビューマトリクスを取得
-//================================================
-D3DXMATRIX CCamera::GetMtxView()
-{
-	return m_mtxView;
 }
 
 //================================================

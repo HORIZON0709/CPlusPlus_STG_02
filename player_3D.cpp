@@ -177,19 +177,17 @@ void CPlayer3D::Move()
 	float fTop		= (pos.y + fSizeHalf);	//上端
 	float fBottom	= (pos.y - fSizeHalf);	//下端
 
-	//カメラの位置を取得
-	//D3DXVECTOR3 posCamera = CApplication::GetCamera()->GetPosV();
+	D3DXMATRIX mtxTrans;	//計算用マトリックス
+	
+	//マトリクスの初期化
+	memset(mtxTrans, 0, sizeof(mtxTrans));
 
-	//float fRimitHeight = (posCamera.y + CRenderer::SCREEN_HEIGHT * 0.5f);	//移動制限(上下)
-	//float fRimitWidth = (posCamera.x + CRenderer::SCREEN_WIDTH * 0.5f);		//移動制限(左右)
-
-	//カメラのビューマトリクスから位置を取得
-	float fCameraPosX = CApplication::GetCamera()->GetMtxView()._41;
-	float fCameraPosY = CApplication::GetCamera()->GetMtxView()._42;
+	//位置を反映
+	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
 
 	//移動制限を設定
-	float fRimitHeight = (fCameraPosY + CRenderer::SCREEN_HEIGHT * 0.5f);	//上下
-	float fRimitWidth = (fCameraPosX + CRenderer::SCREEN_WIDTH * 0.5f);		//左右
+	float fRimitHeight = (mtxTrans._42 + CRenderer::SCREEN_HEIGHT * 0.5f);	//上下
+	float fRimitWidth = (mtxTrans._41 + CRenderer::SCREEN_WIDTH * 0.5f);	//左右
 
 	if (fTop > fRimitHeight)
 	{//移動制限(上)

@@ -29,9 +29,6 @@ public: /* メンバ関数 */
 	void Uninit();	//終了
 	void Update();	//更新
 	void Set();		//設定
-public: /* Get */
-	D3DXVECTOR3 GetPosV();		//位置を取得
-	D3DXMATRIX GetMtxView();	//ビューマトリクスを取得
 private:
 	void Move();			//移動
 
@@ -39,7 +36,6 @@ private: /* メンバ変数 */
 	D3DXVECTOR3 m_posV;		//視点
 	D3DXVECTOR3 m_posR;		//注視点
 	D3DXVECTOR3 m_vecU;		//上方向ベクトル
-	D3DXVECTOR3 m_rot;		//向き
 	D3DXVECTOR3 m_move;		//移動量
 
 	D3DXMATRIX m_mtxProjection;	//プロジェクションマトリックス
