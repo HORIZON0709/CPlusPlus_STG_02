@@ -12,7 +12,7 @@
 //***************************
 //定数の定義
 //***************************
-const float CCamera::CAMERA_MOVE = 20.0f;	//移動量
+const float CCamera::MOVE_SPEED = 10.0f;	//移動量
 
 //================================================
 //コンストラクタ
@@ -20,10 +20,9 @@ const float CCamera::CAMERA_MOVE = 20.0f;	//移動量
 CCamera::CCamera():
 	m_posV(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_posR(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
-	m_posVDest(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
-	m_posRDest(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_vecU(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
-	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
+	m_move(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {
 	//メンバ変数のクリア
 	memset(m_mtxProjection,0,sizeof(m_mtxProjection));
@@ -42,12 +41,13 @@ CCamera::~CCamera()
 //================================================
 void CCamera::Init()
 {
-	//視点・注視点・上方向ベクトルを設定する
+	//メンバ変数の初期設定
 	m_posV = D3DXVECTOR3(0.0f, 0.0f, -150.0f);
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
+	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//向きの初期化
+	//向きの初期設定
 	m_rot = D3DXVECTOR3((-D3DX_PI * 0.1f), 0.0f, 0.0f);
 
 	Set();	//カメラをセット
@@ -65,13 +65,29 @@ void CCamera::Uninit()
 //================================================
 void CCamera::Update()
 {
+	//m_move.x = 0.1f;
+
+#ifdef _DEBUG
+
 	//移動
 	Move();
 
-	//注視点
-	m_posR.x = m_posV.x + sinf(m_rot.y);
-	m_posR.z = m_posV.z + cosf(m_rot.y);
-	m_posR.y = m_posV.y + tanf(m_rot.x);
+#endif
+
+	if ((m_move.x == 0.0f) && (m_move.y == 0.0f))
+	{//移動していなかったら
+		return;
+	}
+
+	/* 移動していたら */
+
+	//移動量に応じて位置を更新(視点)
+	m_posV.x += m_move.x * MOVE_SPEED;	//X軸
+	m_posV.y += m_move.y * MOVE_SPEED;	//Y軸
+
+	//移動量に応じて位置を更新(注視点)
+	m_posR.x += m_move.x * MOVE_SPEED;	//X軸
+	m_posR.y += m_move.y * MOVE_SPEED;	//Y軸
 }
 
 //================================================
@@ -112,6 +128,22 @@ void CCamera::Set()
 }
 
 //================================================
+//視点の位置を取得
+//================================================
+D3DXVECTOR3 CCamera::GetPosV()
+{
+	return m_posV;
+}
+
+//================================================
+//ビューマトリクスを取得
+//================================================
+D3DXMATRIX CCamera::GetMtxView()
+{
+	return m_mtxView;
+}
+
+//================================================
 //移動
 //================================================
 void CCamera::Move()
@@ -123,21 +155,21 @@ void CCamera::Move()
 
 	if (pKeyboard->GetPress(DIK_LEFT))
 	{//←キー
-		/* 方向に応じて移動量を加算 */
+		/* 移動方向に応じて */
 
 		if (pKeyboard->GetPress(DIK_UP))
 		{//左上
-			m_posV.x += sinf(m_rot.y + (-D3DX_PI * 0.75f)) * CAMERA_MOVE;	//X軸
-			m_posV.y += cosf(m_rot.y + (-D3DX_PI * 0.75f)) * CAMERA_MOVE;	//Y軸
+			m_move.x -= 1.0f;	//X軸
+			m_move.y += 1.0f;	//Y軸
 		}
 		else if (pKeyboard->GetPress(DIK_DOWN))
 		{//左下
-			m_posV.x += sinf(m_rot.y + (-D3DX_PI * 0.25f)) * CAMERA_MOVE;	//X軸
-			m_posV.y += cosf(m_rot.y + (-D3DX_PI * 0.25f)) * CAMERA_MOVE;	//Y軸
+			m_move.x -= 1.0f;	//X軸
+			m_move.y -= 1.0f;	//Y軸
 		}
 		else
 		{//左
-			m_posV.x += sinf(m_rot.y + (-D3DX_PI * 0.5f)) * CAMERA_MOVE;	//X軸
+			m_move.x -= 1.0f;	//X軸
 		}
 	}
 	else if (pKeyboard->GetPress(DIK_RIGHT))
@@ -146,55 +178,25 @@ void CCamera::Move()
 		
 		if (pKeyboard->GetPress(DIK_UP))
 		{//右上
-			m_posV.x += sinf(m_rot.y + (D3DX_PI * 0.25f)) * CAMERA_MOVE;	//X軸
-			m_posV.y += cosf(m_rot.y + (D3DX_PI * 0.25f)) * CAMERA_MOVE;	//Y軸
+			m_move.x += 1.0f;	//X軸
+			m_move.y += 1.0f;	//Y軸
 		}
 		else if (pKeyboard->GetPress(DIK_DOWN))
 		{//右下
-			m_posV.x += sinf(m_rot.y + (D3DX_PI * 0.75f)) * CAMERA_MOVE;	//X軸
-			m_posV.y += cosf(m_rot.y + (D3DX_PI * 0.75f)) * CAMERA_MOVE;	//Y軸
+			m_move.x += 1.0f;	//X軸
+			m_move.y -= 1.0f;	//Y軸
 		}
 		else
 		{//右
-			m_posV.x += sinf(m_rot.y + (D3DX_PI * 0.5f)) * CAMERA_MOVE;	//X軸
+			m_move.x += 1.0f;	//X軸
 		}
 	}
 	else if (pKeyboard->GetPress(DIK_UP))
 	{//↑キー(上)
-		/* 方向に応じて移動量を加算 */
-		m_posV.y += cosf(m_rot.y) * CAMERA_MOVE;	//Y軸
+		m_move.y += 1.0f;	//Y軸
 	}
 	else if (pKeyboard->GetPress(DIK_DOWN))
 	{//↓キー(下)
-		/* 方向に応じて移動量を減算 */
-		m_posV.y += cosf(-m_rot.y) * CAMERA_MOVE;	//Y軸
-	}
-}
-
-//================================================
-//角度の正規化
-//================================================
-void CCamera::NormalizeAngle()
-{
-	/* Y軸 */
-
-	if (m_rot.y > D3DX_PI)
-	{//π( 180°)を超えた場合
-		m_rot.y -= (D3DX_PI * 2.0f);
-	}
-	else if (m_rot.y < -D3DX_PI)
-	{//-π( -180°)を超えた場合
-		m_rot.y += (D3DX_PI * 2.0f);
-	}
-
-	/* X軸 */
-
-	if (m_rot.x > D3DX_PI)
-	{//π( 180°)を超えた場合
-		m_rot.x -= (D3DX_PI * 2.0f);
-	}
-	else if (m_rot.x < -D3DX_PI)
-	{//-π( -180°)を超えた場合
-		m_rot.x += (D3DX_PI * 2.0f);
+		m_move.y -= 1.0f;	//Y軸
 	}
 }

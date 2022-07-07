@@ -196,7 +196,7 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* ìG(3D) */
 
-	m_pEnemy3D = CEnemy3D::Create();	//ê∂ê¨
+	//m_pEnemy3D = CEnemy3D::Create();	//ê∂ê¨
 
 	/* îwåi(3D) */
 
@@ -229,7 +229,7 @@ void CApplication::Uninit()
 
 	/* ìG(3D) */
 
-	m_pEnemy3D = nullptr;	//nullptrÇ…Ç∑ÇÈ
+	//m_pEnemy3D = nullptr;	//nullptrÇ…Ç∑ÇÈ
 
 	/* îwåi(3D) */
 

@@ -18,7 +18,7 @@
 class CCamera
 {/* 基本クラス */
 private: /* 定数の定義 */
-	static const float CAMERA_MOVE;	//移動量
+	static const float MOVE_SPEED;	//移動速度
 
 public: /* コンストラクタ・デストラクタ */
 	CCamera();
@@ -29,17 +29,18 @@ public: /* メンバ関数 */
 	void Uninit();	//終了
 	void Update();	//更新
 	void Set();		//設定
+public: /* Get */
+	D3DXVECTOR3 GetPosV();		//位置を取得
+	D3DXMATRIX GetMtxView();	//ビューマトリクスを取得
 private:
 	void Move();			//移動
-	void NormalizeAngle();	//角度の正規化
 
 private: /* メンバ変数 */
-	D3DXVECTOR3 m_posV;		//現在の視点
-	D3DXVECTOR3 m_posR;		//現在の注視点
-	D3DXVECTOR3 m_posVDest;	//目的の視点
-	D3DXVECTOR3 m_posRDest;	//目的の注視点
+	D3DXVECTOR3 m_posV;		//視点
+	D3DXVECTOR3 m_posR;		//注視点
 	D3DXVECTOR3 m_vecU;		//上方向ベクトル
 	D3DXVECTOR3 m_rot;		//向き
+	D3DXVECTOR3 m_move;		//移動量
 
 	D3DXMATRIX m_mtxProjection;	//プロジェクションマトリックス
 	D3DXMATRIX m_mtxView;		//ビューマトリックス

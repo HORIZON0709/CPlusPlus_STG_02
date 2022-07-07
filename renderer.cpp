@@ -15,6 +15,8 @@
 //***************************
 #include "renderer.h"
 #include "main.h"
+#include "application.h"
+#include "camera.h"
 #include "object.h"
 
 #include <tchar.h> //_T
@@ -170,6 +172,9 @@ void CRenderer::Draw()
 	//Direct3Dによる描画の開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{
+		//カメラの設定
+		CApplication::GetCamera()->Set();
+
 		CObject::DrawAll();	//オブジェクト
 
 #ifdef _DEBUG

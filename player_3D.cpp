@@ -10,6 +10,7 @@
 #include "player_3D.h"
 #include "application.h"
 #include "renderer.h"
+#include "camera.h"
 #include "input.h"
 #include "bullet_3D.h"
 
@@ -176,24 +177,35 @@ void CPlayer3D::Move()
 	float fTop		= (pos.y + fSizeHalf);	//上端
 	float fBottom	= (pos.y - fSizeHalf);	//下端
 
-	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.5f);	//移動制限(上下)
-	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.5f);	//移動制限(左右)
+	//カメラの位置を取得
+	//D3DXVECTOR3 posCamera = CApplication::GetCamera()->GetPosV();
+
+	//float fRimitHeight = (posCamera.y + CRenderer::SCREEN_HEIGHT * 0.5f);	//移動制限(上下)
+	//float fRimitWidth = (posCamera.x + CRenderer::SCREEN_WIDTH * 0.5f);		//移動制限(左右)
+
+	//カメラのビューマトリクスから位置を取得
+	float fCameraPosX = CApplication::GetCamera()->GetMtxView()._41;
+	float fCameraPosY = CApplication::GetCamera()->GetMtxView()._42;
+
+	//移動制限を設定
+	float fRimitHeight = (fCameraPosY + CRenderer::SCREEN_HEIGHT * 0.5f);	//上下
+	float fRimitWidth = (fCameraPosX + CRenderer::SCREEN_WIDTH * 0.5f);		//左右
 
 	if (fTop > fRimitHeight)
-	{//移動上限(上)
+	{//移動制限(上)
 		pos.y = fRimitHeight - fSizeHalf;
 	}
 	else if (fBottom < -fRimitHeight)
-	{//移動上限(下)
+	{//移動制限(下)
 		pos.y = -fRimitHeight + fSizeHalf;
 	}
 
 	if (fLeft < -fRimitWidth)
-	{//移動上限(左)
+	{//移動制限(左)
 		pos.x = -fRimitWidth + fSizeHalf;
 	}
 	else if (fRight > fRimitWidth)
-	{//移動上限(右)
+	{//移動制限(右)
 		pos.x = fRimitWidth - fSizeHalf;
 	}
 
