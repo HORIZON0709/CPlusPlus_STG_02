@@ -12,7 +12,9 @@
 #include "renderer.h"
 #include "camera.h"
 #include "input.h"
+
 #include "bullet_3D.h"
+#include "explosion_3D.h"
 
 #include <assert.h>
 
@@ -71,7 +73,7 @@ HRESULT CPlayer3D::Init()
 	CObject3D::SetSize(size);
 
 	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(-200.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	CObject3D::SetPos(pos);
 
 	// テクスチャの設定
@@ -98,6 +100,14 @@ void CPlayer3D::Update()
 	Move();	//移動
 
 	Shot();	//発射
+
+	if(CObject3D::Collision(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY))
+	{
+		//爆発の生成
+		CExplosion3D::Create(CObject3D::GetPos());
+
+		Release();	//解放
+	}
 }
 
 //================================================
@@ -177,34 +187,37 @@ void CPlayer3D::Move()
 	float fTop		= (pos.y + fSizeHalf);	//上端
 	float fBottom	= (pos.y - fSizeHalf);	//下端
 
-	D3DXMATRIX mtxTrans;	//計算用マトリックス
+	//カメラ情報の取得
+	D3DXMATRIX mtxCamera = CApplication::GetCamera()->GetMatrixView();
 	
-	//マトリクスの初期化
-	memset(mtxTrans, 0, sizeof(mtxTrans));
+	//カメラの視点の位置を取得
+	D3DXVECTOR3 posV = CApplication::GetCamera()->GetPosV();
 
 	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
+	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
 
 	//移動制限を設定
-	float fRimitHeight = (mtxTrans._42 + CRenderer::SCREEN_HEIGHT * 0.5f);	//上下
-	float fRimitWidth = (mtxTrans._41 + CRenderer::SCREEN_WIDTH * 0.5f);	//左右
+	float fRimitTop		= (mtxCamera._42 + (CRenderer::SCREEN_HEIGHT * 0.5f));	//上
+	float fRimitBottom	= (mtxCamera._42 - (CRenderer::SCREEN_HEIGHT * 0.5f));	//下
+	float fRimitLeft	= (mtxCamera._41 - (CRenderer::SCREEN_WIDTH * 0.5f));	//左
+	float fRimitRight	= (mtxCamera._41 + (CRenderer::SCREEN_WIDTH * 0.5f));	//右
 
-	if (fTop > fRimitHeight)
+	if (fTop > fRimitTop)
 	{//移動制限(上)
-		pos.y = fRimitHeight - fSizeHalf;
+		pos.y = fRimitTop - fSizeHalf;
 	}
-	else if (fBottom < -fRimitHeight)
+	else if (fBottom < fRimitBottom)
 	{//移動制限(下)
-		pos.y = -fRimitHeight + fSizeHalf;
+		pos.y = fRimitBottom + fSizeHalf;
 	}
 
-	if (fLeft < -fRimitWidth)
+	if (fLeft < fRimitLeft)
 	{//移動制限(左)
-		pos.x = -fRimitWidth + fSizeHalf;
+		pos.x = fRimitLeft + fSizeHalf;
 	}
-	else if (fRight > fRimitWidth)
+	else if (fRight > fRimitRight)
 	{//移動制限(右)
-		pos.x = fRimitWidth - fSizeHalf;
+		pos.x = fRimitRight - fSizeHalf;
 	}
 
 	CObject3D::SetPos(pos);	//位置を更新

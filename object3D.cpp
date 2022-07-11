@@ -209,36 +209,6 @@ D3DXVECTOR3 CObject3D::GetPos()
 }
 
 //================================================
-//テクスチャの設定
-//================================================
-void CObject3D::SetTexture(CTexture::TEXTURE texture)
-{
-	m_texture = texture;
-}
-
-//================================================
-//テクスチャ座標の設定(アニメーションに対応)
-//================================================
-void CObject3D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
-{
-	VERTEX_3D *pVtx;	//頂点情報へのポインタ
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
- 	float fDivide = (1.0f / nDivNum);	//乗算用にfloatに変換
-
-	//テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(fDivide * nPtnAnim,		0.0f);
-	pVtx[1].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 0.0f);
- 	pVtx[2].tex = D3DXVECTOR2(fDivide * nPtnAnim,		1.0f);
-	pVtx[3].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 1.0f);
-
-	//頂点バッファをアンロックする
-	m_pVtxBuff->Unlock();
-}
-
-//================================================
 //サイズの設定
 //================================================
 void CObject3D::SetSize(const D3DXVECTOR2 &size)
@@ -285,4 +255,91 @@ void CObject3D::SetMove(const D3DXVECTOR3 &move)
 D3DXVECTOR3 CObject3D::GetMove()
 {
 	return m_move;
+}
+
+//================================================
+//テクスチャの設定
+//================================================
+void CObject3D::SetTexture(CTexture::TEXTURE texture)
+{
+	m_texture = texture;
+}
+
+//================================================
+//テクスチャ座標の設定(アニメーションに対応)
+//================================================
+void CObject3D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
+{
+	VERTEX_3D *pVtx;	//頂点情報へのポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+ 	float fDivide = (1.0f / nDivNum);	//乗算用にfloatに変換
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(fDivide * nPtnAnim,		0.0f);
+	pVtx[1].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 0.0f);
+ 	pVtx[2].tex = D3DXVECTOR2(fDivide * nPtnAnim,		1.0f);
+	pVtx[3].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 1.0f);
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
+//================================================
+//当たり判定
+//================================================
+bool CObject3D::Collision(OBJ_TYPE myType, OBJ_TYPE targetType)
+{
+	for (int i = 0; i < MAX_OBJECT; i++)
+	{
+		CObject* pObjectTarget = GetObjects(i);	//対象の情報の取得
+
+		if (pObjectTarget == nullptr || pObjectTarget == this)
+		{//NULLチェック
+			continue;
+		}
+
+		/* 「nullptrではない」かつ「対象と自身が同じではない」場合 */
+
+		CObject::OBJ_TYPE typeTarget = pObjectTarget->GetObjType();	//タイプの取得
+
+		if (!(((this->GetObjType() == myType) && (typeTarget == targetType))))
+		{//「自身のタイプ」と「対象のタイプ」が引数と一致しない場合
+			continue;
+		}
+
+		/* 「自身のタイプ」と「対象のタイプ」が引数と一致した場合 */
+
+		//自身の情報をそれぞれ取得
+		D3DXVECTOR3 posMyself = this->GetPos();		//位置
+		D3DXVECTOR2 sizeMyself = this->GetSize();	//サイズ
+
+		/* 自身の判定用 */
+		float fLeft		= (posMyself.x - (sizeMyself.x * 0.5f));	//左端
+		float fRight	= (posMyself.x + (sizeMyself.x * 0.5f));	//右端
+		float fTop		= (posMyself.y + (sizeMyself.y * 0.5f));	//上端
+		float fBottom	= (posMyself.y - (sizeMyself.y * 0.5f));	//下端
+
+		//対象の情報をそれぞれ取得
+		D3DXVECTOR3 posTarget = pObjectTarget->GetPos();	//位置
+		D3DXVECTOR2 sizeTarget = pObjectTarget->GetSize();	//サイズ
+
+		/* 対象の判定用 */
+		float fLeftTarget	= (posTarget.x - (sizeTarget.x * 0.5f));	//左端
+		float fRightTarget	= (posTarget.x + (sizeTarget.x * 0.5f));	//右端
+		float fTopTarget	= (posTarget.y + (sizeTarget.y * 0.5f));	//上端
+		float fBottomTarget = (posTarget.y - (sizeTarget.y * 0.5f));	//下端
+
+		if (fLeft < fRightTarget
+			&& fRight > fLeftTarget
+			&& fTop > fBottomTarget
+			&& fBottom < fTopTarget)
+		{//「自身」が「対象の範囲内」に来た場合
+			return true;	//「当たった」を返す
+		}
+	}
+
+	return false;	//「当たっていない」を返す
 }

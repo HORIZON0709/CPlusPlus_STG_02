@@ -29,6 +29,9 @@ public: /* メンバ関数 */
 	void Uninit();	//終了
 	void Update();	//更新
 	void Set();		//設定
+
+	D3DXMATRIX GetMatrixView();
+	D3DXVECTOR3 GetPosV();
 private:
 	void Move();			//移動
 

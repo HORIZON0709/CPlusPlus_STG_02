@@ -84,6 +84,8 @@ void CCamera::Update()
 	//移動量に応じて位置を更新(注視点)
 	m_posR.x += m_move.x * MOVE_SPEED;	//X軸
 	m_posR.y += m_move.y * MOVE_SPEED;	//Y軸
+
+	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動量をリセット
 }
 
 //================================================
@@ -124,6 +126,22 @@ void CCamera::Set()
 }
 
 //================================================
+//ビューマトリクスの取得
+//================================================
+D3DXMATRIX CCamera::GetMatrixView()
+{
+	return m_mtxView;
+}
+
+//================================================
+//視点の位置の取得
+//================================================
+D3DXVECTOR3 CCamera::GetPosV()
+{
+	return m_posV;
+}
+
+//================================================
 //移動
 //================================================
 void CCamera::Move()
@@ -139,17 +157,17 @@ void CCamera::Move()
 
 		if (pKeyboard->GetPress(DIK_UP))
 		{//左上
-			m_move.x -= 1.0f;	//X軸
-			m_move.y += 1.0f;	//Y軸
+			m_move.x = -1.0f;	//X軸
+			m_move.y = +1.0f;	//Y軸
 		}
 		else if (pKeyboard->GetPress(DIK_DOWN))
 		{//左下
-			m_move.x -= 1.0f;	//X軸
-			m_move.y -= 1.0f;	//Y軸
+			m_move.x = -1.0f;	//X軸
+			m_move.y = -1.0f;	//Y軸
 		}
 		else
 		{//左
-			m_move.x -= 1.0f;	//X軸
+			m_move.x = -1.0f;	//X軸
 		}
 	}
 	else if (pKeyboard->GetPress(DIK_RIGHT))
@@ -158,25 +176,25 @@ void CCamera::Move()
 		
 		if (pKeyboard->GetPress(DIK_UP))
 		{//右上
-			m_move.x += 1.0f;	//X軸
-			m_move.y += 1.0f;	//Y軸
+			m_move.x = +1.0f;	//X軸
+			m_move.y = +1.0f;	//Y軸
 		}
 		else if (pKeyboard->GetPress(DIK_DOWN))
 		{//右下
-			m_move.x += 1.0f;	//X軸
-			m_move.y -= 1.0f;	//Y軸
+			m_move.x = +1.0f;	//X軸
+			m_move.y = -1.0f;	//Y軸
 		}
 		else
 		{//右
-			m_move.x += 1.0f;	//X軸
+			m_move.x = +1.0f;	//X軸
 		}
 	}
 	else if (pKeyboard->GetPress(DIK_UP))
 	{//↑キー(上)
-		m_move.y += 1.0f;	//Y軸
+		m_move.y = +1.0f;	//Y軸
 	}
 	else if (pKeyboard->GetPress(DIK_DOWN))
 	{//↓キー(下)
-		m_move.y -= 1.0f;	//Y軸
+		m_move.y = -1.0f;	//Y軸
 	}
 }

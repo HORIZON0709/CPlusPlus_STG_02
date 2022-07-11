@@ -8,8 +8,10 @@
 //インクルード
 //***************************
 #include "bullet_3D.h"
+#include "application.h"
 #include "renderer.h"
 #include "explosion_3D.h"
+#include "camera.h"
 
 #include <assert.h>
 
@@ -102,20 +104,32 @@ void CBullet3D::Update()
 
 	CObject3D::SetPos(pos);	//更新した位置を設定
 
-	Collision();	//当たり判定
+	IsCollision();	//当たり判定
 
 	float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
 	float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//右端
 	float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
 	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
 
-	float fRimitHeight = (CRenderer::SCREEN_HEIGHT * 0.75f);	//制限(上下)
-	float fRimitWidth = (CRenderer::SCREEN_WIDTH * 0.5f);	//制限(左右)
+	//カメラ情報の取得
+	D3DXMATRIX mtxCamera = CApplication::GetCamera()->GetMatrixView();
+	
+	//カメラの視点の位置を取得
+	D3DXVECTOR3 posV = CApplication::GetCamera()->GetPosV();
 
-	if ((fLeft < -fRimitWidth) ||	//左端
-		(fRight > fRimitWidth) ||	//右端
-		(fTop > fRimitHeight) ||	//上端
-		(fBottom < -fRimitHeight))	//下端
+	//位置を反映
+	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
+
+	//移動制限を設定
+	float fRimitTop		= (mtxCamera._42 + (CRenderer::SCREEN_HEIGHT * 0.5f));	//上
+	float fRimitBottom	= (mtxCamera._42 - (CRenderer::SCREEN_HEIGHT * 0.5f));	//下
+	float fRimitLeft	= (mtxCamera._41 - (CRenderer::SCREEN_WIDTH * 0.5f));	//左
+	float fRimitRight	= (mtxCamera._41 + (CRenderer::SCREEN_WIDTH * 0.5f));	//右
+
+	if ((fLeft < fRimitLeft) ||		//左端
+		(fRight > fRimitRight) ||	//右端
+		(fTop > fRimitTop) ||		//上端
+		(fBottom < fRimitBottom))	//下端
 	{//指定した範囲から出たら
 		//爆発の生成
 		CExplosion3D::Create(pos);
@@ -135,7 +149,7 @@ void CBullet3D::Draw()
 //================================================
 //当たり判定
 //================================================
-void CBullet3D::Collision()
+void CBullet3D::IsCollision()
 {
 	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置設定用
 
@@ -150,10 +164,10 @@ void CBullet3D::Collision()
 
 		/* nullptrではない場合 */
 
-		CObject::OBJ_TYPE type = pObject->GetObjType();	//タイプの取得
+		CObject::OBJ_TYPE typeTarget = pObject->GetObjType();	//タイプの取得
 
-		if (!((GetHaveType() == CObject::PLAYER) && (type == CObject::ENEMY) || 
-			(GetHaveType() == CObject::ENEMY) && (type == CObject::PLAYER)))
+		if (!(((GetHaveType() == CObject::PLAYER) && (typeTarget == CObject::ENEMY)) || 
+			((GetHaveType() == CObject::ENEMY) && (typeTarget == CObject::PLAYER))))
 			/*
 			『「所有者がプレイヤー　かつ　対象が敵」
 			もしくは

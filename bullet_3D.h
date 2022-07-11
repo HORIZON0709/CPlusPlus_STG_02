@@ -35,7 +35,7 @@ public: /* オーバーライド関数 */
 	void Draw() override;		//描画
 
 private: /* メンバ関数 */
-	void Collision();
+	void IsCollision();
 
 public:	/* Set・Get系 */
 	void SetHaveType(CObject::OBJ_TYPE haveType);

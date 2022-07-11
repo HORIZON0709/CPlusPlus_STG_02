@@ -63,6 +63,13 @@ public: /* メンバ関数 */
 	void SetTexture(CTexture::TEXTURE texture);				//テクスチャの設定
 	void SetTexUV(const int &nDivNum,const int &nPtnAnim);	//テクスチャ座標の設定(アニメーション対応)
 
+	/*
+		当たり判定
+		OBJ_TYPE myType ---> 自身のタイプ
+		OBJ_TYPE targetType ---> 判定を取る対象のタイプ
+	*/
+	bool Collision(OBJ_TYPE myType, OBJ_TYPE targetType);
+
 private: /* メンバ変数 */
 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	//頂点バッファへのポインタ
