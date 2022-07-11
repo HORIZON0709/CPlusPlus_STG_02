@@ -16,8 +16,8 @@
 //***************************
 //íËêîÇÃíËã`
 //***************************
-const float CBg3D::BG_WIDTH = CRenderer::SCREEN_WIDTH - 100.0f;		//â°ïù
-const float CBg3D::BG_HEIGHT = CRenderer::SCREEN_HEIGHT - 50.0f;	//ècïù
+const float CBg3D::BG_WIDTH = CRenderer::SCREEN_WIDTH * 0.9f;	//â°ïù
+const float CBg3D::BG_HEIGHT = CRenderer::SCREEN_HEIGHT * 0.9f;	//ècïù
 
 //================================================
 //ê∂ê¨

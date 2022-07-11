@@ -37,7 +37,7 @@ CEnemy3D* CEnemy3D::Create()
 	pEnemy3D->Init();	//初期化
 
 	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(200.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(500.0f, 200.0f, 0.0f);
 	pEnemy3D->SetPos(pos);
 
 	return pEnemy3D;	//動的確保したものを返す
@@ -98,7 +98,7 @@ void CEnemy3D::Update()
 
 	if (m_nTimerInterval % SHOT_INTERVAL == 0)
 	{//タイマーが一定時間になったら
-		D3DXVECTOR3 move = D3DXVECTOR3(-4.0f, 0.0f, 0.0f);	//移動量設定用
+		D3DXVECTOR3 move = D3DXVECTOR3(-4.0f, 0.0f, 0.0f);	//弾の移動量設定用
 
 		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::ENEMY);	//弾の生成
 	}
