@@ -40,7 +40,7 @@ CObject3D* CObject3D::Create()
 CObject3D::CObject3D() :
 	m_pTexture(nullptr),
 	m_pVtxBuff(nullptr),
-	m_texture(CTexture::TEXTURE_NONE),
+	m_texture(CTexture::NONE),
 	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_move(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
@@ -72,7 +72,7 @@ HRESULT CObject3D::Init()
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_size = D3DXVECTOR2(0.0f, 0.0f);
-	m_texture = CTexture::TEXTURE_NONE;
+	m_texture = CTexture::NONE;
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4,

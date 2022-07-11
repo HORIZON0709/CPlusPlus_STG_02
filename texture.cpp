@@ -19,15 +19,24 @@
 //==================================================
 const char* CTexture::s_FileName[] =
 {// テクスチャのパス
-	"data/TEXTURE/百鬼あやめ_8.jpg",	// 仮画像1
-	"data/TEXTURE/slack_icon.png",		// 仮画像2
-	"data/TEXTURE/circle_sakura2.png",	// 仮画像3
-	"data/TEXTURE/explosion000.png",	// 仮画像4
-	"data/TEXTURE/全部違う.jpg",		// 仮画像5
-	"data/TEXTURE/universe.jpeg"		// 仮画像6
+	/* プレイヤー */
+	"data/TEXTURE/player000.jpg",		//モチモチの余さん
+
+	/* 弾 */
+	"data/TEXTURE/bullet000.png",		//桜のサークル
+	"data/TEXTURE/bullet001.png",		//スラックのアイコン
+
+	/* 爆発 */
+	"data/TEXTURE/explosion000.png",	//配布の爆発アニメーション画像
+
+	/* 敵 */
+	"data/TEXTURE/enemy000.jpg",		//全部違うネタ画像のやつ
+
+	/* 背景 */
+	"data/TEXTURE/bg000.jpeg"			//何かユニバース
 };
 
-static_assert(sizeof(CTexture::s_FileName) / sizeof(CTexture::s_FileName[0]) == CTexture::TEXTURE_MAX, "aho");
+static_assert(sizeof(CTexture::s_FileName) / sizeof(CTexture::s_FileName[0]) == CTexture::MAX, "aho");
 
 //--------------------------------------------------
 // デフォルトコンストラクタ
@@ -53,7 +62,7 @@ void CTexture::LoadAll()
 	// デバイスへのポインタの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 	
-	for (int i = 0; i < TEXTURE_MAX; ++i)
+	for (int i = 0; i < MAX; ++i)
 	{
 		if (s_pTexture[i] != nullptr)
 		{// テクスチャの読み込みがされている
@@ -72,7 +81,7 @@ void CTexture::LoadAll()
 //--------------------------------------------------
 void CTexture::Load(TEXTURE inTexture)
 {
-	assert(inTexture >= 0 && inTexture < TEXTURE_MAX);
+	assert(inTexture >= 0 && inTexture < MAX);
 
 	if (s_pTexture[inTexture] != nullptr)
 	{// テクスチャの読み込みがされている
@@ -93,7 +102,7 @@ void CTexture::Load(TEXTURE inTexture)
 //--------------------------------------------------
 void CTexture::ReleaseAll(void)
 {
-	for (int i = 0; i < TEXTURE_MAX; ++i)
+	for (int i = 0; i < MAX; ++i)
 	{
 		if (s_pTexture[i] != NULL)
 		{// テクスチャの解放
@@ -108,7 +117,7 @@ void CTexture::ReleaseAll(void)
 //--------------------------------------------------
 void CTexture::Release(TEXTURE inTexture)
 {
-	assert(inTexture >= 0 && inTexture < TEXTURE_MAX);
+	assert(inTexture >= 0 && inTexture < MAX);
 
 	if (s_pTexture[inTexture] != NULL)
 	{// テクスチャの解放
@@ -122,12 +131,12 @@ void CTexture::Release(TEXTURE inTexture)
 //--------------------------------------------------
 LPDIRECT3DTEXTURE9 CTexture::GetTexture(TEXTURE inTexture)
 {
-	if (inTexture == TEXTURE_NONE)
+	if (inTexture == NONE)
 	{// テクスチャを使用しない
 		return nullptr;
 	}
 
-	assert(inTexture >= 0 && inTexture < TEXTURE_MAX);
+	assert(inTexture >= 0 && inTexture < MAX);
 
 	// 読み込み
 	Load(inTexture);

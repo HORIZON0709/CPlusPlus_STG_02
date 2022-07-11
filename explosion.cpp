@@ -70,7 +70,7 @@ HRESULT CExplosion::Init()
 	CObject2D::SetSize(size);
 
 	// テクスチャの設定
-	CObject2D::SetTexture(CTexture::TEXTURE_explosion000);
+	CObject2D::SetTexture(CTexture::explosion000);
 
 	//テクスチャ座標の設定
 	CObject2D::SetTexUV(DIVIDE_TEX_U, 0);

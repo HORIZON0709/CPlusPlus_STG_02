@@ -72,7 +72,7 @@ HRESULT CBg3D::Init()
 	CObject3D::SetPos(pos);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::TEXTURE_universe);
+	CObject3D::SetTexture(CTexture::bg000);
 
 	return S_OK;
 }

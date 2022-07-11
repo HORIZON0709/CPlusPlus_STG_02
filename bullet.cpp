@@ -76,7 +76,7 @@ HRESULT CBullet::Init()
 	CObject2D::SetMove(move);
 
 	// テクスチャの設定
-	CObject2D::SetTexture(CTexture::TEXTURE_circle_sakura2);
+	CObject2D::SetTexture(CTexture::bullet000);
 
 	return S_OK;
 }

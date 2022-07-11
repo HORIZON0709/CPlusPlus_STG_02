@@ -76,7 +76,7 @@ HRESULT CBullet3D::Init()
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
-	//CObject3D::SetTexture(CTexture::TEXTURE_circle_sakura2);
+	CObject3D::SetTexture(CTexture::bullet001);
 
 	return S_OK;
 }

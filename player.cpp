@@ -74,7 +74,7 @@ HRESULT CPlayer::Init()
 	CObject2D::SetPos(pos);
 
 	// テクスチャの設定
-	CObject2D::SetTexture(CTexture::TEXTURE_百鬼あやめ_8);
+	CObject2D::SetTexture(CTexture::player000);
 
 	return S_OK;
 }

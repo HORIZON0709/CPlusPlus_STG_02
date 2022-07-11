@@ -72,7 +72,7 @@ HRESULT CEnemy3D::Init()
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::TEXTURE_全部違う);
+	CObject3D::SetTexture(CTexture::enemy000);
 
 	return S_OK;
 }
