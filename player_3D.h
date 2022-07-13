@@ -11,6 +11,7 @@
 //インクルード
 //***************************
 #include "object3D.h"
+#include "item_3D.h"
 
 //***************************
 //プレイヤー(3D)クラスの定義
@@ -42,5 +43,6 @@ private: /* メンバ関数 */
 
 private: /* メンバ変数 */
 	int m_nTimerInterval;	//弾の連続発射の間隔
+	//CItem3D::TYPE 
 };
 #endif

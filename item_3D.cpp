@@ -68,12 +68,12 @@ HRESULT CItem3D::Init()
 	D3DXVECTOR2 size = D3DXVECTOR2(ITEM_SIZE, ITEM_SIZE);
 	CObject3D::SetSize(size);
 
-	//色の設定
-	D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+	//色を設定
+	D3DXCOLOR col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 	CObject3D::SetCol(col);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::item000);
+	CObject3D::SetTexture(CTexture::bullet001);
 
 	return S_OK;
 }
@@ -92,6 +92,11 @@ void CItem3D::Uninit()
 void CItem3D::Update()
 {
 	CObject3D::Update();	//親クラス
+
+	if (CObject3D::Collision(OBJ_TYPE::ITEM, OBJ_TYPE::PLAYER))
+	{//プレイヤーと当たったら
+		Release();	//解放
+	}
 }
 
 //================================================

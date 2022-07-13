@@ -190,6 +190,10 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	//m_pEnemy = CEnemy::Create();	//ê∂ê¨
 
+	/* îwåi(3D) */
+
+	m_pBg3D = CBg3D::Create();	//ê∂ê¨
+
 	/* ÉvÉåÉCÉÑÅ[(3D) */
 
 	m_pPlayer3D = CPlayer3D::Create();	//ê∂ê¨
@@ -197,10 +201,6 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 	/* ìG(3D) */
 
 	m_pEnemy3D = CEnemy3D::Create();	//ê∂ê¨
-
-	/* îwåi(3D) */
-
-	m_pBg3D = CBg3D::Create();	//ê∂ê¨
 
 	return S_OK;
 }
@@ -223,6 +223,10 @@ void CApplication::Uninit()
 
 	//m_pEnemy = nullptr;	//nullptrÇ…Ç∑ÇÈ
 
+	/* îwåi(3D) */
+
+	m_pBg3D = nullptr;	//nullptrÇ…Ç∑ÇÈ
+
 	/* ÉvÉåÉCÉÑÅ[(3D) */
 
 	m_pPlayer3D = nullptr;	//nullptrÇ…Ç∑ÇÈ
@@ -230,10 +234,6 @@ void CApplication::Uninit()
 	/* ìG(3D) */
 
 	m_pEnemy3D = nullptr;	//nullptrÇ…Ç∑ÇÈ
-
-	/* îwåi(3D) */
-
-	m_pBg3D = nullptr;	//nullptrÇ…Ç∑ÇÈ
 
 	/* ÉJÉÅÉâ */
 

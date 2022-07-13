@@ -11,6 +11,9 @@
 #include "application.h"
 #include "renderer.h"
 #include "explosion_3D.h"
+
+#include "item_3D.h"
+
 #include "camera.h"
 
 #include <assert.h>
@@ -203,6 +206,8 @@ void CBullet3D::IsCollision()
 			CExplosion3D::Create(posTarget);	//爆発の生成
 
 			pObjTarget3D->Release();	//対象の解放
+
+			CItem3D::Create(posTarget);	//アイテムの生成
 
 			Release();	//自身の解放
 			break;

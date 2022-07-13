@@ -17,6 +17,14 @@
 //***************************
 class CItem3D : public CObject3D
 {/* Cobject3Dの派生クラス */
+public: /* 列挙型の定義 */
+	enum TYPE	/* アイテムの種類 */
+	{
+		CHANGE_BUlLET,	//弾を変化させる
+		MAX,
+		NONE
+	};
+
 private: /* 定数の定義 */
 	static const float ITEM_SIZE;	//サイズ
 
