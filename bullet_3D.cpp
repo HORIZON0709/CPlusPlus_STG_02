@@ -155,16 +155,16 @@ void CBullet3D::IsCollision()
 
 	for (int i = 0; i < MAX_OBJECT; i++)
 	{
-		CObject* pObject = GetObjects(i);	//オブジェクト情報の取得
+		CObject* pObjectTarget = GetObjects(i);	//対象の情報の取得
 
-		if (pObject == nullptr || pObject == this)
+		if (pObjectTarget == nullptr || pObjectTarget == this)
 		{//NULLチェック
 			continue;
 		}
 
 		/* nullptrではない場合 */
 
-		CObject::OBJ_TYPE typeTarget = pObject->GetObjType();	//タイプの取得
+		CObject::OBJ_TYPE typeTarget = pObjectTarget->GetObjType();	//タイプの取得
 
 		if (!(((GetHaveType() == CObject::PLAYER) && (typeTarget == CObject::ENEMY)) || 
 			((GetHaveType() == CObject::ENEMY) && (typeTarget == CObject::PLAYER))))
@@ -184,8 +184,10 @@ void CBullet3D::IsCollision()
 		float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
 		float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
 
-		D3DXVECTOR3 posTarget = pObject->GetPos();		//対象の位置を取得
-		D3DXVECTOR2 sizeTarget = pObject->GetSize();	//対象のサイズを取得
+		CObject3D* pObjTarget3D = (CObject3D*)pObjectTarget;	//CObject3D型にキャスト
+
+		D3DXVECTOR3 posTarget = pObjTarget3D->GetPos();		//対象の位置を取得
+		D3DXVECTOR2 sizeTarget = pObjTarget3D->GetSize();	//対象のサイズを取得
 
 		/* 対象の判定用 */
 		float fLeftTarget	= (posTarget.x - (sizeTarget.x * 0.5f));	//左端
@@ -198,10 +200,9 @@ void CBullet3D::IsCollision()
 			&& fTop > fBottomTarget
 			&& fBottom < fTopTarget)
 		{//弾が対象の範囲内に来た場合
-			//爆発の生成
-			CExplosion3D::Create(posTarget);
+			CExplosion3D::Create(posTarget);	//爆発の生成
 
-			pObject->Release();	//対象の解放
+			pObjTarget3D->Release();	//対象の解放
 
 			Release();	//自身の解放
 			break;

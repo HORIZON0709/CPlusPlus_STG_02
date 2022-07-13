@@ -47,17 +47,18 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
+public: /* 仮想関数 */
 	/* Pos */
-	void SetPos(const D3DXVECTOR3 &pos) override;	//位置を設定
-	D3DXVECTOR3 GetPos() override;					//位置を取得
+	virtual void SetPos(const D3DXVECTOR3 &pos);	//位置を設定
+	virtual D3DXVECTOR3 GetPos();					//位置を取得
 
 	/* Size */
-	void SetSize(const D3DXVECTOR2 &size) override;	//サイズを設定
-	D3DXVECTOR2 GetSize() override;					//サイズを取得
+	virtual void SetSize(const D3DXVECTOR2 &size);	//サイズを設定
+	virtual D3DXVECTOR2 GetSize();					//サイズを取得
 
 	/* Move */
-	void SetMove(const D3DXVECTOR3 &move) override;	//移動量を設定
-	D3DXVECTOR3 GetMove() override;					//移動量を取得
+	virtual void SetMove(const D3DXVECTOR3 &move);	//移動量を設定
+	virtual D3DXVECTOR3 GetMove();					//移動量を取得
 
 public: /* メンバ関数 */
 	void SetTexture(CTexture::TEXTURE texture);				//テクスチャの設定

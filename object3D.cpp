@@ -322,9 +322,11 @@ bool CObject3D::Collision(OBJ_TYPE myType, OBJ_TYPE targetType)
 		float fTop		= (posMyself.y + (sizeMyself.y * 0.5f));	//上端
 		float fBottom	= (posMyself.y - (sizeMyself.y * 0.5f));	//下端
 
+		CObject3D* pObjTarget3D = (CObject3D*)pObjectTarget;	//Object3D型にキャスト
+
 		//対象の情報をそれぞれ取得
-		D3DXVECTOR3 posTarget = pObjectTarget->GetPos();	//位置
-		D3DXVECTOR2 sizeTarget = pObjectTarget->GetSize();	//サイズ
+		D3DXVECTOR3 posTarget = pObjTarget3D->GetPos();	//位置
+		D3DXVECTOR2 sizeTarget = pObjTarget3D->GetSize();	//サイズ
 
 		/* 対象の判定用 */
 		float fLeftTarget	= (posTarget.x - (sizeTarget.x * 0.5f));	//左端

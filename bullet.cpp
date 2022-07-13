@@ -135,26 +135,16 @@ void CBullet::Collision()
 
 	for (int i = 0; i < MAX_OBJECT; i++)
 	{
-		CObject* pObject = GetObjects(i);	//オブジェクト情報の取得
+		CObject* pObjectTarget = GetObjects(i);	//対象の情報の取得
 
-		if (pObject == nullptr || pObject == this)
+		if (pObjectTarget == nullptr || pObjectTarget == this)
 		{//NULLチェック
 			continue;
 		}
 
 		/* nullptrではない場合 */
 
-		CObject::OBJ_TYPE type = pObject->GetObjType();	//タイプの取得
-
-		//if (type != objType)
-		//{//指定したタイプ以外の場合
-		//	continue;
-		//}
-
-		//if (type == GetHaveType())
-		//{//対象と所有者が同じの場合
-		//	continue;
-		//}
+		CObject::OBJ_TYPE type = pObjectTarget->GetObjType();	//タイプの取得
 
 		if (!((GetHaveType() == CObject::PLAYER) && (type == CObject::ENEMY) || 
 			(GetHaveType() == CObject::ENEMY) && (type == CObject::PLAYER)))
@@ -173,8 +163,10 @@ void CBullet::Collision()
 		float fTop		= (pos.y - (BULLET_SIZE * 0.5f));	//上端
 		float fBottom	= (pos.y + (BULLET_SIZE * 0.5f));	//下端
 
-		D3DXVECTOR3 posTarget = pObject->GetPos();	//対象の位置を取得
-		D3DXVECTOR2 sizeTarget = pObject->GetSize();		//対象のサイズを取得
+		CObject2D* pObjTarget2D = (CObject2D*)pObjectTarget;	//CObject2D型にキャスト
+
+		D3DXVECTOR3 posTarget = pObjTarget2D->GetPos();		//対象の位置を取得
+		D3DXVECTOR2 sizeTarget = pObjTarget2D->GetSize();	//対象のサイズを取得
 
 		/* 対象の判定用 */
 		float fLeftTarget	= (posTarget.x - (sizeTarget.x * 0.5f));	//左端
@@ -187,10 +179,9 @@ void CBullet::Collision()
 			&& fTop <= fBottomTarget
 			&& fBottom >= fTopTarget)
 		{//弾が対象の範囲内に来た場合
-			//爆発の生成
-			CExplosion::Create(posTarget);
+			CExplosion::Create(posTarget);	//爆発の生成
 
-			pObject->Release();	//対象の解放
+			pObjTarget2D->Release();	//対象の解放
 
 			Release();	//自身の解放
 			break;

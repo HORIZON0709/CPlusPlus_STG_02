@@ -171,6 +171,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_3D.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="score.cpp" />
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +194,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="player_3D.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

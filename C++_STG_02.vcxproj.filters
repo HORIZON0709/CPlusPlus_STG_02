@@ -105,6 +105,9 @@
     <ClCompile Include="bg_3D.cpp">
       <Filter>ソース ファイル\Application\Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="bg_3D.h">
       <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
