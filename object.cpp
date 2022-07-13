@@ -109,22 +109,6 @@ CObject* CObject::GetObjects(int nIdx)
 }
 
 //================================================
-//タイプの設定
-//================================================
-void CObject::SetObjType(const CObject::OBJ_TYPE &type)
-{
-	objType = type;
-}
-
-//================================================
-//タイプの取得
-//================================================
-CObject::OBJ_TYPE CObject::GetObjType()
-{
-	return objType;
-}
-
-//================================================
 //解放
 //================================================
 void CObject::Release()
@@ -143,4 +127,20 @@ void CObject::Release()
 	m_apObject[nID] = nullptr;	//nullptrにする
 
 	m_nNumAll--;	//数を減らす
+}
+
+//================================================
+//タイプの設定
+//================================================
+void CObject::SetObjType(const CObject::OBJ_TYPE &type)
+{
+	objType = type;
+}
+
+//================================================
+//タイプの取得
+//================================================
+CObject::OBJ_TYPE CObject::GetObjType()
+{
+	return objType;
 }

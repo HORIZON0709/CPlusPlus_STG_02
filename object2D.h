@@ -45,22 +45,55 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
-public: /* 仮想関数 */
-	/* Pos */
-	virtual void SetPos(const D3DXVECTOR3 &pos);	//位置を設定
-	virtual D3DXVECTOR3 GetPos();					//位置を取得
+public: /* Pos */
+	/*
+		位置を設定
+		const D3DXVECTOR3 &pos ---> 任意の位置
+	*/
+	void SetPos(const D3DXVECTOR3 &pos);
 
-	/* Size */
-	virtual void SetSize(const D3DXVECTOR2 &size);	//サイズを設定
-	virtual D3DXVECTOR2 GetSize();					//サイズを取得
+	/*
+		位置を取得
+	*/
+	D3DXVECTOR3 GetPos();
 
-	/* Move */
-	virtual void SetMove(const D3DXVECTOR3 &move);	//移動量を設定
-	virtual D3DXVECTOR3 GetMove();					//移動量を取得
+public: /* Size */
+	/*
+		サイズを設定
+		const D3DXVECTOR2 &size ---> 任意のサイズ
+	*/
+	void SetSize(const D3DXVECTOR2 &size);
 
-public: /* メンバ関数 */
-	void SetTexture(CTexture::TEXTURE texture);				//テクスチャの設定
-	void SetTexUV(const int &nDivNum,const int &nPtnAnim);	//テクスチャ座標の設定(アニメーション対応)
+	/*
+		サイズを取得
+	*/
+	D3DXVECTOR2 GetSize();
+
+public: /* Move */
+	/*
+		移動量を設定
+		const D3DXVECTOR3 &move ---> 任意の移動量
+	*/
+	void SetMove(const D3DXVECTOR3 &move);
+
+	/*
+		移動量を取得
+	*/
+	D3DXVECTOR3 GetMove();
+
+public: /* Texture */
+	/*
+		テクスチャの設定
+		CTexture::TEXTURE texture ---> 任意のテクスチャ
+	*/
+	void SetTexture(CTexture::TEXTURE texture);
+
+	/*
+		テクスチャ座標の設定(アニメーション対応)
+		const int &nDivNum ---> テクスチャの分割数
+		const int &nPtnAnim ---> アニメーションパターン数
+	*/
+	void SetTexUV(const int &nDivNum,const int &nPtnAnim);
 
 private: /* メンバ変数 */
 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ

@@ -20,20 +20,23 @@
 const char* CTexture::s_FileName[] =
 {// テクスチャのパス
 	/* プレイヤー */
-	"data/TEXTURE/player000.jpg",		//モチモチの余さん
+	"data/TEXTURE/player000.jpg",	//モチモチの余さん
 
 	/* 弾 */
-	"data/TEXTURE/bullet000.png",		//桜のサークル
-	"data/TEXTURE/bullet001.png",		//スラックのアイコン
+	"data/TEXTURE/bullet000.png",	//桜のサークル
+	"data/TEXTURE/bullet001.png",	//スラックのアイコン
 
 	/* 爆発 */
 	"data/TEXTURE/explosion000.png",	//配布の爆発アニメーション画像
 
 	/* 敵 */
-	"data/TEXTURE/enemy000.jpg",		//全部違うネタ画像のやつ
+	"data/TEXTURE/enemy000.jpg",	//全部違うネタ画像のやつ
 
 	/* 背景 */
-	"data/TEXTURE/bg000.jpeg"			//何かユニバース
+	"data/TEXTURE/bg000.jpeg",	//何かユニバース
+
+	/* アイテム */
+	"data/TEXTURE/item000.png"	//三角形
 };
 
 static_assert(sizeof(CTexture::s_FileName) / sizeof(CTexture::s_FileName[0]) == CTexture::MAX, "aho");

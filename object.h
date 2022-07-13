@@ -25,6 +25,7 @@ public: /* 列挙型の定義 */
 		BULLET,		//弾
 		EXPLOSION,	//爆発
 		BG,			//背景
+		ITEM,		//アイテム
 		MAX,
 		NONE
 	};
@@ -49,12 +50,19 @@ public: /* 純粋仮想関数 */
 
 public: /* メンバ関数 */
 	CObject* GetObjects(int nIdx);	//オブジェクト情報の取得
-
-	/* ObjType */
-	void SetObjType(const OBJ_TYPE &type);	//タイプの設定
-	OBJ_TYPE GetObjType();					//タイプの取得
-
 	void Release();	//解放
+
+public:	/* ObjType */
+	/*
+		タイプの設定
+		const OBJ_TYPE &type ---> 任意のタイプ
+	*/
+	void SetObjType(const OBJ_TYPE &type);
+
+	/*
+		タイプの取得
+	*/
+	OBJ_TYPE GetObjType();
 
 private: /* 静的メンバ変数 */
 	static CObject* m_apObject[MAX_OBJECT];	//ポインタ

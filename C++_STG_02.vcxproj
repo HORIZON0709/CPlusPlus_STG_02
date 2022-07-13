@@ -163,6 +163,7 @@
     <ClCompile Include="explosion_3D.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inputKeyboard.cpp" />
+    <ClCompile Include="item_3D.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="object.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="explosion_3D.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="inputKeyboard.h" />
+    <ClInclude Include="item_3D.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="object.h" />

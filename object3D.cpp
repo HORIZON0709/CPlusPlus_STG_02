@@ -288,6 +288,26 @@ void CObject3D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
 }
 
 //================================================
+//色の設定
+//================================================
+void CObject3D::SetCol(const D3DXCOLOR &col)
+{
+	VERTEX_3D *pVtx;	//頂点情報へのポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点カラーの設定
+	pVtx[0].col = col;
+	pVtx[1].col = col;
+	pVtx[2].col = col;
+	pVtx[3].col = col;
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
+//================================================
 //当たり判定
 //================================================
 bool CObject3D::Collision(OBJ_TYPE myType, OBJ_TYPE targetType)
