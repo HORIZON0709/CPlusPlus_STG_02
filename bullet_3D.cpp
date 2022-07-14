@@ -26,7 +26,9 @@ const float CBullet3D::BULLET_SIZE = 30.0f;	//サイズ
 //================================================
 //生成
 //================================================
-CBullet3D* CBullet3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CObject::OBJ_TYPE haveType)
+CBullet3D* CBullet3D::Create(const D3DXVECTOR3 &pos,
+							 const D3DXVECTOR3 &move,
+							 const CObject::OBJ_TYPE &haveType)
 {
 	CBullet3D* pBullet3D = nullptr;	//ポインタ
 
@@ -102,8 +104,7 @@ void CBullet3D::Update()
 	D3DXVECTOR3 pos = CObject3D::GetPos();		//位置設定用
 	D3DXVECTOR3 move = CObject3D::GetMove();	//移動量設定用
 
-	pos.x += move.x;
-	//pos.y -= move.y;	//位置を更新
+	pos += move;	//位置を更新
 
 	CObject3D::SetPos(pos);	//更新した位置を設定
 

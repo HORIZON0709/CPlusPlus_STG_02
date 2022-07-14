@@ -12,6 +12,7 @@
 //***************************
 #include "object3D.h"
 #include "item_3D.h"
+#include "bullet_3D.h"
 
 //***************************
 //プレイヤー(3D)クラスの定義
@@ -41,8 +42,15 @@ private: /* メンバ関数 */
 	void Move();	//移動
 	void Shot();	//発射
 
+	/*
+		タイプに応じた弾の生成
+		const CItem3D::TYPE &getItem ---> 取得したアイテム
+	*/
+	void CreateBulletAccordingToType(const CItem3D::TYPE &getItem);
+
 private: /* メンバ変数 */
-	int m_nTimerInterval;	//弾の連続発射の間隔
-	//CItem3D::TYPE 
+	int m_nTimerInterval;		//弾の連続発射の間隔
+	CItem3D::TYPE m_getItem;	//取得したアイテム
+	CBullet3D::TYPE m_typeNow;	//現在の弾のタイプ
 };
 #endif

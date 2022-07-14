@@ -17,12 +17,29 @@
 //***************************
 class CBullet3D : public CObject3D
 {/* CObject3Dの派生クラス */
+public: /* 列挙型の定義 */
+	enum TYPE	/* 弾の種類 */
+	{
+		NORMAL = 0,	//通常弾
+		DOUBLE,		//二連弾
+		TRIPLE,		//三方向各散弾
+		MAX,
+		NONE
+	};
+
 private: /* 定数の定義 */
 	static const float BULLET_SIZE;	//サイズ
 
 public: /* 静的メンバ関数 */
-	/* 生成 */
-	static CBullet3D* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, CObject::OBJ_TYPE haveType);
+	/*
+		生成
+		const D3DXVECTOR3 &pos ---> 位置
+		const D3DXVECTOR3 &move ---> 移動量
+		const CObject::OBJ_TYPE &haveType ---> 所有者
+	*/
+	static CBullet3D* Create(const D3DXVECTOR3 &pos,
+							 const D3DXVECTOR3 &move,
+							 const CObject::OBJ_TYPE &haveType);
 
 public: /* コンストラクタ・デストラクタ */
 	CBullet3D();
