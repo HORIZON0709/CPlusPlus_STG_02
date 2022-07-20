@@ -8,6 +8,7 @@
 //インクルード
 //***************************
 #include "score.h"
+#include "number.h"
 
 #include <assert.h>
 
@@ -38,6 +39,8 @@ CScore* CScore::Create()
 CScore::CScore():
 	m_nScore(0)
 {
+	//メンバ変数のクリア
+	memset(m_apNumber, 0, sizeof(m_apNumber));
 }
 
 //================================================
@@ -52,6 +55,36 @@ CScore::~CScore()
 //================================================
 HRESULT CScore::Init()
 {
+	for (int i = 0; i < MAX_DIGIT; i++)
+	{
+		m_apNumber[i] = nullptr;	//nullptrにする
+
+		if (m_apNumber[i] != nullptr)
+		{//NULLチェック
+			continue;
+		}
+
+		/* nullptrの場合 */
+
+		m_apNumber[i] = new CNumber;	//メモリの動的確保
+
+		m_apNumber[i]->Init();	//初期化
+
+		//位置の設定
+		D3DXVECTOR3 pos = D3DXVECTOR3(CNumber::START_POS_X, CNumber::START_POS_Y, 0.0f);
+		m_apNumber[i]->SetPos(pos);
+
+		//サイズの設定
+		D3DXVECTOR2 size = D3DXVECTOR2(CNumber::NUMBER_WIDTH, CNumber::NUMBER_HEIGHT);
+		m_apNumber[i]->SetSize(size);
+
+		//テクスチャの設定
+		m_apNumber[i]->SetTexture(CTexture::TEXTURE::number000);
+
+		//テクスチャ座標の設定
+		m_apNumber[i]->SetTexUV(CNumber::DIVIDE_TEX_U, 0);
+	}
+
 	return S_OK;
 }
 

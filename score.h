@@ -13,16 +13,24 @@
 #include "object.h"
 
 //***************************
+//前方宣言
+//***************************
+class CNumber;
+
+//***************************
 //スコアクラスの定義
 //***************************
 class CScore : public CObject
 {/* CObjectの派生クラス */
+private: /* 定数の定義 */
+	static const int MAX_DIGIT = 8;	//最大桁数
+
 public: /* 静的メンバ関数 */
 	static CScore* Create();	//生成
 
 public: /* コンストラクタ・デストラクタ */
 	CScore();
-	~CScore();
+	~CScore()override;
 
 public: /* オーバーライド関数 */
 	HRESULT Init() override;	//初期化
@@ -36,8 +44,8 @@ public: /* メンバ関数 */
 	int Get();				//取得
 
 private: /* メンバ変数 */
-	//CNumber* m_apNumber[8];	//桁数分用意
-	int m_nScore;				//スコア
+	CNumber* m_apNumber[MAX_DIGIT];	//桁数分用意
+	int m_nScore;					//スコア
 };
 
 

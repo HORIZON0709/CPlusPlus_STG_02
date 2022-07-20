@@ -36,7 +36,10 @@ const char* CTexture::s_FileName[] =
 	"data/TEXTURE/bg000.jpeg",	//何かユニバース
 
 	/* アイテム */
-	"data/TEXTURE/item000.png"	//三角形
+	"data/TEXTURE/item000.png",	//三角形
+
+	/* ナンバー */
+	"data/TEXTURE/number000.png"	//0～9の数字(横並び)
 };
 
 static_assert(sizeof(CTexture::s_FileName) / sizeof(CTexture::s_FileName[0]) == CTexture::MAX, "aho");

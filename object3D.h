@@ -94,6 +94,7 @@ public: /* Texture */
 		テクスチャ座標の設定(アニメーション対応)
 		const int &nDivNum ---> テクスチャの分割数
 		const int &nPtnAnim ---> アニメーションパターン数
+		(単体画像の場合は「1,0」を送る。)
 	*/
 	void SetTexUV(const int &nDivNum,const int &nPtnAnim);
 
