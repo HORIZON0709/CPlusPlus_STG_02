@@ -50,7 +50,7 @@ CPlayer3D* CPlayer3D::Create()
 CPlayer3D::CPlayer3D():
 	m_nTimerInterval(0),
 	m_getItem(CItem3D::TYPE::NONE),
-	m_typeNow(CBullet3D::TYPE::NONE)
+	m_bulletType(CBullet3D::TYPE::NONE)
 {
 	//タイプの設定
 	CObject::SetObjType(CObject::OBJ_TYPE::PLAYER);
@@ -72,7 +72,7 @@ HRESULT CPlayer3D::Init()
 
 	//メンバ変数の初期設定
 	m_getItem = CItem3D::TYPE::NONE;		//何も取得していない
-	m_typeNow = CBullet3D::TYPE::NORMAL;	//通常弾
+	m_bulletType = CBullet3D::TYPE::NORMAL;	//通常弾
 
 	//サイズを設定
 	D3DXVECTOR2 size = D3DXVECTOR2(PLAYER_SIZE, PLAYER_SIZE);
@@ -108,11 +108,17 @@ void CPlayer3D::Update()
 	Shot();	//発射
 
 	if(CObject3D::Collision(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY))
-	{
+	{//敵と接触した場合
 		//爆発の生成
 		CExplosion3D::Create(CObject3D::GetPos());
 
 		Release();	//解放
+	}
+
+	if (m_getItem != CItem3D::TYPE::NONE)
+	{//何かアイテムを取得した場合
+		//アイテム毎の処理
+		ProcessingForEachItem();
 	}
 }
 
@@ -122,6 +128,22 @@ void CPlayer3D::Update()
 void CPlayer3D::Draw()
 {
 	CObject3D::Draw();	//親クラス
+}
+
+//================================================
+//所持アイテムのセット
+//================================================
+void CPlayer3D::SetItem(const CItem3D::TYPE &item)
+{
+	m_getItem = item;
+}
+
+//================================================
+//所持アイテムの取得
+//================================================
+CItem3D::TYPE CPlayer3D::GetItem()
+{
+	return m_getItem;
 }
 
 //================================================
@@ -238,7 +260,7 @@ void CPlayer3D::Shot()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::SHOT))
 	{//単押し
-		CreateBulletAccordingToType(m_getItem);	//アイテム取得時は弾が変化
+		CreateBulletByType();	//タイプ別の弾の生成
 	}
 	else if (pInput->Press(CInput::STANDARD_KEY::SHOT))
 	{//長押し(押しっぱなし)
@@ -251,7 +273,7 @@ void CPlayer3D::Shot()
 
 		/* 間隔タイマーが規定値に達したら */
 
-		CreateBulletAccordingToType(m_getItem);	//アイテム取得時は弾が変化
+		CreateBulletByType();	//タイプ別の弾の生成
 	}
 
 	if (pInput->Release(CInput::STANDARD_KEY::SHOT))
@@ -261,17 +283,17 @@ void CPlayer3D::Shot()
 }
 
 //================================================
-//タイプに応じた弾の生成
+//タイプ別の弾の生成
 //================================================
-void CPlayer3D::CreateBulletAccordingToType(const CItem3D::TYPE &getItem)
+void CPlayer3D::CreateBulletByType()
 {
 	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
 
 	D3DXVECTOR3 move;	//移動量設定用
 
-	switch (getItem)
+	switch (m_bulletType)
 	{/* 取得したアイテム毎の処理 */
-	case CItem3D::TYPE::CHANGE_BUlLET_NORMAL:	/* 通常弾 */
+	case CBullet3D::TYPE::NORMAL:	/* 通常弾 */
 
 		//移動量設定(+X方向)
 		move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);
@@ -280,7 +302,7 @@ void CPlayer3D::CreateBulletAccordingToType(const CItem3D::TYPE &getItem)
 		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
 		break;
 
-	case CItem3D::TYPE::CHANGE_BUlLET_DOUBLE:	/* 二連弾 */
+	case CBullet3D::TYPE::DOUBLE:	/* 二連弾 */
 		
 		{
 			//弾の位置を上下に少しずらす
@@ -296,7 +318,7 @@ void CPlayer3D::CreateBulletAccordingToType(const CItem3D::TYPE &getItem)
 		}
 		break;
 
-	case CItem3D::TYPE::CHANGE_BUlLET_TRIPLE:	/* 三方向各散弾 */
+	case CBullet3D::TYPE::TRIPLE:	/* 三方向各散弾 */
 
 		/* 斜め上方向 */
 
@@ -326,4 +348,31 @@ void CPlayer3D::CreateBulletAccordingToType(const CItem3D::TYPE &getItem)
 		assert(false);
 		break;
 	}
+}
+
+//================================================
+//アイテム毎の処理
+//================================================
+void CPlayer3D::ProcessingForEachItem()
+{
+	switch (m_getItem)
+	{
+	case CItem3D::TYPE::CHANGE_BUlLET_NORMAL: /* 弾変化(通常弾) */
+		m_bulletType = CBullet3D::TYPE::NORMAL;	//弾のタイプを変更
+		break;
+
+	case CItem3D::TYPE::CHANGE_BUlLET_DOUBLE: /* 弾変化(二連弾) */
+		m_bulletType = CBullet3D::TYPE::DOUBLE;	//弾のタイプを変更
+		break;
+
+	case CItem3D::TYPE::CHANGE_BUlLET_TRIPLE: /* 弾変化(三方向各散弾) */
+		m_bulletType = CBullet3D::TYPE::TRIPLE;	//弾のタイプを変更
+		break;
+
+	default: /* それ以外 */
+		assert(false);
+		break;
+	}
+
+	//m_getItem = CItem3D::TYPE::NONE;	//何も取得していない状態にする
 }

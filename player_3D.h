@@ -38,19 +38,26 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
-private: /* メンバ関数 */
+public: /* メンバ関数 */
+	/*
+		所持アイテムのセット
+		const CItem3D::TYPE &item ---> 入手したアイテムのタイプ
+	*/
+	void SetItem(const CItem3D::TYPE &item);
+
+	CItem3D::TYPE GetItem();	//所持アイテムの取得
+
+private:
 	void Move();	//移動
 	void Shot();	//発射
 
-	/*
-		タイプに応じた弾の生成
-		const CItem3D::TYPE &getItem ---> 取得したアイテム
-	*/
-	void CreateBulletAccordingToType(const CItem3D::TYPE &getItem);
+	void CreateBulletByType();	//タイプ別の弾の生成
+
+	void ProcessingForEachItem();	//アイテム毎の処理
 
 private: /* メンバ変数 */
-	int m_nTimerInterval;		//弾の連続発射の間隔
-	CItem3D::TYPE m_getItem;	//取得したアイテム
-	CBullet3D::TYPE m_typeNow;	//現在の弾のタイプ
+	int m_nTimerInterval;			//弾の連続発射の間隔
+	CItem3D::TYPE m_getItem;		//取得したアイテム
+	CBullet3D::TYPE m_bulletType;	//弾のタイプ
 };
 #endif

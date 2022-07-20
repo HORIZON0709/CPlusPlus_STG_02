@@ -208,8 +208,6 @@ void CBullet3D::IsCollision()
 
 			pObjTarget3D->Release();	//対象の解放
 
-			CItem3D::Create(posTarget);	//アイテムの生成
-
 			Release();	//自身の解放
 			break;
 		}
@@ -219,7 +217,7 @@ void CBullet3D::IsCollision()
 //================================================
 //所有者を設定
 //================================================
-void CBullet3D::SetHaveType(CObject::OBJ_TYPE haveType)
+void CBullet3D::SetHaveType(const CObject::OBJ_TYPE &haveType)
 {
 	m_haveType = haveType;
 }

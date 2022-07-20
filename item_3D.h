@@ -28,10 +28,16 @@ public: /* 列挙型の定義 */
 	};
 
 private: /* 定数の定義 */
+	static const int MAX_ITEM = 16;	//最大数
 	static const float ITEM_SIZE;	//サイズ
 
 public: /* 静的メンバ関数 */
-	static CItem3D* Create(const D3DXVECTOR3 &pos);	//生成
+	/*
+		生成
+		const D3DXVECTOR3 &pos ---> 生成する位置
+		const CItem3D::TYPE type ---> どのタイプで生成するか
+	*/
+	static CItem3D* Create(const D3DXVECTOR3 &pos, const CItem3D::TYPE type);
 
 public: /* コンストラクタ・デストラクタ */
 	CItem3D();
@@ -42,5 +48,8 @@ public: /* オーバーライド関数 */
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
+
+private: /* メンバ変数 */
+	CItem3D::TYPE m_type;	//種類
 };
 #endif

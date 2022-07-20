@@ -55,8 +55,13 @@ private: /* メンバ関数 */
 	void IsCollision();
 
 public:	/* Set・Get系 */
-	void SetHaveType(CObject::OBJ_TYPE haveType);
-	CObject::OBJ_TYPE GetHaveType();
+	/*
+		所有者を設定
+		const CObject::OBJ_TYPE &haveType ---> 所有者
+	*/
+	void SetHaveType(const CObject::OBJ_TYPE &haveType);
+
+	CObject::OBJ_TYPE GetHaveType();	//所有者を取得
 
 private: /* メンバ変数 */
 	CObject::OBJ_TYPE m_haveType;	//所有者

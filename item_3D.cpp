@@ -10,6 +10,7 @@
 #include "item_3D.h"
 #include "application.h"
 #include "renderer.h"
+#include "player_3D.h"
 
 #include <assert.h>
 
@@ -18,10 +19,15 @@
 //***************************
 const float CItem3D::ITEM_SIZE = 40.0f;	//サイズ
 
+//***************************
+//静的メンバ変数
+//***************************
+//CItem3D* CItem3D::m_apItem[MAX_ITEM] = {};	//ポインタ
+
 //================================================
 //生成
 //================================================
-CItem3D* CItem3D::Create(const D3DXVECTOR3 &pos)
+CItem3D* CItem3D::Create(const D3DXVECTOR3 &pos, const CItem3D::TYPE type)
 {
 	CItem3D* pItem3D = nullptr;	//ポインタ
 
@@ -34,9 +40,9 @@ CItem3D* CItem3D::Create(const D3DXVECTOR3 &pos)
 
 	pItem3D = new CItem3D;	//メモリの動的確保
 
-	pItem3D->Init();	//初期化
-
+	pItem3D->Init();		//初期化
 	pItem3D->SetPos(pos);	//位置を設定
+	pItem3D->m_type = type;	//タイプを設定
 
 	return pItem3D;	//動的確保したものを返す
 }
@@ -44,7 +50,8 @@ CItem3D* CItem3D::Create(const D3DXVECTOR3 &pos)
 //================================================
 //コンストラクタ
 //================================================
-CItem3D::CItem3D()
+CItem3D::CItem3D():
+	m_type(CItem3D::TYPE::NONE)
 {
 	//タイプの設定
 	CObject::SetObjType(CObject::OBJ_TYPE::ITEM);
@@ -63,6 +70,9 @@ CItem3D::~CItem3D()
 HRESULT CItem3D::Init()
 {
 	CObject3D::Init();	//親クラス
+
+	//メンバ変数の初期設定
+	m_type = CItem3D::TYPE::NONE;
 
 	//サイズを設定
 	D3DXVECTOR2 size = D3DXVECTOR2(ITEM_SIZE, ITEM_SIZE);
@@ -95,7 +105,12 @@ void CItem3D::Update()
 
 	if (CObject3D::Collision(OBJ_TYPE::ITEM, OBJ_TYPE::PLAYER))
 	{//プレイヤーと当たったら
-		Release();	//解放
+		CPlayer3D* pPlayer = CApplication::GetPlayer3D();	//プレイヤー情報の取得
+
+		//プレイヤーに、当たったアイテムのタイプを送る
+		pPlayer->SetItem(m_type);
+
+		Release();	//自身の解放
 	}
 }
 

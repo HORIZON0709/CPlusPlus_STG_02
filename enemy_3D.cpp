@@ -8,8 +8,10 @@
 //インクルード
 //***************************
 #include "enemy_3D.h"
+#include "application.h"
 #include "renderer.h"
 #include "bullet_3D.h"
+#include "item_3D.h"
 
 #include <assert.h>
 
@@ -82,6 +84,11 @@ HRESULT CEnemy3D::Init()
 //================================================
 void CEnemy3D::Uninit()
 {
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置を取得
+
+	//アイテムの生成
+	CItem3D::Create(pos, CItem3D::TYPE::CHANGE_BUlLET_TRIPLE);
+
 	CObject3D::Uninit();	//親クラス
 }
 
