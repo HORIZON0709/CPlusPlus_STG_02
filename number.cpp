@@ -45,6 +45,8 @@ CNumber* CNumber::Create()
 //================================================
 CNumber::CNumber()
 {
+	//É^ÉCÉvÇÃê›íË
+	CObject::SetObjType(CObject::OBJ_TYPE::NUMBER);
 }
 
 //================================================

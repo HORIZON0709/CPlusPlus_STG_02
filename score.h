@@ -52,6 +52,8 @@ public: /* メンバ関数 */
 	void AddScore(const int &nValue);
 
 	int GetCurrentScore();	//現在のスコアの取得
+private:
+	void ChangeTexUV();	//現在のスコアに応じたテクスチャ座標の変更
 
 private: /* メンバ変数 */
 	CNumber* m_apNumber[MAX_DIGIT];	//桁数分用意

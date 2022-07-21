@@ -370,9 +370,6 @@ void CPlayer3D::ProcessingForEachItem()
 		break;
 
 	default: /* ‚»‚êˆÈŠO */
-		assert(false);
 		break;
 	}
-
-	//m_getItem = CItem3D::TYPE::NONE;	//‰½‚àæ“¾‚µ‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 }

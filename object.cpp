@@ -88,8 +88,6 @@ CObject::CObject()
 
 		m_nID = i;	//自分の番号を設定
 
-		objType = (CObject::OBJ_TYPE)this->m_nID;	//オブジェクトのタイプを設定
-
 		m_nNumAll++;	//数を増やす
 		break;
 	}

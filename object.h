@@ -26,6 +26,8 @@ public: /* 列挙型の定義 */
 		EXPLOSION,	//爆発
 		BG,			//背景
 		ITEM,		//アイテム
+		SCORE,		//スコア
+		NUMBER,		//ナンバー
 		MAX,
 		NONE
 	};

@@ -10,6 +10,10 @@
 #include "score.h"
 #include "number.h"
 
+#include "application.h"
+#include "input.h"
+
+#include <math.h>
 #include <assert.h>
 
 //================================================
@@ -41,6 +45,9 @@ CScore::CScore():
 {
 	//メンバ変数のクリア
 	memset(m_apNumber, 0, sizeof(m_apNumber));
+
+	//タイプの設定
+	CObject::SetObjType(CObject::OBJ_TYPE::SCORE);
 }
 
 //================================================
@@ -71,7 +78,9 @@ HRESULT CScore::Init()
 		m_apNumber[i]->Init();	//初期化
 
 		//位置の設定
-		D3DXVECTOR3 pos = D3DXVECTOR3(CNumber::POS_X, CNumber::POS_Y, 0.0f);
+		D3DXVECTOR3 pos = D3DXVECTOR3((CNumber::POS_X - (i * CNumber::NUMBER_WIDTH)),
+									  CNumber::POS_Y,
+									  0.0f);
 		m_apNumber[i]->SetPos(pos);
 
 		//サイズの設定
@@ -100,6 +109,18 @@ void CScore::Uninit()
 //================================================
 void CScore::Update()
 {
+	/* デバッグ用 */
+
+	//キーボード情報の取得
+	CInputKeyboard* pKeyboard = CApplication::GetInputKeyboard();
+
+	if (pKeyboard->GetTrigger(DIK_P))
+	{//Pキー押下
+		AddScore(123);
+	}
+	
+	//現在のスコアに応じたテクスチャ座標の変更
+	ChangeTexUV();
 }
 
 //================================================
@@ -131,4 +152,30 @@ void CScore::AddScore(const int &nValue)
 int CScore::GetCurrentScore()
 {
 	return m_nScore;
+}
+
+//================================================
+//現在のスコアに応じたテクスチャ座標の変更
+//================================================
+void CScore::ChangeTexUV()
+{
+	int nSaveScore = m_nScore;	//現在のスコアを取得、保存
+
+	for (int i = 0; i < MAX_DIGIT; i++)
+	{
+		//一の位から順に値を入れていく
+		int nNum = (nSaveScore % 10);
+
+		if ((nNum < 0) || (nNum > 9))
+		{//0～9の値( 1桁 )ではない場合
+			continue;
+		}
+
+		/* 0～9の値( 1桁 )の場合 */
+
+		//テクスチャ座標の設定
+		m_apNumber[i]->SetTexUV(CNumber::DIVIDE_TEX_U, nNum);
+
+		nSaveScore /= 10;	//計算した位から除外していく
+	}
 }
