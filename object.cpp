@@ -86,12 +86,32 @@ CObject::CObject()
 
 		m_apObject[i] = this;	//自身のポインタを返す
 
-		m_nID = i;		//自分の番号を設定
-		objType = (CObject::OBJ_TYPE)this->m_nID;
+		m_nID = i;	//自分の番号を設定
+
+		objType = (CObject::OBJ_TYPE)this->m_nID;	//オブジェクトのタイプを設定
+
 		m_nNumAll++;	//数を増やす
 		break;
 	}
 }
+
+//================================================
+//コンストラクタ(デフォルト引数ver.)
+//================================================
+//CObject::CObject(const int &nPriority /* = 3 */)
+//{
+//	for (int i = 0; i < MAX_OBJECT; i++)
+//	{
+//		if (m_apObject[nPriority][i] != nullptr)
+//		{//NULLチェック
+//			continue;
+//		}
+//
+//		/* nullptrの場合 */
+//
+//
+//	}
+//}
 
 //================================================
 //デストラクタ
@@ -103,7 +123,7 @@ CObject::~CObject()
 //================================================
 //オブジェクト情報の取得
 //================================================
-CObject* CObject::GetObjects(int nIdx)
+CObject* CObject::GetObjects(const int &nIdx)
 {
 	return m_apObject[nIdx];
 }

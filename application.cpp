@@ -15,6 +15,7 @@
 
 #include "player.h"
 #include "enemy.h"
+#include "score.h"
 
 #include "player_3D.h"
 #include "enemy_3D.h"
@@ -35,6 +36,7 @@ CCamera* CApplication::m_pCamera = nullptr;		//カメラ
 
 CPlayer* CApplication::m_pPlayer = nullptr;	//プレイヤー
 CEnemy* CApplication::m_pEnemy = nullptr;	//敵
+CScore* CApplication::m_pScore = nullptr;	//スコア
 
 CPlayer3D* CApplication::m_pPlayer3D = nullptr;	//プレイヤー(3D)
 CEnemy3D* CApplication::m_pEnemy3D = nullptr;	//敵(3D)
@@ -97,6 +99,14 @@ CEnemy* CApplication::GetEnemy()
 }
 
 //================================================
+//スコア情報を取得
+//================================================
+CScore* CApplication::GetScore()
+{
+	return m_pScore;
+}
+
+//================================================
 //プレイヤー(3D)情報を取得
 //================================================
 CPlayer3D* CApplication::GetPlayer3D()
@@ -110,6 +120,14 @@ CPlayer3D* CApplication::GetPlayer3D()
 CEnemy3D* CApplication::GetEnemy3D()
 {
 	return m_pEnemy3D;
+}
+
+//================================================
+//背景(3D)情報を取得
+//================================================
+CBg3D* CApplication::GetBg3D()
+{
+	return m_pBg3D;
 }
 
 //================================================
@@ -190,6 +208,10 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	//m_pEnemy = CEnemy::Create();	//生成
 
+	/* スコア */
+
+	m_pScore = CScore::Create();	//生成
+
 	/* 背景(3D) */
 
 	m_pBg3D = CBg3D::Create();	//生成
@@ -222,6 +244,10 @@ void CApplication::Uninit()
 	/* 敵 */
 
 	//m_pEnemy = nullptr;	//nullptrにする
+
+	/* スコア */
+
+	m_pScore = nullptr;	//nullptrにする
 
 	/* 背景(3D) */
 

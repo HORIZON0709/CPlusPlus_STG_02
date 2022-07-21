@@ -20,8 +20,8 @@ class CNumber : public CObject2D
 public: /* 定数の定義 */
 	static const int DIVIDE_TEX_U = 10;	//テクスチャの分割数( U方向 )
 
-	static const float START_POS_X;		//初期位置( X )
-	static const float START_POS_Y;		//初期位置( Y )
+	static const float POS_X;			//位置( X )
+	static const float POS_Y;			//位置( Y )
 	static const float NUMBER_WIDTH;	//横幅
 	static const float NUMBER_HEIGHT;	//縦幅
 
@@ -38,5 +38,4 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 };
-
 #endif

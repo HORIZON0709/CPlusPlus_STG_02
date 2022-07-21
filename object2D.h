@@ -37,6 +37,7 @@ public: /* 静的メンバ関数 */
 
 public: /* コンストラクタ・デストラクタ */
 	CObject2D();
+	//explicit CObject2D(const int &nPriority = 3);
 	~CObject2D() override;
 
 public: /* オーバーライド関数 */

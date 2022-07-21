@@ -39,14 +39,22 @@ public: /* オーバーライド関数 */
 	void Draw() override;		//描画
 
 public: /* メンバ関数 */
-	void Set(const int &nScore);	//セット
-	void Add(const int &nValue);	//スコア加算
-	int Get();				//取得
+	/*
+		スコアのセット
+		const int &nScore ---> スコア
+	*/
+	void SetScore(const int &nScore);
+
+	/*
+		スコア加算
+		const int &nValue ---> 加算する値
+	*/
+	void AddScore(const int &nValue);
+
+	int GetCurrentScore();	//現在のスコアの取得
 
 private: /* メンバ変数 */
 	CNumber* m_apNumber[MAX_DIGIT];	//桁数分用意
 	int m_nScore;					//スコア
 };
-
-
 #endif

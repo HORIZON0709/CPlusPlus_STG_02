@@ -66,12 +66,12 @@ HRESULT CScore::Init()
 
 		/* nullptrの場合 */
 
-		m_apNumber[i] = new CNumber;	//メモリの動的確保
+		m_apNumber[i] = CNumber::Create();	//メモリの動的確保
 
 		m_apNumber[i]->Init();	//初期化
 
 		//位置の設定
-		D3DXVECTOR3 pos = D3DXVECTOR3(CNumber::START_POS_X, CNumber::START_POS_Y, 0.0f);
+		D3DXVECTOR3 pos = D3DXVECTOR3(CNumber::POS_X, CNumber::POS_Y, 0.0f);
 		m_apNumber[i]->SetPos(pos);
 
 		//サイズの設定
@@ -112,7 +112,7 @@ void CScore::Draw()
 //================================================
 //セット
 //================================================
-void CScore::Set(const int &nScore)
+void CScore::SetScore(const int &nScore)
 {
 	m_nScore = nScore;
 }
@@ -120,15 +120,15 @@ void CScore::Set(const int &nScore)
 //================================================
 //スコア加算
 //================================================
-void CScore::Add(const int &nValue)
+void CScore::AddScore(const int &nValue)
 {
 	m_nScore += nValue;
 }
 
 //================================================
-//取得
+//現在のスコアの取得
 //================================================
-int CScore::Get()
+int CScore::GetCurrentScore()
 {
 	return m_nScore;
 }

@@ -112,7 +112,7 @@
       <Filter>ソース ファイル\Application\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="number.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Application\Object\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +183,7 @@
       <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="number.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
