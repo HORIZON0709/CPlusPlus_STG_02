@@ -38,10 +38,6 @@ CEnemy3D* CEnemy3D::Create()
 
 	pEnemy3D->Init();	//初期化
 
-	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(500.0f, 200.0f, 0.0f);
-	pEnemy3D->SetPos(pos);
-
 	return pEnemy3D;	//動的確保したものを返す
 }
 
@@ -68,6 +64,10 @@ CEnemy3D::~CEnemy3D()
 HRESULT CEnemy3D::Init()
 {
 	CObject3D::Init();	//親クラス
+
+	//位置を設定
+	D3DXVECTOR3 pos = D3DXVECTOR3(500.0f, 200.0f, 0.0f);
+	CObject3D::SetPos(pos);
 
 	//サイズを設定
 	D3DXVECTOR2 size = D3DXVECTOR2(ENEMY_SIZE, ENEMY_SIZE);
