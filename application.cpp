@@ -222,7 +222,8 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* ìG(3D) */
 
-	m_pEnemy3D = CEnemy3D::Create();	//ê∂ê¨
+	
+	m_pEnemy3D = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE);	//ê∂ê¨
 
 	return S_OK;
 }

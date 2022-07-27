@@ -43,6 +43,12 @@
     <Filter Include="ヘッダー ファイル\Application\Object\3D">
       <UniqueIdentifier>{b57549a8-6c73-4e5f-9861-694f10c3c20d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\Object\3D\enemy3D">
+      <UniqueIdentifier>{16b09e76-a63a-4626-97cc-6825b1d0cc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Application\Object\3D\enemy3D">
+      <UniqueIdentifier>{c993b7d8-081b-44f5-8a54-f4745de0ae00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -81,9 +87,6 @@
     <ClCompile Include="bullet_3D.cpp">
       <Filter>ソース ファイル\Application\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="application.cpp">
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
@@ -113,6 +116,12 @@
     </ClCompile>
     <ClCompile Include="number.cpp">
       <Filter>ソース ファイル\Application\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_3D.cpp">
+      <Filter>ソース ファイル\Application\Object\3D\enemy3D</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_curve.cpp">
+      <Filter>ソース ファイル\Application\Object\3D\enemy3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +161,6 @@
     <ClInclude Include="bullet_3D.h">
       <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="application.h">
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
@@ -184,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="number.h">
       <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_3D.h">
+      <Filter>ヘッダー ファイル\Application\Object\3D\enemy3D</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_curve.h">
+      <Filter>ヘッダー ファイル\Application\Object\3D\enemy3D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

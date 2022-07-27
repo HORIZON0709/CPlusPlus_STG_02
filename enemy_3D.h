@@ -17,13 +17,21 @@
 //***************************
 class CEnemy3D : public CObject3D
 {/* CObject3Dの派生クラス */
-private: /* 定数の定義 */
-	static const float ENEMY_SIZE;	//サイズ
-
-	static const int SHOT_INTERVAL = 90;	//弾の連続発射の間隔
+public: /* 列挙型の定義 */
+	enum ENM_TYPE /* 敵の種類 */
+	{
+		CURVE = 0,	//sinカーブ
+		MAX,
+		NONE
+	};
 
 public: /* 静的メンバ関数 */
-	static CEnemy3D* Create();	//生成
+	/*
+		生成
+		const ENM_TYPE &type ---> 敵の種類
+		const int nNum ---> 生成数
+	*/
+	static CEnemy3D* Create(const ENM_TYPE &type);
 
 public: /* コンストラクタ・デストラクタ */
 	CEnemy3D();
@@ -35,7 +43,19 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
+public: /* メンバ関数 */
+	/*
+		敵の種類を設定
+		const ENM_TYPE &type ---> 任意の敵の種類
+	*/
+	void SetEnmType(const ENM_TYPE &type);
+
+	/*
+		敵の種類を取得
+	*/
+	ENM_TYPE GetEnmType();
+
 private: /* メンバ変数 */
-	int m_nTimerInterval;	//弾の連続発射の間隔
+	ENM_TYPE m_type;	//種類
 };
 #endif
