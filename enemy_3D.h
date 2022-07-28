@@ -47,6 +47,9 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
+public: /* 純粋仮想関数 */
+	virtual void Death() = 0;	//死亡時の処理
+
 public: /* メンバ関数 */
 	/*
 		敵の種類を設定

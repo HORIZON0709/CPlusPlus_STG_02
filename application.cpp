@@ -13,15 +13,7 @@
 #include "texture.h"
 #include "camera.h"
 
-#include "player.h"
-#include "enemy.h"
-#include "score.h"
-
-#include "player_3D.h"
-#include "bg_3D.h"
-
-#include "object2D.h"
-#include "object3D.h"
+#include "game.h"
 
 //***************************
 //静的メンバ変数
@@ -33,13 +25,7 @@ CTexture* CApplication::m_pTexture = nullptr;	//テクスチャ
 CRenderer* CApplication::m_pRenderer = nullptr;	//レンダラー
 CCamera* CApplication::m_pCamera = nullptr;		//カメラ
 
-CPlayer* CApplication::m_pPlayer = nullptr;	//プレイヤー
-CEnemy* CApplication::m_pEnemy = nullptr;	//敵
-CScore* CApplication::m_pScore = nullptr;	//スコア
-
-CPlayer3D* CApplication::m_pPlayer3D = nullptr;	//プレイヤー(3D)
-CEnemy3D* CApplication::m_apEnemy3D[CEnemy3D::MAX_ENEMY] = {};	//敵(3D)
-CBg3D* CApplication::m_pBg3D = nullptr;			//背景(3D)
+CGame* CApplication::m_pGame = nullptr;	//ゲーム
 
 //================================================
 //インプット情報を取得
@@ -82,51 +68,11 @@ CCamera* CApplication::GetCamera()
 }
 
 //================================================
-//プレイヤー情報を取得
+//ゲーム情報を取得
 //================================================
-CPlayer* CApplication::GetPlayer()
+CGame* CApplication::GetGame()
 {
-	return m_pPlayer;
-}
-
-//================================================
-//敵情報を取得
-//================================================
-CEnemy* CApplication::GetEnemy()
-{
-	return m_pEnemy;
-}
-
-//================================================
-//スコア情報を取得
-//================================================
-CScore* CApplication::GetScore()
-{
-	return m_pScore;
-}
-
-//================================================
-//プレイヤー(3D)情報を取得
-//================================================
-CPlayer3D* CApplication::GetPlayer3D()
-{
-	return m_pPlayer3D;
-}
-
-//================================================
-//敵(3D)情報を取得
-//================================================
-CEnemy3D* CApplication::GetEnemy3D(const int nIdx)
-{
-	return m_apEnemy3D[nIdx];
-}
-
-//================================================
-//背景(3D)情報を取得
-//================================================
-CBg3D* CApplication::GetBg3D()
-{
-	return m_pBg3D;
+	return m_pGame;
 }
 
 //================================================
@@ -199,47 +145,16 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 		m_pCamera->Init();			//初期化
 	}
 
-	/* プレイヤー */
+	/* ゲーム */
 
-	//m_pPlayer = CPlayer::Create();	//生成
+	if (m_pGame == nullptr)
+	{//NULLチェック
+		m_pGame = new CGame;	//メモリの動的確保
+	}
 
-	/* 敵 */
-
-	//m_pEnemy = CEnemy::Create();	//生成
-
-	/* スコア */
-
-	m_pScore = CScore::Create();	//生成
-
-	/* 背景(3D) */
-
-	m_pBg3D = CBg3D::Create();	//生成
-
-	/* プレイヤー(3D) */
-
-	m_pPlayer3D = CPlayer3D::Create();	//生成
-
-	/* 敵(3D) */
-
-	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
-	{
-		if (m_apEnemy3D[i] != nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrの場合 */
-
-		bool bNumEnemyCurve = ((i >= 0) && (i < 2));	//カーブする敵か否か
-
-		if (bNumEnemyCurve)
-		{
-			D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i),
-										 (100.0f * i),
-											0.0f);
-
-			m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);	//生成
-		}
+	if (FAILED(m_pGame->Init()))
+	{//初期化処理が失敗した場合
+		return E_FAIL;
 	}
 
 	return S_OK;
@@ -250,43 +165,13 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 //================================================
 void CApplication::Uninit()
 {
-	/* オブジェクト */
+	/* ゲーム */
 
-	CObject2D::ReleaseAll();	//全ての解放(2D)
-	CObject3D::ReleaseAll();	//全ての解放(3D)
-	
-	/* プレイヤー */
-
-	//m_pPlayer = nullptr;	//nullptrにする
-
-	/* 敵 */
-
-	//m_pEnemy = nullptr;	//nullptrにする
-
-	/* スコア */
-
-	m_pScore = nullptr;	//nullptrにする
-
-	/* 背景(3D) */
-
-	m_pBg3D = nullptr;	//nullptrにする
-
-	/* プレイヤー(3D) */
-
-	m_pPlayer3D = nullptr;	//nullptrにする
-
-	/* 敵(3D) */
-
-	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
-	{
-		if (m_apEnemy3D[i] == nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrではない場合 */
-
-		m_apEnemy3D[i] = nullptr;	//nullptrにする
+	if (m_pGame != nullptr)
+	{//NULLチェック
+		m_pGame->Uninit();	//終了
+		delete m_pGame;		//メモリの解放
+		m_pGame = nullptr;	//nullptrにする
 	}
 
 	/* カメラ */

@@ -10,6 +10,8 @@
 #include "enemy_curve.h"
 #include "application.h"
 #include "renderer.h"
+#include "game.h"
+
 #include "bullet_3D.h"
 #include "item_3D.h"
 #include "score.h"
@@ -70,14 +72,6 @@ HRESULT CEnemyCurve::Init()
 //================================================
 void CEnemyCurve::Uninit()
 {
-	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置を取得
-
-	//アイテムの生成
-	CItem3D::Create(pos, CItem3D::TYPE::CHANGE_BUlLET_DOUBLE);
-
-	//スコアを加算
-	CApplication::GetScore()->AddScore(NUM_SCORE);
-
 	CObject3D::Uninit();	//親クラス
 }
 
@@ -122,4 +116,18 @@ void CEnemyCurve::Update()
 void CEnemyCurve::Draw()
 {
 	CObject3D::Draw();	//親クラス
+}
+
+//================================================
+//死亡時の処理
+//================================================
+void CEnemyCurve::Death()
+{
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置を取得
+
+	//アイテムの生成
+	CItem3D::Create(pos, CItem3D::TYPE::CHANGE_BUlLET_DOUBLE);
+
+	//スコアを加算
+	CApplication::GetGame()->GetScore()->AddScore(NUM_SCORE);
 }

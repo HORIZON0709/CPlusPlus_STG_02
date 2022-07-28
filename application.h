@@ -12,8 +12,6 @@
 //***************************
 #include <d3dx9.h>
 
-#include "enemy_3D.h"
-
 //***************************
 //前方宣言
 //***************************
@@ -23,12 +21,7 @@ class CRenderer;
 class CTexture;
 class CCamera;
 
-class CPlayer;
-class CEnemy;
-class CScore;
-
-class CPlayer3D;
-class CBg3D;
+class CGame;
 
 //***************************
 //アプリケーションクラスの定義
@@ -46,13 +39,7 @@ public: /* 静的メンバ関数 */
 	static CRenderer* GetRenderer();	//レンダラー
 	static CCamera* GetCamera();		//カメラ
 
-	static CPlayer* GetPlayer();	//プレイヤー
-	static CEnemy* GetEnemy();		//敵
-	static CScore* GetScore();		//スコア
-
-	static CPlayer3D* GetPlayer3D();	//プレイヤー(3D)
-	static CEnemy3D* GetEnemy3D(const int nIdx);		//敵(3D)
-	static CBg3D* GetBg3D();			//背景(3D)
+	static CGame* GetGame();	//ゲーム
 
 public: /* コンストラクタ・デストラクタ */
 	CApplication();
@@ -76,12 +63,6 @@ private: /* 静的メンバ変数 */
 	static CRenderer* m_pRenderer;	//レンダラー
 	static CCamera* m_pCamera;		//カメラ
 
-	static CPlayer* m_pPlayer;	//プレイヤー
-	static CEnemy* m_pEnemy;	//敵
-	static CScore* m_pScore;	//スコア
-
-	static CPlayer3D* m_pPlayer3D;	//プレイヤー(3D)
-	static CEnemy3D* m_apEnemy3D[CEnemy3D::MAX_ENEMY];	//敵(3D)
-	static CBg3D* m_pBg3D;			//背景(3D)
+	static CGame* m_pGame;	//ゲーム
 };
 #endif

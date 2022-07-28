@@ -10,11 +10,11 @@
 #include "bullet_3D.h"
 #include "application.h"
 #include "renderer.h"
-#include "explosion_3D.h"
-
-#include "item_3D.h"
-
 #include "camera.h"
+
+#include "explosion_3D.h"
+#include "item_3D.h"
+#include "enemy_3D.h"
 
 #include <assert.h>
 
@@ -183,10 +183,10 @@ void CBullet3D::IsCollision()
 		}
 
 		/* 自身の判定用 */
-		float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
-		float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//右端
-		float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
-		float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
+		float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//自身の左端
+		float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//自身の右端
+		float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//自身の上端
+		float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//自身の下端
 
 		CObject3D* pObjTarget3D = (CObject3D*)pObjectTarget;	//CObject3D型にキャスト
 
@@ -194,23 +194,39 @@ void CBullet3D::IsCollision()
 		D3DXVECTOR2 sizeTarget = pObjTarget3D->GetSize();	//対象のサイズを取得
 
 		/* 対象の判定用 */
-		float fLeftTarget	= (posTarget.x - (sizeTarget.x * 0.5f));	//左端
-		float fRightTarget	= (posTarget.x + (sizeTarget.x * 0.5f));	//右端
-		float fTopTarget	= (posTarget.y + (sizeTarget.y * 0.5f));	//上端
-		float fBottomTarget = (posTarget.y - (sizeTarget.y * 0.5f));	//下端
+		float fLeftTarget	= (posTarget.x - (sizeTarget.x * 0.5f));	//対象の左端
+		float fRightTarget	= (posTarget.x + (sizeTarget.x * 0.5f));	//対象の右端
+		float fTopTarget	= (posTarget.y + (sizeTarget.y * 0.5f));	//対象の上端
+		float fBottomTarget = (posTarget.y - (sizeTarget.y * 0.5f));	//対象の下端
 
-		if (fLeft < fRightTarget
-			&& fRight > fLeftTarget
-			&& fTop > fBottomTarget
-			&& fBottom < fTopTarget)
-		{//弾が対象の範囲内に来た場合
-			CExplosion3D::Create(posTarget);	//爆発の生成
+		/* 判定式( 対象の範囲内に完全に入ったかどうか ) */
+		bool bInvadeFromRight	= (fLeft < fRightTarget);	//右から侵入
+		bool bInvadeFromLeft	= (fRight > fLeftTarget);	//左から侵入
+		bool bInvadeFromBottom	= (fTop > fBottomTarget);	//上から侵入
+		bool bInvadeFromTop		= (fBottom < fTopTarget);	//下から侵入
 
-			pObjTarget3D->Release();	//対象の解放
-
-			Release();	//自身の解放
+		if (!bInvadeFromRight || !bInvadeFromLeft || !bInvadeFromBottom || !bInvadeFromTop)
+		{//弾が対象の範囲内に入っていない場合
 			break;
 		}
+
+		/* 弾が対象の範囲内に入った場合 */
+
+		if (pObjTarget3D->GetObjType() == CObject::ENEMY)
+		{//対象が敵だった場合
+			//敵の型にキャスト
+			CEnemy3D* pEnemy = (CEnemy3D*)pObjTarget3D;
+
+			//死亡時の処理
+			pEnemy->Death();
+		}
+
+		//爆発の生成
+		CExplosion3D::Create(posTarget);
+
+		pObjTarget3D->Release();	//対象の解放
+
+		Release();	//自身の解放
 	}
 }
 

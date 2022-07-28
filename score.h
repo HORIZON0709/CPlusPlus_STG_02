@@ -41,15 +41,15 @@ public: /* オーバーライド関数 */
 public: /* メンバ関数 */
 	/*
 		スコアのセット
-		const int &nScore ---> スコア
+		const int nScore ---> スコア
 	*/
-	void SetScore(const int &nScore);
+	void SetScore(const int nScore);
 
 	/*
 		スコア加算
-		const int &nValue ---> 加算する値
+		const int nValue ---> 加算する値
 	*/
-	void AddScore(const int &nValue);
+	void AddScore(const int nValue);
 
 	int GetCurrentScore();	//現在のスコアの取得
 private:

@@ -133,7 +133,7 @@ void CScore::Draw()
 //================================================
 //セット
 //================================================
-void CScore::SetScore(const int &nScore)
+void CScore::SetScore(const int nScore)
 {
 	m_nScore = nScore;
 }
@@ -141,7 +141,7 @@ void CScore::SetScore(const int &nScore)
 //================================================
 //スコア加算
 //================================================
-void CScore::AddScore(const int &nValue)
+void CScore::AddScore(const int nValue)
 {
 	m_nScore += nValue;
 }

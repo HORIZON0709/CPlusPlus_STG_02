@@ -162,6 +162,7 @@
     <ClCompile Include="enemy_curve.cpp" />
     <ClCompile Include="explosion.cpp" />
     <ClCompile Include="explosion_3D.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inputKeyboard.cpp" />
     <ClCompile Include="item_3D.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="enemy_curve.h" />
     <ClInclude Include="explosion.h" />
     <ClInclude Include="explosion_3D.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="inputKeyboard.h" />
     <ClInclude Include="item_3D.h" />

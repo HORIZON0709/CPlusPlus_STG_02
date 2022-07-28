@@ -40,6 +40,8 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
+	void Death() override;	//死亡時の処理
+
 private: /* メンバ変数 */
 	int m_nTimerInterval;	//弾の連続発射の間隔
 	float m_fCurve;			//カーブの具合

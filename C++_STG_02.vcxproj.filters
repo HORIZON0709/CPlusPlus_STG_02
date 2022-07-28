@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\Application\Object\3D">
       <UniqueIdentifier>{61d13126-d099-46e3-80bc-2b32a528af4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\Object\3D\enemy3D">
+      <UniqueIdentifier>{16b09e76-a63a-4626-97cc-6825b1d0cc41}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ヘッダー ファイル\Application\Input">
       <UniqueIdentifier>{01153262-b8d8-4f81-8018-7357f3a1db61}</UniqueIdentifier>
     </Filter>
@@ -42,9 +45,6 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Application\Object\3D">
       <UniqueIdentifier>{b57549a8-6c73-4e5f-9861-694f10c3c20d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\Object\3D\enemy3D">
-      <UniqueIdentifier>{16b09e76-a63a-4626-97cc-6825b1d0cc41}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Application\Object\3D\enemy3D">
       <UniqueIdentifier>{c993b7d8-081b-44f5-8a54-f4745de0ae00}</UniqueIdentifier>
@@ -123,6 +123,9 @@
     <ClCompile Include="enemy_curve.cpp">
       <Filter>ソース ファイル\Application\Object\3D\enemy3D</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="enemy_curve.h">
       <Filter>ヘッダー ファイル\Application\Object\3D\enemy3D</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
