@@ -1,7 +1,7 @@
 //================================================
 //
 //制作実践基礎[enemy_curve.h]
-//Author:Kishimoto Eiji
+//Author:Kishimoto Eiji Danian
 //
 //================================================
 #ifndef _ENEMY_CURVE_H_
@@ -29,9 +29,6 @@ private:
 
 	static const int SHOT_INTERVAL = 90;	//弾の連続発射の間隔
 	static const int NUM_SCORE = 10;		//獲得スコア量
-
-public: /* 静的メンバ関数 */
-	static CEnemyCurve* Create();	//生成
 
 public: /* コンストラクタ・デストラクタ */
 	CEnemyCurve();

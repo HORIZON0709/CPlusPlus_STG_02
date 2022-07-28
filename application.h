@@ -12,6 +12,8 @@
 //***************************
 #include <d3dx9.h>
 
+#include "enemy_3D.h"
+
 //***************************
 //前方宣言
 //***************************
@@ -26,7 +28,6 @@ class CEnemy;
 class CScore;
 
 class CPlayer3D;
-class CEnemy3D;
 class CBg3D;
 
 //***************************
@@ -50,7 +51,7 @@ public: /* 静的メンバ関数 */
 	static CScore* GetScore();		//スコア
 
 	static CPlayer3D* GetPlayer3D();	//プレイヤー(3D)
-	static CEnemy3D* GetEnemy3D();		//敵(3D)
+	static CEnemy3D* GetEnemy3D(const int nIdx);		//敵(3D)
 	static CBg3D* GetBg3D();			//背景(3D)
 
 public: /* コンストラクタ・デストラクタ */
@@ -80,7 +81,7 @@ private: /* 静的メンバ変数 */
 	static CScore* m_pScore;	//スコア
 
 	static CPlayer3D* m_pPlayer3D;	//プレイヤー(3D)
-	static CEnemy3D* m_pEnemy3D;	//敵(3D)
+	static CEnemy3D* m_apEnemy3D[CEnemy3D::MAX_ENEMY];	//敵(3D)
 	static CBg3D* m_pBg3D;			//背景(3D)
 };
 #endif

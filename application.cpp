@@ -18,7 +18,6 @@
 #include "score.h"
 
 #include "player_3D.h"
-#include "enemy_3D.h"
 #include "bg_3D.h"
 
 #include "object2D.h"
@@ -39,7 +38,7 @@ CEnemy* CApplication::m_pEnemy = nullptr;	//敵
 CScore* CApplication::m_pScore = nullptr;	//スコア
 
 CPlayer3D* CApplication::m_pPlayer3D = nullptr;	//プレイヤー(3D)
-CEnemy3D* CApplication::m_pEnemy3D = nullptr;	//敵(3D)
+CEnemy3D* CApplication::m_apEnemy3D[CEnemy3D::MAX_ENEMY] = {};	//敵(3D)
 CBg3D* CApplication::m_pBg3D = nullptr;			//背景(3D)
 
 //================================================
@@ -117,9 +116,9 @@ CPlayer3D* CApplication::GetPlayer3D()
 //================================================
 //敵(3D)情報を取得
 //================================================
-CEnemy3D* CApplication::GetEnemy3D()
+CEnemy3D* CApplication::GetEnemy3D(const int nIdx)
 {
-	return m_pEnemy3D;
+	return m_apEnemy3D[nIdx];
 }
 
 //================================================
@@ -222,8 +221,26 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	/* 敵(3D) */
 
-	
-	m_pEnemy3D = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE);	//生成
+	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
+	{
+		if (m_apEnemy3D[i] != nullptr)
+		{//NULLチェック
+			continue;
+		}
+
+		/* nullptrの場合 */
+
+		bool bNumEnemyCurve = ((i >= 0) && (i < 2));	//カーブする敵か否か
+
+		if (bNumEnemyCurve)
+		{
+			D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i),
+										 (100.0f * i),
+											0.0f);
+
+			m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);	//生成
+		}
+	}
 
 	return S_OK;
 }
@@ -260,7 +277,17 @@ void CApplication::Uninit()
 
 	/* 敵(3D) */
 
-	m_pEnemy3D = nullptr;	//nullptrにする
+	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
+	{
+		if (m_apEnemy3D[i] == nullptr)
+		{//NULLチェック
+			continue;
+		}
+
+		/* nullptrではない場合 */
+
+		m_apEnemy3D[i] = nullptr;	//nullptrにする
+	}
 
 	/* カメラ */
 

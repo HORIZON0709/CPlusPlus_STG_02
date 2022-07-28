@@ -15,7 +15,7 @@
 //================================================
 //生成
 //================================================
-CEnemy3D* CEnemy3D::Create(const ENM_TYPE &type)
+CEnemy3D* CEnemy3D::Create(const ENM_TYPE &type, const D3DXVECTOR3 &pos)
 {
 	CEnemy3D* pEnemy3D = nullptr;	//ポインタ
 
@@ -29,7 +29,7 @@ CEnemy3D* CEnemy3D::Create(const ENM_TYPE &type)
 	switch (type)
 	{
 	case ENM_TYPE::CURVE: /* sinカーブ */
-		pEnemy3D = CEnemyCurve::Create();	//メモリの動的確保
+		pEnemy3D = new CEnemyCurve;	//メモリの動的確保
 		break;
 
 	default: /* それ以外 */
@@ -37,7 +37,8 @@ CEnemy3D* CEnemy3D::Create(const ENM_TYPE &type)
 		break;
 	}
 
-	pEnemy3D->Init();	//初期化
+	pEnemy3D->Init();		//初期化
+	pEnemy3D->SetPos(pos);	//位置を設定
 
 	return pEnemy3D;	//動的確保したものを返す
 }

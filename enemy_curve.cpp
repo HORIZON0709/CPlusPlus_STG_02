@@ -22,30 +22,9 @@
 const float CEnemyCurve::START_POS_X = 500.0f;	//初期位置( X )
 const float CEnemyCurve::START_POS_Y = 0.0f;	//初期位置( Y )
 const float CEnemyCurve::ENEMY_SIZE = 90.0f;	//サイズ
-const float CEnemyCurve::CURVE_SIZE = 0.1f;		//カーブのサイズ
+const float CEnemyCurve::CURVE_SIZE = 0.025f;	//カーブのサイズ
 const float CEnemyCurve::MOVE_SPEED_X = 1.0f;	//移動スピード( X )
 const float CEnemyCurve::MOVE_SPEED_Y = 5.0f;	//移動スピード( Y )
-
-//================================================
-//生成
-//================================================
-CEnemyCurve* CEnemyCurve::Create()
-{
-	CEnemyCurve* pEnemyCurve = nullptr;	//ポインタ
-
-	if (pEnemyCurve != nullptr)
-	{//NULLチェック
-		assert(false);
-	}
-
-	/* nullptrの場合 */
-
-	pEnemyCurve = new CEnemyCurve;	//メモリの動的確保
-
-	pEnemyCurve->Init();	//初期化
-
-	return pEnemyCurve;	//動的確保したものを返す
-}
 
 //================================================
 //コンストラクタ
@@ -71,10 +50,6 @@ CEnemyCurve::~CEnemyCurve()
 HRESULT CEnemyCurve::Init()
 {
 	CObject3D::Init();	//親クラス
-
-	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(START_POS_X, START_POS_Y, 0.0f);
-	CObject3D::SetPos(pos);
 
 	//移動量を設定
 	D3DXVECTOR3 move = D3DXVECTOR3(-MOVE_SPEED_X, 0.0f, 0.0f);

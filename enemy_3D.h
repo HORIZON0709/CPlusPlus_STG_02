@@ -21,17 +21,21 @@ public: /* 列挙型の定義 */
 	enum ENM_TYPE /* 敵の種類 */
 	{
 		CURVE = 0,	//sinカーブ
+		BOSS,		//ボス
 		MAX,
 		NONE
 	};
+
+public: /* 定数の定義 */
+	static const int MAX_ENEMY = 16;	//敵の最大数
 
 public: /* 静的メンバ関数 */
 	/*
 		生成
 		const ENM_TYPE &type ---> 敵の種類
-		const int nNum ---> 生成数
+		const D3DXVECTOR3 &pos ---> 任意の位置
 	*/
-	static CEnemy3D* Create(const ENM_TYPE &type);
+	static CEnemy3D* Create(const ENM_TYPE &type, const D3DXVECTOR3 &pos);
 
 public: /* コンストラクタ・デストラクタ */
 	CEnemy3D();
