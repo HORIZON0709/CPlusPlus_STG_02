@@ -55,5 +55,12 @@ private: /* 静的メンバ変数 */
 	static CEnemy3D* m_apEnemy3D[CEnemy3D::MAX_ENEMY];	//敵(3D)
 	static CBg3D* m_pBg3D;								//背景(3D)
 	
+private: /* メンバ変数 */
+	/*
+		ゲームパートの判別
+		false ---> 通常パート
+		true ---> ボスパート
+	*/
+	bool m_bGamePart;
 };
 #endif

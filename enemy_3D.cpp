@@ -9,6 +9,7 @@
 //***************************
 #include "enemy_3D.h"
 #include "enemy_curve.h"
+#include "enemy_boss.h"
 
 #include <assert.h>
 
@@ -30,6 +31,10 @@ CEnemy3D* CEnemy3D::Create(const ENM_TYPE &type, const D3DXVECTOR3 &pos)
 	{
 	case ENM_TYPE::CURVE: /* sinカーブ */
 		pEnemy3D = new CEnemyCurve;	//メモリの動的確保
+		break;
+
+	case ENM_TYPE::BOSS: /* ボス */
+		pEnemy3D = new CEnemyBoss;	//メモリの動的確保
 		break;
 
 	default: /* それ以外 */

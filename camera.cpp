@@ -61,7 +61,13 @@ void CCamera::Uninit()
 //================================================
 void CCamera::Update()
 {
-	m_move.x = 0.1f;
+	if (m_posV.x >= 400.0f)
+	{
+		m_posV.x = 400.0f;
+		return;
+	}
+
+	m_move.x = 0.1f;	//ƒJƒƒ‰‚ÌˆÚ“®
 
 #ifdef _DEBUG
 

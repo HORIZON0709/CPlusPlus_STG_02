@@ -59,5 +59,6 @@ private: /* メンバ変数 */
 	int m_nTimerInterval;			//弾の連続発射の間隔
 	CItem3D::TYPE m_getItem;		//取得したアイテム
 	CBullet3D::TYPE m_bulletType;	//弾のタイプ
+	bool m_bGamePart;				//ゲームパート
 };
 #endif

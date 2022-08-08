@@ -1,19 +1,18 @@
 //================================================
 //
-//制作実践基礎[enemy_curve.cpp]
+//制作実践基礎[enemy_boss.cpp]
 //Author:Kishimoto Eiji
 //
 //================================================
 //***************************
 //インクルード
 //***************************
-#include "enemy_curve.h"
+#include "enemy_boss.h"
 #include "application.h"
 #include "renderer.h"
 #include "game.h"
 
 #include "bullet_3D.h"
-#include "item_3D.h"
 #include "score.h"
 
 #include <assert.h>
@@ -21,41 +20,33 @@
 //***************************
 //定数の定義
 //***************************
-const float CEnemyCurve::START_POS_X = 500.0f;	//初期位置( X )
-const float CEnemyCurve::START_POS_Y = 0.0f;	//初期位置( Y )
-const float CEnemyCurve::ENEMY_SIZE = 90.0f;	//サイズ
-const float CEnemyCurve::CURVE_SIZE = 0.025f;	//カーブのサイズ
-const float CEnemyCurve::MOVE_SPEED_X = 1.0f;	//移動スピード( X )
-const float CEnemyCurve::MOVE_SPEED_Y = 5.0f;	//移動スピード( Y )
+const float CEnemyBoss::START_POS_X = 0.0f;		//初期位置( X )
+const float CEnemyBoss::START_POS_Y = 100.0f;	//初期位置( Y )
+const float CEnemyBoss::ENEMY_SIZE = 270.0f;	//サイズ
 
 //================================================
 //コンストラクタ
 //================================================
-CEnemyCurve::CEnemyCurve():
-	m_nTimerInterval(0),
-	m_fCurve(0.0f)
+CEnemyBoss::CEnemyBoss():
+	m_nTimerInterval(0)
 {
 	//敵の種類を設定
-	CEnemy3D::SetEnmType(CEnemy3D::ENM_TYPE::CURVE);
+	CEnemy3D::SetEnmType(CEnemy3D::ENM_TYPE::BOSS);
 }
 
 //================================================
 //デストラクタ
 //================================================
-CEnemyCurve::~CEnemyCurve()
+CEnemyBoss::~CEnemyBoss()
 {
 }
 
 //================================================
 //初期化
 //================================================
-HRESULT CEnemyCurve::Init()
+HRESULT CEnemyBoss::Init()
 {
 	CEnemy3D::Init();	//親クラス
-
-	//移動量を設定
-	D3DXVECTOR3 move = D3DXVECTOR3(-MOVE_SPEED_X, 0.0f, 0.0f);
-	CObject3D::SetMove(move);
 
 	//サイズを設定
 	D3DXVECTOR2 size = D3DXVECTOR2(ENEMY_SIZE, ENEMY_SIZE);
@@ -70,7 +61,7 @@ HRESULT CEnemyCurve::Init()
 //================================================
 //終了
 //================================================
-void CEnemyCurve::Uninit()
+void CEnemyBoss::Uninit()
 {
 	CEnemy3D::Uninit();	//親クラス
 }
@@ -78,30 +69,18 @@ void CEnemyCurve::Uninit()
 //================================================
 //更新
 //================================================
-void CEnemyCurve::Update()
+void CEnemyBoss::Update()
 {
 	CEnemy3D::Update();	//親クラス
 
-	D3DXVECTOR3 pos = CObject3D::GetPos();		//位置を取得
-	D3DXVECTOR3 move = CObject3D::GetMove();	//移動量を取得
-
-	//加算
-	m_fCurve += CURVE_SIZE;
-
-	//sinカーブ
-	move.y = sinf(D3DX_PI * m_fCurve) * MOVE_SPEED_Y;
-
-	//移動量を位置に加算
-	pos += move;
-
-	CObject3D::SetPos(pos);	//位置を設定
+	Move();	//移動
 
 	m_nTimerInterval++;	//タイマーを進める
 
 	if (m_nTimerInterval % SHOT_INTERVAL == 0)
 	{//タイマーが一定時間になったら
 		D3DXVECTOR3 posBullet = CObject3D::GetPos();				//位置を取得
-		D3DXVECTOR3 moveBullet = D3DXVECTOR3(-4.0f, 0.0f, 0.0f);	//弾の移動量を設定
+		D3DXVECTOR3 moveBullet = D3DXVECTOR3(0.0f, -2.0f, 0.0f);	//弾の移動量を設定
 
 		CBullet3D::Create(/* 弾の生成 */
 			posBullet,					//位置
@@ -113,7 +92,7 @@ void CEnemyCurve::Update()
 //================================================
 //描画
 //================================================
-void CEnemyCurve::Draw()
+void CEnemyBoss::Draw()
 {
 	CEnemy3D::Draw();	//親クラス
 }
@@ -121,13 +100,16 @@ void CEnemyCurve::Draw()
 //================================================
 //死亡時の処理
 //================================================
-void CEnemyCurve::Death()
+void CEnemyBoss::Death()
 {
-	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置を取得
-
-	//アイテムの生成
-	CItem3D::Create(pos, CItem3D::TYPE::CHANGE_BUlLET_DOUBLE);
-
 	//スコアを加算
 	CApplication::GetGame()->GetScore()->AddScore(NUM_SCORE);
+}
+
+//================================================
+//移動
+//================================================
+void CEnemyBoss::Move()
+{
+
 }

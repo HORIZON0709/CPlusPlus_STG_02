@@ -72,38 +72,37 @@ CGame::~CGame()
 //================================================
 HRESULT CGame::Init()
 {
-	/* スコア */
+	m_bGamePart = false;	//通常パート
 
-	m_pScore = CScore::Create();	//生成
+	/* 生成 */
 
-	/* 背景(3D) */
+	if (!m_bGamePart)
+	{//通常パート
+		m_pScore = CScore::Create();	//スコア
 
-	m_pBg3D = CBg3D::Create();	//生成
+		m_pBg3D = CBg3D::Create();	//背景(3D)
 
-	/* プレイヤー(3D) */
+		m_pPlayer3D = CPlayer3D::Create();	//プレイヤー(3D)
 
-	m_pPlayer3D = CPlayer3D::Create();	//生成
+		for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
+		{//敵(3D)
+			if (m_apEnemy3D[i] != nullptr)
+			{//NULLチェック
+				continue;
+			}
 
-	/* 敵(3D) */
+			/* nullptrの場合 */
 
-	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
-	{
-		if (m_apEnemy3D[i] != nullptr)
-		{//NULLチェック
-			continue;
-		}
+			bool bNumEnemyCurve = ((i >= 0) && (i < 2));	//カーブする敵か否か
 
-		/* nullptrの場合 */
+			if (bNumEnemyCurve)
+			{//カーブ敵の場合
+				//位置を設定
+				D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i), (100.0f * i), 0.0f);
 
-		bool bNumEnemyCurve = ((i >= 0) && (i < 2));	//カーブする敵か否か
-
-		if (bNumEnemyCurve)
-		{//カーブ敵の場合
-			//位置を設定
-			D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i), (100.0f * i), 0.0f);
-
-			//生成
-			m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
+				//生成
+				m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
+			}
 		}
 	}
 
