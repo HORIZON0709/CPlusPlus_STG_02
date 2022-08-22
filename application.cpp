@@ -13,7 +13,7 @@
 #include "texture.h"
 #include "camera.h"
 
-#include "game.h"
+#include "mode.h"
 
 //***************************
 //静的メンバ変数
@@ -25,7 +25,7 @@ CTexture* CApplication::m_pTexture = nullptr;	//テクスチャ
 CRenderer* CApplication::m_pRenderer = nullptr;	//レンダラー
 CCamera* CApplication::m_pCamera = nullptr;		//カメラ
 
-CGame* CApplication::m_pGame = nullptr;	//ゲーム
+CMode* CApplication::m_pMode = nullptr;	//モード
 
 //================================================
 //インプット情報を取得
@@ -68,11 +68,11 @@ CCamera* CApplication::GetCamera()
 }
 
 //================================================
-//ゲーム情報を取得
+//モード情報を取得
 //================================================
-CGame* CApplication::GetGame()
+CMode* CApplication::GetMode()
 {
-	return m_pGame;
+	return m_pMode;
 }
 
 //================================================
@@ -145,14 +145,14 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 		m_pCamera->Init();			//初期化
 	}
 
-	/* ゲーム */
+	/* モード */
 
-	if (m_pGame == nullptr)
+	if (m_pMode == nullptr)
 	{//NULLチェック
-		m_pGame = new CGame;	//メモリの動的確保
+		m_pMode = new CMode;	//メモリの動的確保
 	}
 
-	if (FAILED(m_pGame->Init()))
+	if (FAILED(m_pMode->Init()))
 	{//初期化処理が失敗した場合
 		return E_FAIL;
 	}
@@ -165,13 +165,13 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 //================================================
 void CApplication::Uninit()
 {
-	/* ゲーム */
+	/* モード */
 
-	if (m_pGame != nullptr)
+	if (m_pMode != nullptr)
 	{//NULLチェック
-		m_pGame->Uninit();	//終了
-		delete m_pGame;		//メモリの解放
-		m_pGame = nullptr;	//nullptrにする
+		m_pMode->Uninit();	//終了
+		delete m_pMode;		//メモリの解放
+		m_pMode = nullptr;	//nullptrにする
 	}
 
 	/* カメラ */

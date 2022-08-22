@@ -46,13 +46,10 @@ public: /* メンバ関数 */
 	void SetItem(const CItem3D::TYPE &item);
 
 	CItem3D::TYPE GetItem();	//所持アイテムの取得
-
 private:
-	void Move();	//移動
-	void Shot();	//発射
-
-	void CreateBulletByType();	//タイプ別の弾の生成
-
+	void Move();					//移動
+	void Shot();					//発射
+	void CreateBulletByType();		//タイプ別の弾の生成
 	void ProcessingForEachItem();	//アイテム毎の処理
 
 private: /* メンバ変数 */

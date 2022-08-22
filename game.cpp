@@ -84,7 +84,7 @@ HRESULT CGame::Init()
 
 		m_pPlayer3D = CPlayer3D::Create();	//プレイヤー(3D)
 
-		for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
+		for (int i = 0; i < CEnemy3D::NUM_ENEMY_CURVE; i++)
 		{//敵(3D)
 			if (m_apEnemy3D[i] != nullptr)
 			{//NULLチェック
@@ -93,16 +93,11 @@ HRESULT CGame::Init()
 
 			/* nullptrの場合 */
 
-			bool bNumEnemyCurve = ((i >= 0) && (i < 2));	//カーブする敵か否か
+			//位置を設定
+			D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i), (100.0f * i), 0.0f);
 
-			if (bNumEnemyCurve)
-			{//カーブ敵の場合
-				//位置を設定
-				D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i), (100.0f * i), 0.0f);
-
-				//生成
-				m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
-			}
+			//生成
+			m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
 		}
 	}
 
@@ -158,4 +153,12 @@ void CGame::Update()
 //================================================
 void CGame::Draw()
 {
+}
+
+//================================================
+//ゲームパートの取得
+//================================================
+bool CGame::GetGamePart()
+{
+	return m_bGamePart;
 }

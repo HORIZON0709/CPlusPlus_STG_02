@@ -27,7 +27,8 @@ public: /* 列挙型の定義 */
 	};
 
 public: /* 定数の定義 */
-	static const int MAX_ENEMY = 16;	//敵の最大数
+	static const int MAX_ENEMY = 16;		//敵の最大数
+	static const int NUM_ENEMY_CURVE = 2;	//カーブ敵の数
 
 public: /* 静的メンバ関数 */
 	/*

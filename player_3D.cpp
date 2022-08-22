@@ -303,11 +303,10 @@ void CPlayer3D::CreateBulletByType()
 		break;
 
 	case CBullet3D::TYPE::DOUBLE:	/* ìÒòAíe */
-		
 		{
 			//íeÇÃà íuÇè„â∫Ç…è≠ÇµÇ∏ÇÁÇ∑
-			D3DXVECTOR3 posOver = pos + D3DXVECTOR3(0.0f, 5.0f, 0.0f);		//è„ë§
-			D3DXVECTOR3 posUnder = pos + D3DXVECTOR3(0.0f, -5.0f, 0.0f);	//â∫ë§
+			D3DXVECTOR3 posOver = pos + D3DXVECTOR3(0.0f, 10.0f, 0.0f);		//è„ë§
+			D3DXVECTOR3 posUnder = pos + D3DXVECTOR3(0.0f, -10.0f, 0.0f);	//â∫ë§
 
 			//à⁄ìÆó ê›íË(+Xï˚å¸)
 			move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);

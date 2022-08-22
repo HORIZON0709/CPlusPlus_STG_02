@@ -129,5 +129,5 @@ void CEnemyCurve::Death()
 	CItem3D::Create(pos, CItem3D::TYPE::CHANGE_BUlLET_DOUBLE);
 
 	//ƒXƒRƒA‚ð‰ÁŽZ
-	CApplication::GetGame()->GetScore()->AddScore(NUM_SCORE);
+	CApplication::GetMode()->GetGame()->GetScore()->AddScore(NUM_SCORE);
 }

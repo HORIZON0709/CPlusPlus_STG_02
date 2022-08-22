@@ -10,8 +10,9 @@
 //***************************
 //インクルード
 //***************************
-#include "score.h"
+#include "mode.h"
 
+#include "score.h"
 #include "player_3D.h"
 #include "enemy_3D.h"
 #include "bg_3D.h"
@@ -21,8 +22,8 @@
 //***************************
 //ゲームクラスの定義
 //***************************
-class CGame
-{/* 基本クラス */
+class CGame : public CMode
+{/* CModeの派生クラス */
 public: /* 静的メンバ関数 */
 	/* スコアの情報を取得 */
 	static CScore* GetScore();
@@ -41,13 +42,15 @@ public: /* 静的メンバ関数 */
 
 public: /* コンストラクタ・デストラクタ */
 	CGame();
-	~CGame();
+	~CGame() override;
 
 public: /* メンバ関数 */
-	HRESULT Init();	//初期化
-	void Uninit();	//終了
-	void Update();	//更新
-	void Draw();	//描画
+	HRESULT Init() override;	//初期化
+	void Uninit() override;	//終了
+	void Update() override;	//更新
+	void Draw() override;	//描画
+
+	bool GetGamePart();	//ゲームパートの取得
 
 private: /* 静的メンバ変数 */
 	static CScore* m_pScore;							//スコア

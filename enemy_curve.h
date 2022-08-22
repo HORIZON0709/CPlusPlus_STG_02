@@ -17,9 +17,7 @@
 //***************************
 class CEnemyCurve : public CEnemy3D
 {/* CEnemy3Dの派生クラス */
-public: /* 定数の定義 */
-	static const int MAX_ENEMY_CURVE = 8;	//カーブ敵の最大数
-private:
+private: /* 定数の定義 */
 	static const float START_POS_X;		//初期位置( X )
 	static const float START_POS_Y;		//初期位置( Y )
 	static const float ENEMY_SIZE;		//サイズ

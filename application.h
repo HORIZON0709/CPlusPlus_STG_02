@@ -21,7 +21,7 @@ class CRenderer;
 class CTexture;
 class CCamera;
 
-class CGame;
+class CMode;
 
 //***************************
 //アプリケーションクラスの定義
@@ -39,7 +39,7 @@ public: /* 静的メンバ関数 */
 	static CRenderer* GetRenderer();	//レンダラー
 	static CCamera* GetCamera();		//カメラ
 
-	static CGame* GetGame();	//ゲーム
+	static CMode* GetMode();	//モード
 
 public: /* コンストラクタ・デストラクタ */
 	CApplication();
@@ -63,6 +63,6 @@ private: /* 静的メンバ変数 */
 	static CRenderer* m_pRenderer;	//レンダラー
 	static CCamera* m_pCamera;		//カメラ
 
-	static CGame* m_pGame;	//ゲーム
+	static CMode* m_pMode;	//モード
 };
 #endif

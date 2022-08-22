@@ -101,7 +101,7 @@ void CItem3D::Update()
 
 	if (CObject3D::Collision(OBJ_TYPE::ITEM, OBJ_TYPE::PLAYER))
 	{//プレイヤーと当たったら
-		CPlayer3D* pPlayer = CApplication::GetGame()->GetPlayer3D();	//プレイヤー情報の取得
+		CPlayer3D* pPlayer = CApplication::GetMode()->GetGame()->GetPlayer3D();	//プレイヤー情報の取得
 
 		//プレイヤーに、当たったアイテムのタイプを送る
 		pPlayer->SetItem(m_type);
