@@ -50,12 +50,14 @@ private:
 	void Move();					//移動
 	void Shot();					//発射
 	void CreateBulletByType();		//タイプ別の弾の生成
+	void SetNormalBullet();			//通常弾の設定
+	void SetDoubleBullet();			//二連弾の設定
+	void SetTripleBullet();			//三方向各散弾の設定
 	void ProcessingForEachItem();	//アイテム毎の処理
 
 private: /* メンバ変数 */
 	int m_nTimerInterval;			//弾の連続発射の間隔
 	CItem3D::TYPE m_getItem;		//取得したアイテム
 	CBullet3D::TYPE m_bulletType;	//弾のタイプ
-	bool m_bGamePart;				//ゲームパート
 };
 #endif

@@ -11,13 +11,16 @@
 //インクルード
 //***************************
 #include "mode.h"
-
-#include "score.h"
-#include "player_3D.h"
 #include "enemy_3D.h"
-#include "bg_3D.h"
 
 #include <d3dx9.h>
+
+//***************************
+//前方宣言
+//***************************
+class CScore;
+class CPlayer3D;
+class CBg3D;
 
 //***************************
 //ゲームクラスの定義

@@ -23,7 +23,7 @@
 //***************************
 const float CEnemyCurve::START_POS_X = 500.0f;	//初期位置( X )
 const float CEnemyCurve::START_POS_Y = 0.0f;	//初期位置( Y )
-const float CEnemyCurve::ENEMY_SIZE = 90.0f;	//サイズ
+const float CEnemyCurve::ENEMY_SIZE = 75.0f;	//サイズ
 const float CEnemyCurve::CURVE_SIZE = 0.025f;	//カーブのサイズ
 const float CEnemyCurve::MOVE_SPEED_X = 1.0f;	//移動スピード( X )
 const float CEnemyCurve::MOVE_SPEED_Y = 5.0f;	//移動スピード( Y )

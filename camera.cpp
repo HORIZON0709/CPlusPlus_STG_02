@@ -12,7 +12,7 @@
 //***************************
 //定数の定義
 //***************************
-const float CCamera::MOVE_SPEED = 10.0f;	//移動量
+const float CCamera::MOVE_SPEED = 5.0f;	//移動量
 
 //================================================
 //コンストラクタ
@@ -61,13 +61,7 @@ void CCamera::Uninit()
 //================================================
 void CCamera::Update()
 {
-	if (m_posV.x >= 400.0f)
-	{
-		m_posV.x = 400.0f;
-		return;
-	}
-
-	m_move.x = 0.1f;	//カメラの移動
+	m_move.y = 0.1f;	//カメラの移動
 
 #ifdef _DEBUG
 

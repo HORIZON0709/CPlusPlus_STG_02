@@ -10,6 +10,9 @@
 #include "game.h"
 #include "object2D.h"
 #include "object3D.h"
+#include "score.h"
+#include "player_3D.h"
+#include "bg_3D.h"
 
 #include <assert.h>
 
@@ -72,33 +75,30 @@ CGame::~CGame()
 //================================================
 HRESULT CGame::Init()
 {
-	m_bGamePart = false;	//通常パート
+	m_bGamePart = true;	//通常パート
 
 	/* 生成 */
 
-	if (!m_bGamePart)
-	{//通常パート
-		m_pScore = CScore::Create();	//スコア
+	m_pScore = CScore::Create();	//スコア
 
-		m_pBg3D = CBg3D::Create();	//背景(3D)
+	m_pBg3D = CBg3D::Create();	//背景(3D)
 
-		m_pPlayer3D = CPlayer3D::Create();	//プレイヤー(3D)
+	m_pPlayer3D = CPlayer3D::Create();	//プレイヤー(3D)
 
-		for (int i = 0; i < CEnemy3D::NUM_ENEMY_CURVE; i++)
-		{//敵(3D)
-			if (m_apEnemy3D[i] != nullptr)
-			{//NULLチェック
-				continue;
-			}
-
-			/* nullptrの場合 */
-
-			//位置を設定
-			D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i), (100.0f * i), 0.0f);
-
-			//生成
-			m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
+	for (int i = 0; i < CEnemy3D::NUM_ENEMY_CURVE; i++)
+	{//カーブ敵
+		if (m_apEnemy3D[i] != nullptr)
+		{//NULLチェック
+			continue;
 		}
+
+		/* nullptrの場合 */
+
+		//位置を設定
+		D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i), (100.0f * i), 0.0f);
+
+		//生成
+		m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
 	}
 
 	return S_OK;

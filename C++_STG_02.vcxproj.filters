@@ -19,35 +19,41 @@
     <Filter Include="ヘッダー ファイル\Application">
       <UniqueIdentifier>{e1c17624-b282-4418-bf3c-e613303e5c1a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Input">
+    <Filter Include="ソース ファイル\Input">
       <UniqueIdentifier>{54c1d88d-5310-4619-b7eb-0d84ad0ae29d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Object">
+    <Filter Include="ソース ファイル\Object">
       <UniqueIdentifier>{279f7b6d-6861-4030-913c-bc2bfd452564}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Object\2D">
+    <Filter Include="ソース ファイル\Object\2D">
       <UniqueIdentifier>{497cd407-c383-458c-b6e3-cdde12be0e64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Object\3D">
+    <Filter Include="ソース ファイル\Object\3D">
       <UniqueIdentifier>{61d13126-d099-46e3-80bc-2b32a528af4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Object\3D\enemy3D">
+    <Filter Include="ソース ファイル\Object\3D\enemy3D">
       <UniqueIdentifier>{16b09e76-a63a-4626-97cc-6825b1d0cc41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Input">
+    <Filter Include="ソース ファイル\Application\Mode">
+      <UniqueIdentifier>{ed6d56fb-337f-4c42-99fc-2f002ec6d177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Input">
       <UniqueIdentifier>{01153262-b8d8-4f81-8018-7357f3a1db61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Object">
+    <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{280bb9e5-5307-4f39-a084-7acdedda31ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Object\2D">
+    <Filter Include="ヘッダー ファイル\Object\2D">
       <UniqueIdentifier>{ae7b5298-30d2-4b4a-bb17-74747aa21c4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Object\3D">
+    <Filter Include="ヘッダー ファイル\Object\3D">
       <UniqueIdentifier>{b57549a8-6c73-4e5f-9861-694f10c3c20d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Object\3D\enemy3D">
+    <Filter Include="ヘッダー ファイル\Object\3D\enemy3D">
       <UniqueIdentifier>{c993b7d8-081b-44f5-8a54-f4745de0ae00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Application\Mode">
+      <UniqueIdentifier>{29c04c87-a2ca-4815-af63-09f292ab6811}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,37 +61,37 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="bullet.cpp">
-      <Filter>ソース ファイル\Application\Object\2D</Filter>
+      <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="enemy.cpp">
-      <Filter>ソース ファイル\Application\Object\2D</Filter>
+      <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="explosion.cpp">
-      <Filter>ソース ファイル\Application\Object\2D</Filter>
+      <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="object2D.cpp">
-      <Filter>ソース ファイル\Application\Object\2D</Filter>
+      <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル\Application\Object\2D</Filter>
+      <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="object3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D</Filter>
+      <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル\Application\Input</Filter>
+      <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
     <ClCompile Include="inputKeyboard.cpp">
-      <Filter>ソース ファイル\Application\Input</Filter>
+      <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
     <ClCompile Include="object.cpp">
-      <Filter>ソース ファイル\Application\Object</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="player_3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D</Filter>
+      <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="bullet_3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D</Filter>
+      <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="application.cpp">
       <Filter>ソース ファイル\Application</Filter>
@@ -103,34 +109,34 @@
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
     <ClCompile Include="explosion_3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D</Filter>
+      <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="score.cpp">
-      <Filter>ソース ファイル\Application\Object</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="item_3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D</Filter>
+      <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="bg_3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D</Filter>
+      <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="number.cpp">
-      <Filter>ソース ファイル\Application\Object\2D</Filter>
+      <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="enemy_3D.cpp">
-      <Filter>ソース ファイル\Application\Object\3D\enemy3D</Filter>
+      <Filter>ソース ファイル\Object\3D\enemy3D</Filter>
     </ClCompile>
     <ClCompile Include="enemy_curve.cpp">
-      <Filter>ソース ファイル\Application\Object\3D\enemy3D</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>ソース ファイル\Application</Filter>
+      <Filter>ソース ファイル\Object\3D\enemy3D</Filter>
     </ClCompile>
     <ClCompile Include="enemy_boss.cpp">
-      <Filter>ソース ファイル\Application\Object\3D\enemy3D</Filter>
+      <Filter>ソース ファイル\Object\3D\enemy3D</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>ソース ファイル\Application\Mode</Filter>
     </ClCompile>
     <ClCompile Include="mode.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Application\Mode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,37 +144,37 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="object.h">
-      <Filter>ヘッダー ファイル\Application\Object</Filter>
+      <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
-      <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
+      <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
-      <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
+      <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="explosion.h">
-      <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
+      <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="object2D.h">
-      <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
+      <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
+      <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="object3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
-      <Filter>ヘッダー ファイル\Application\Input</Filter>
+      <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
     <ClInclude Include="inputKeyboard.h">
-      <Filter>ヘッダー ファイル\Application\Input</Filter>
+      <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
     <ClInclude Include="player_3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="bullet_3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="application.h">
       <Filter>ヘッダー ファイル\Application</Filter>
@@ -186,34 +192,34 @@
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
     <ClInclude Include="explosion_3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="score.h">
-      <Filter>ヘッダー ファイル\Application\Object</Filter>
+      <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="item_3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="bg_3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="number.h">
-      <Filter>ヘッダー ファイル\Application\Object\2D</Filter>
+      <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="enemy_3D.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D\enemy3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D\enemy3D</Filter>
     </ClInclude>
     <ClInclude Include="enemy_curve.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D\enemy3D</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
+      <Filter>ヘッダー ファイル\Object\3D\enemy3D</Filter>
     </ClInclude>
     <ClInclude Include="enemy_boss.h">
-      <Filter>ヘッダー ファイル\Application\Object\3D\enemy3D</Filter>
+      <Filter>ヘッダー ファイル\Object\3D\enemy3D</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダー ファイル\Application\Mode</Filter>
     </ClInclude>
     <ClInclude Include="mode.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Application\Mode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

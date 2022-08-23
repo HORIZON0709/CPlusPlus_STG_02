@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "camera.h"
 #include "input.h"
+#include "game.h"
 
 #include "explosion_3D.h"
 
@@ -20,7 +21,7 @@
 //***************************
 //定数の定義
 //***************************
-const float CPlayer3D::PLAYER_SIZE = 150.0f;	//サイズ
+const float CPlayer3D::PLAYER_SIZE = 100.0f;	//サイズ
 const float CPlayer3D::MOVE_SPEED = 10.0f;		//移動速度
 
 //================================================
@@ -294,53 +295,15 @@ void CPlayer3D::CreateBulletByType()
 	switch (m_bulletType)
 	{/* 取得したアイテム毎の処理 */
 	case CBullet3D::TYPE::NORMAL:	/* 通常弾 */
-
-		//移動量設定(+X方向)
-		move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);
-
-		//弾の生成
-		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+		SetNormalBullet();	//通常弾の設定
 		break;
 
 	case CBullet3D::TYPE::DOUBLE:	/* 二連弾 */
-		{
-			//弾の位置を上下に少しずらす
-			D3DXVECTOR3 posOver = pos + D3DXVECTOR3(0.0f, 10.0f, 0.0f);		//上側
-			D3DXVECTOR3 posUnder = pos + D3DXVECTOR3(0.0f, -10.0f, 0.0f);	//下側
-
-			//移動量設定(+X方向)
-			move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);
-
-			//弾の生成
-			CBullet3D::Create(posOver, move, CObject::OBJ_TYPE::PLAYER);	//上側
-			CBullet3D::Create(posUnder, move, CObject::OBJ_TYPE::PLAYER);	//下側
-		}
+		SetDoubleBullet();	//二連弾の設定
 		break;
 
 	case CBullet3D::TYPE::TRIPLE:	/* 三方向各散弾 */
-
-		/* 斜め上方向 */
-
-		move = D3DXVECTOR3(10.0f, 10.0f, 0.0f);	//移動量設定
-
-		//弾の生成
-		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
-		
-
-		/* 水平方向 */
-
-		move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);	//移動量設定
-
-		//弾の生成
-		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
-		
-
-		/* 斜め下方向 */
-
-		move = D3DXVECTOR3(10.0f, -10.0f, 0.0f);	//移動量設定
-
-		//弾の生成
-		CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+		SetTripleBullet();	//三連各散弾の設定
 		break;
 
 	default: /* それ以外 */
@@ -350,22 +313,128 @@ void CPlayer3D::CreateBulletByType()
 }
 
 //================================================
+//通常弾の設定
+//================================================
+void CPlayer3D::SetNormalBullet()
+{
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
+
+	D3DXVECTOR3 move;	//移動量設定用
+
+	//移動量設定(+X方向)
+	move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);
+
+	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	{//ボスパートの場合
+	 //移動量設定(+Y方向)
+		move = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+	}
+
+	//弾の生成
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+}
+
+//================================================
+//二連弾の設定
+//================================================
+void CPlayer3D::SetDoubleBullet()
+{
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
+
+	D3DXVECTOR3 move;	//移動量設定用
+
+	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	{//ボスパートの場合
+		//弾の位置を左右に少しずらす
+		D3DXVECTOR3 posLeft = pos + D3DXVECTOR3(10.0f, 0.0f, 0.0f);		//左
+		D3DXVECTOR3 posRight = pos + D3DXVECTOR3(-10.0f, 0.0f, 0.0f);	//右
+
+		//移動量設定(+Y方向)
+		move = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+
+		//弾の生成
+		CBullet3D::Create(posLeft, move, CObject::OBJ_TYPE::PLAYER);	//左
+		CBullet3D::Create(posRight, move, CObject::OBJ_TYPE::PLAYER);	//右
+		return;
+	}
+
+	/* 通常パートの場合 */
+
+	//弾の位置を上下に少しずらす
+	D3DXVECTOR3 posOver = pos + D3DXVECTOR3(0.0f, 10.0f, 0.0f);		//上
+	D3DXVECTOR3 posUnder = pos + D3DXVECTOR3(0.0f, -10.0f, 0.0f);	//下
+
+	//移動量設定(+X方向)
+	move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);
+
+	//弾の生成
+	CBullet3D::Create(posOver, move, CObject::OBJ_TYPE::PLAYER);	//上
+	CBullet3D::Create(posUnder, move, CObject::OBJ_TYPE::PLAYER);	//下
+}
+
+//================================================
+//三連拡散弾の設定
+//================================================
+void CPlayer3D::SetTripleBullet()
+{
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
+
+	D3DXVECTOR3 move;	//移動量設定用
+	
+	/*************************** 1弾目 ***************************/
+
+	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	{//ボスパートの場合
+		move = D3DXVECTOR3(-10.0f, 10.0f, 0.0f);	//左斜め
+	}
+
+	move = D3DXVECTOR3(10.0f, 10.0f, 0.0f);	//斜め上
+
+	//弾の生成
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+
+	/*************************** 2弾目 ***************************/
+
+	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	{//ボスパートの場合
+		move = D3DXVECTOR3(0.0f, 10.0f, 0.0f);	//+Y方向
+	}
+
+	move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);	//水平
+
+	//弾の生成
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+
+	/*************************** 3弾目 ***************************/
+
+	move = D3DXVECTOR3(10.0f, -10.0f, 0.0f);	//斜め下
+
+	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	{//ボスパートの場合
+		move = D3DXVECTOR3(10.0f, 10.0f, 0.0f);	//右斜め
+	}
+
+	//弾の生成
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+}
+
+//================================================
 //アイテム毎の処理
 //================================================
 void CPlayer3D::ProcessingForEachItem()
 {
 	switch (m_getItem)
-	{
-	case CItem3D::TYPE::CHANGE_BUlLET_NORMAL: /* 弾変化(通常弾) */
-		m_bulletType = CBullet3D::TYPE::NORMAL;	//弾のタイプを変更
+	{//タイプを変更
+	case CItem3D::TYPE::CHANGE_BUlLET_NORMAL: /* 通常弾 */
+		m_bulletType = CBullet3D::TYPE::NORMAL;
 		break;
 
-	case CItem3D::TYPE::CHANGE_BUlLET_DOUBLE: /* 弾変化(二連弾) */
-		m_bulletType = CBullet3D::TYPE::DOUBLE;	//弾のタイプを変更
+	case CItem3D::TYPE::CHANGE_BUlLET_DOUBLE: /* 二連弾 */
+		m_bulletType = CBullet3D::TYPE::DOUBLE;
 		break;
 
-	case CItem3D::TYPE::CHANGE_BUlLET_TRIPLE: /* 弾変化(三方向各散弾) */
-		m_bulletType = CBullet3D::TYPE::TRIPLE;	//弾のタイプを変更
+	case CItem3D::TYPE::CHANGE_BUlLET_TRIPLE: /* 三方向各散弾 */
+		m_bulletType = CBullet3D::TYPE::TRIPLE;
 		break;
 
 	default: /* それ以外 */
