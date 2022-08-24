@@ -8,6 +8,7 @@
 #include "application.h"
 #include "inputKeyboard.h"
 #include "renderer.h"
+#include "game.h"
 
 //***************************
 //定数の定義
@@ -61,7 +62,14 @@ void CCamera::Uninit()
 //================================================
 void CCamera::Update()
 {
-	m_move.y = 0.1f;	//カメラの移動
+	if (!CApplication::GetMode()->GetGame()->GetGamePart())
+	{//通常パート
+		m_move.x = 0.1f;	//X軸の移動
+	}
+	else
+	{//ボスパート
+		m_move.y = 0.1f;	//Y軸の移動
+	}
 
 #ifdef _DEBUG
 

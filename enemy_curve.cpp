@@ -10,6 +10,7 @@
 #include "enemy_curve.h"
 #include "application.h"
 #include "renderer.h"
+#include "camera.h"
 #include "game.h"
 
 #include "bullet_3D.h"
@@ -108,6 +109,9 @@ void CEnemyCurve::Update()
 			moveBullet,					//移動量
 			CObject::OBJ_TYPE::ENEMY);	//所有者
 	}
+
+	//画面外に出たら解放する
+	ReleaseOffScreen();
 }
 
 //================================================
@@ -130,4 +134,39 @@ void CEnemyCurve::Death()
 
 	//スコアを加算
 	CApplication::GetMode()->GetGame()->GetScore()->AddScore(NUM_SCORE);
+}
+
+//================================================
+//画面外に出たら解放する
+//================================================
+void CEnemyCurve::ReleaseOffScreen()
+{
+	D3DXVECTOR3 pos = CObject3D::GetPos();		//位置を取得
+
+	float fSizeHalf = (ENEMY_SIZE * 0.5f);	//サイズの半分
+
+	float fLeft		= (pos.x - fSizeHalf);	//左端
+	float fRight	= (pos.x + fSizeHalf);	//右端
+
+	//カメラ情報の取得
+	D3DXMATRIX mtxCamera = CApplication::GetCamera()->GetMatrixView();
+	
+	//カメラの視点の位置を取得
+	D3DXVECTOR3 posV = CApplication::GetCamera()->GetPosV();
+
+	//位置を反映
+	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
+
+	//カメラの画角の左右の限界を設定
+	float fRimitLeft	= (mtxCamera._41 - (CRenderer::SCREEN_WIDTH * 0.5f));	//左
+	float fRimitRight	= (mtxCamera._41 + (CRenderer::SCREEN_WIDTH * 0.5f));	//右
+
+	//左右にフレームアウトしたかどうか
+	bool bFrameOutOnLeft	= (fRight < fRimitLeft);	//左側に
+	bool bFrameOutOnRight	= (fLeft > fRimitRight);	//右側に
+
+	if (bFrameOutOnLeft || bFrameOutOnRight)
+	{//画角から完全に出たら
+		Release();	//自身の解放
+	}
 }

@@ -52,7 +52,8 @@ public: /* オーバーライド関数 */
 	void Draw() override;		//描画
 
 private: /* メンバ関数 */
-	void IsCollision();
+	void IsCollision();			//当たり判定
+	void ReleaseOffScreen();	//画面外に出たら解放する
 
 public:	/* Set・Get系 */
 	/*

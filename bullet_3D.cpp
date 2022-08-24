@@ -110,36 +110,7 @@ void CBullet3D::Update()
 
 	IsCollision();	//当たり判定
 
-	float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
-	float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//右端
-	float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
-	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
-
-	//カメラ情報の取得
-	D3DXMATRIX mtxCamera = CApplication::GetCamera()->GetMatrixView();
-	
-	//カメラの視点の位置を取得
-	D3DXVECTOR3 posV = CApplication::GetCamera()->GetPosV();
-
-	//位置を反映
-	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
-
-	//移動制限を設定
-	float fRimitTop		= (mtxCamera._42 + (CRenderer::SCREEN_HEIGHT * 0.5f));	//上
-	float fRimitBottom	= (mtxCamera._42 - (CRenderer::SCREEN_HEIGHT * 0.5f));	//下
-	float fRimitLeft	= (mtxCamera._41 - (CRenderer::SCREEN_WIDTH * 0.5f));	//左
-	float fRimitRight	= (mtxCamera._41 + (CRenderer::SCREEN_WIDTH * 0.5f));	//右
-
-	if ((fLeft < fRimitLeft) ||		//左端
-		(fRight > fRimitRight) ||	//右端
-		(fTop > fRimitTop) ||		//上端
-		(fBottom < fRimitBottom))	//下端
-	{//指定した範囲から出たら
-		//爆発の生成
-		CExplosion3D::Create(pos);
-
-		Release();	//解放
-	}
+	ReleaseOffScreen();	//画面外に出たら解放
 }
 
 //================================================
@@ -227,6 +198,45 @@ void CBullet3D::IsCollision()
 		pObjTarget3D->Release();	//対象の解放
 
 		Release();	//自身の解放
+	}
+}
+
+//================================================
+//画面外に出たら解放する
+//================================================
+void CBullet3D::ReleaseOffScreen()
+{
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置設定用
+
+	float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
+	float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//右端
+	float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
+	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
+
+	//カメラ情報の取得
+	D3DXMATRIX mtxCamera = CApplication::GetCamera()->GetMatrixView();
+	
+	//カメラの視点の位置を取得
+	D3DXVECTOR3 posV = CApplication::GetCamera()->GetPosV();
+
+	//位置を反映
+	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
+
+	//カメラの画角の上下左右の限界を設定
+	float fRimitTop		= (mtxCamera._42 + (CRenderer::SCREEN_HEIGHT * 0.5f));	//上
+	float fRimitBottom	= (mtxCamera._42 - (CRenderer::SCREEN_HEIGHT * 0.5f));	//下
+	float fRimitLeft	= (mtxCamera._41 - (CRenderer::SCREEN_WIDTH * 0.5f));	//左
+	float fRimitRight	= (mtxCamera._41 + (CRenderer::SCREEN_WIDTH * 0.5f));	//右
+
+	//上下左右にフレームアウトしたかどうか
+	bool bFrameOutOnTop		= (fBottom > fRimitTop);	//上側に
+	bool bFrameOutOnBottom	= (fTop < fRimitBottom);	//下側に
+	bool bFrameOutOnLeft	= (fRight < fRimitLeft);	//左側に
+	bool bFrameOutOnRight	= (fLeft > fRimitRight);	//右側に
+
+	if (bFrameOutOnTop || bFrameOutOnBottom || bFrameOutOnLeft || bFrameOutOnRight)
+	{//画角から完全に出たら
+		Release();	//解放
 	}
 }
 

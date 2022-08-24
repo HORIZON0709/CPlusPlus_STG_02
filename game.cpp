@@ -75,7 +75,7 @@ CGame::~CGame()
 //================================================
 HRESULT CGame::Init()
 {
-	m_bGamePart = true;	//通常パート
+	m_bGamePart = false;	//通常パート
 
 	/* 生成 */
 
