@@ -9,13 +9,25 @@
 //***************************
 #include "mode.h"
 
+#include "title.h"
 #include "game.h"
+#include "result.h"
 
 //***************************
 //静的メンバ変数
 //***************************
+CMode::MODE CMode::m_mode = TITLE;		//モード
+CTitle* CMode::m_pTitle = nullptr;		//タイトル
+CGame* CMode::m_pGame = nullptr;		//ゲーム
+CResult* CMode::m_pResult = nullptr;	//リザルト
 
-CGame* CMode::m_pGame = nullptr;	//ゲーム
+//================================================
+//モードの設定
+//================================================
+void CMode::SetMode(const MODE &mode)
+{
+	m_mode = mode;
+}
 
 //================================================
 //ゲーム情報を取得
@@ -64,6 +76,15 @@ HRESULT CMode::Init()
 //================================================
 void CMode::Uninit()
 {
+	/* タイトル */
+
+	if (m_pTitle != nullptr)
+	{//NULLチェック
+		m_pTitle->Uninit();	//終了
+		delete m_pTitle;	//メモリの解放
+		m_pTitle = nullptr;	//nullptrにする
+	}
+
 	/* ゲーム */
 
 	if (m_pGame != nullptr)
@@ -71,6 +92,15 @@ void CMode::Uninit()
 		m_pGame->Uninit();	//終了
 		delete m_pGame;		//メモリの解放
 		m_pGame = nullptr;	//nullptrにする
+	}
+
+	/* リザルト */
+
+	if (m_pResult != nullptr)
+	{//NULLチェック
+		m_pResult->Uninit();	//終了
+		delete m_pResult;		//メモリの解放
+		m_pResult = nullptr;	//nullptrにする
 	}
 }
 

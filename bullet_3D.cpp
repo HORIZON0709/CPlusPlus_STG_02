@@ -108,9 +108,9 @@ void CBullet3D::Update()
 
 	CObject3D::SetPos(pos);	//更新した位置を設定
 
-	IsCollision();	//当たり判定
-
 	ReleaseOffScreen();	//画面外に出たら解放
+
+	IsCollision();	//当たり判定
 }
 
 //================================================

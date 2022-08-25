@@ -15,7 +15,9 @@
 //***************************
 //前方宣言
 //***************************
+class CTitle;
 class CGame;
+class CResult;
 
 //***************************
 //モードクラスの定義
@@ -36,7 +38,7 @@ public: /* 静的メンバ関数 */
 		モードの設定
 		MODE mode ---> モードの種類
 	*/
-	static void SetMode(MODE mode);
+	static void SetMode(const MODE &mode);
 
 	//ゲーム情報の取得
 	static CGame* GetGame();
@@ -52,11 +54,12 @@ public: /* 仮想関数 */
 	virtual void Draw();	//描画
 
 private: /* 静的メンバ変数 */
-	
+	static MODE m_mode;	//モード
+
 	//********** ポインタ **********//
 
-	//static CTitle* m_pTitle;	//タイトル
+	static CTitle* m_pTitle;	//タイトル
 	static CGame* m_pGame;		//ゲーム
-	//static CResult* m_pResult;	//リザルト
+	static CResult* m_pResult;	//リザルト
 };
 #endif

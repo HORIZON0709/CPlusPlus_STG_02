@@ -22,7 +22,8 @@
 //定数の定義
 //***************************
 const float CPlayer3D::PLAYER_SIZE = 100.0f;	//サイズ
-const float CPlayer3D::MOVE_SPEED = 10.0f;		//移動速度
+const float CPlayer3D::MOVE_SPEED = 8.0f;		//移動速度
+const float CPlayer3D::SHOT_SPEED = 12.0f;		//弾発射の速さ
 
 //================================================
 //生成
@@ -322,12 +323,12 @@ void CPlayer3D::SetNormalBullet()
 	D3DXVECTOR3 move;	//移動量設定用
 
 	//移動量設定(+X方向)
-	move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);
+	move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);
 
 	if (CApplication::GetMode()->GetGame()->GetGamePart())
 	{//ボスパートの場合
 	 //移動量設定(+Y方向)
-		move = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+		move = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);
 	}
 
 	//弾の生成
@@ -350,7 +351,7 @@ void CPlayer3D::SetDoubleBullet()
 		D3DXVECTOR3 posRight = pos + D3DXVECTOR3(-10.0f, 0.0f, 0.0f);	//右
 
 		//移動量設定(+Y方向)
-		move = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
+		move = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);
 
 		//弾の生成
 		CBullet3D::Create(posLeft, move, CObject::OBJ_TYPE::PLAYER);	//左
@@ -361,11 +362,11 @@ void CPlayer3D::SetDoubleBullet()
 	/* 通常パートの場合 */
 
 	//弾の位置を上下に少しずらす
-	D3DXVECTOR3 posOver = pos + D3DXVECTOR3(0.0f, 10.0f, 0.0f);		//上
-	D3DXVECTOR3 posUnder = pos + D3DXVECTOR3(0.0f, -10.0f, 0.0f);	//下
+	D3DXVECTOR3 posOver = pos + D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);	//上
+	D3DXVECTOR3 posUnder = pos + D3DXVECTOR3(0.0f, -SHOT_SPEED, 0.0f);	//下
 
 	//移動量設定(+X方向)
-	move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);
+	move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);
 
 	//弾の生成
 	CBullet3D::Create(posOver, move, CObject::OBJ_TYPE::PLAYER);	//上
@@ -385,10 +386,10 @@ void CPlayer3D::SetTripleBullet()
 
 	if (CApplication::GetMode()->GetGame()->GetGamePart())
 	{//ボスパートの場合
-		move = D3DXVECTOR3(-10.0f, 10.0f, 0.0f);	//左斜め
+		move = D3DXVECTOR3(-SHOT_SPEED, SHOT_SPEED, 0.0f);	//左斜め
 	}
 
-	move = D3DXVECTOR3(10.0f, 10.0f, 0.0f);	//斜め上
+	move = D3DXVECTOR3(SHOT_SPEED, SHOT_SPEED, 0.0f);	//斜め上
 
 	//弾の生成
 	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
@@ -397,21 +398,21 @@ void CPlayer3D::SetTripleBullet()
 
 	if (CApplication::GetMode()->GetGame()->GetGamePart())
 	{//ボスパートの場合
-		move = D3DXVECTOR3(0.0f, 10.0f, 0.0f);	//+Y方向
+		move = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);	//+Y方向
 	}
 
-	move = D3DXVECTOR3(10.0f, 0.0f, 0.0f);	//水平
+	move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);	//水平
 
 	//弾の生成
 	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
 
 	/*************************** 3弾目 ***************************/
 
-	move = D3DXVECTOR3(10.0f, -10.0f, 0.0f);	//斜め下
+	move = D3DXVECTOR3(SHOT_SPEED, -SHOT_SPEED, 0.0f);	//斜め下
 
 	if (CApplication::GetMode()->GetGame()->GetGamePart())
 	{//ボスパートの場合
-		move = D3DXVECTOR3(10.0f, 10.0f, 0.0f);	//右斜め
+		move = D3DXVECTOR3(SHOT_SPEED, SHOT_SPEED, 0.0f);	//右斜め
 	}
 
 	//弾の生成

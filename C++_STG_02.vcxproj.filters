@@ -114,9 +114,6 @@
     <ClCompile Include="score.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="item_3D.cpp">
-      <Filter>ソース ファイル\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="bg_3D.cpp">
       <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
@@ -136,6 +133,15 @@
       <Filter>ソース ファイル\Application\Mode</Filter>
     </ClCompile>
     <ClCompile Include="mode.cpp">
+      <Filter>ソース ファイル\Application\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="item_3D.cpp">
+      <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>ソース ファイル\Application\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="result.cpp">
       <Filter>ソース ファイル\Application\Mode</Filter>
     </ClCompile>
   </ItemGroup>
@@ -219,6 +225,12 @@
       <Filter>ヘッダー ファイル\Application\Mode</Filter>
     </ClInclude>
     <ClInclude Include="mode.h">
+      <Filter>ヘッダー ファイル\Application\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>ヘッダー ファイル\Application\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="result.h">
       <Filter>ヘッダー ファイル\Application\Mode</Filter>
     </ClInclude>
   </ItemGroup>
