@@ -1,39 +1,41 @@
 //================================================
 //
-//制作実践基礎[result.h]
+//制作実践基礎[bg.h]
 //Author:Kishimoto Eiji
 //
 //================================================
-#ifndef _RESULT_H_
-#define _RESULT_H_
+#ifndef _BG_H_
+#define _BG_H_
 
 //***************************
 //インクルード
 //***************************
-#include "mode.h"
-
-#include <d3dx9.h>
+#include "object2D.h"
 
 //***************************
-//前方宣言
+//背景クラスの定義
 //***************************
+class CBg : public CObject2D
+{/* CObject2Dの派生クラス */
+public: /* 定数の定義 */
+	static const float BG_WIDTH;	//横幅
+	static const float BG_HEIGHT;	//縦幅
 
-//***************************
-//リザルトクラスの定義
-//***************************
-class CResult : public CMode
-{/* CModeの派生クラス */
+public: /* 静的メンバ関数 */
+	/*
+		生成
+		CTexture::TEXTURE texture ---> 使用するテクスチャ
+	*/
+	static CBg* Create(CTexture::TEXTURE texture);
+
 public: /* コンストラクタ・デストラクタ */
-	CResult();
-	~CResult() override;
+	CBg();
+	~CBg()override;
 
 public: /* オーバーライド関数 */
 	HRESULT Init() override;	//初期化
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
-
-private: /* メンバ変数 */
-	
 };
 #endif

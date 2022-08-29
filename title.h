@@ -17,23 +17,31 @@
 //***************************
 //前方宣言
 //***************************
+class CObject2D;
 
 //***************************
 //タイトルクラスの定義
 //***************************
 class CTitle : public CMode
 {/* CModeの派生クラス */
+private: /* 定数の定義 */
+	static const float START_POS_X;	//初期位置( X )
+	static const float START_POS_Y;	//初期位置( Y )
+	static const float LOGO_WIDTH;	//ロゴの幅
+	static const float LOGO_HEIGHT;	//ロゴの高さ
+
 public: /* コンストラクタ・デストラクタ */
 	CTitle();
 	~CTitle() override;
 
-public: /* メンバ関数 */
+public: /* オーバーライド関数 */
 	HRESULT Init() override;	//初期化
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
-private: /* メンバ変数 */
-	
+private: /* 静的メンバ変数 */
+	static CObject2D* m_pLogo;	//タイトルロゴ
+	static CObject2D* m_pBg;	//背景
 };
 #endif

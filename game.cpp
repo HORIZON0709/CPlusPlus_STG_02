@@ -10,8 +10,12 @@
 #include "game.h"
 #include "object2D.h"
 #include "object3D.h"
+
 #include "score.h"
+
 #include "player_3D.h"
+#include "enemy_curve.h"
+#include "enemy_boss.h"
 #include "bg_3D.h"
 
 #include <assert.h>
@@ -95,7 +99,9 @@ HRESULT CGame::Init()
 		/* nullptrの場合 */
 
 		//位置を設定
-		D3DXVECTOR3 pos = D3DXVECTOR3(300.0f + (200.0f * i), (100.0f * i), 0.0f);
+		D3DXVECTOR3 pos = D3DXVECTOR3(CEnemyCurve::START_POS_X + (200.0f * i),
+										(100.0f * i),
+										0.0f);
 
 		//生成
 		m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
@@ -116,15 +122,23 @@ void CGame::Uninit()
 
 	/* スコア */
 
-	m_pScore = nullptr;	//nullptrにする
+	if (m_pScore != nullptr)
+	{//NULLチェック
+		m_pScore = nullptr;	//nullptrにする
+	}
 
 	/* 背景(3D) */
 
-	m_pBg3D = nullptr;	//nullptrにする
+	if (m_pScore != nullptr)
+	{//NULLチェック
+		m_pBg3D = nullptr;	//nullptrにする
+	}
 
 	/* プレイヤー(3D) */
-
-	m_pPlayer3D = nullptr;	//nullptrにする
+	if (m_pScore != nullptr)
+	{//NULLチェック
+		m_pPlayer3D = nullptr;	//nullptrにする
+	}
 
 	/* 敵(3D) */
 
@@ -153,6 +167,41 @@ void CGame::Update()
 //================================================
 void CGame::Draw()
 {
+}
+
+//================================================
+//ゲームパートの切り替え
+//================================================
+void CGame::ChangeGamePart()
+{
+	/* 通常敵を解放 */
+
+	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
+	{
+		if (m_apEnemy3D[i] == nullptr)
+		{//NULLチェック
+			continue;
+		}
+
+		/* nullptrではない場合 */
+
+		m_apEnemy3D[i] = nullptr;	//nullptrにする
+	}
+
+	m_bGamePart = true;	//ボスパートに切り替え
+
+	/* ボスの生成 */
+
+	if (m_apEnemy3D[0] != nullptr)
+	{//NULLチェック
+		m_apEnemy3D[0] = nullptr;	//nullptrにする
+
+		//位置を設定
+		D3DXVECTOR3 pos = D3DXVECTOR3(CEnemyBoss::START_POS_X, CEnemyBoss::START_POS_Y, 0.0f);
+
+		//ボスを生成する
+		m_apEnemy3D[0] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::BOSS, pos);
+	}
 }
 
 //================================================

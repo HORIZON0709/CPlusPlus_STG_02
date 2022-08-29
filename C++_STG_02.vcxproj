@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="bg.cpp" />
     <ClCompile Include="bg_3D.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="bullet_3D.cpp" />
@@ -184,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="bg.h" />
     <ClInclude Include="bg_3D.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="bullet_3D.h" />

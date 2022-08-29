@@ -17,9 +17,10 @@
 //***************************
 class CEnemyCurve : public CEnemy3D
 {/* CEnemy3Dの派生クラス */
-private: /* 定数の定義 */
+public: /* 定数の定義 */
 	static const float START_POS_X;		//初期位置( X )
 	static const float START_POS_Y;		//初期位置( Y )
+private:
 	static const float ENEMY_SIZE;		//サイズ
 	static const float CURVE_SIZE;		//カーブの大きさ
 	static const float MOVE_SPEED_X;	//移動スピード( X )
@@ -40,10 +41,20 @@ public: /* オーバーライド関数 */
 	void Death() override;		//死亡時の処理
 	
 private: /* メンバ関数 */
+	void Move();				//移動
+	void Shot();				//弾の発射
+	void OverRimitRight();		//画面右端を超えたかどうか
 	void ReleaseOffScreen();	//画面外に出たら解放する
 
 private: /* メンバ変数 */
 	int m_nTimerInterval;	//弾の連続発射の間隔
-	float m_fCurve;			//カーブの具合
+	float m_fCurve;			//カーブ度合
+
+	/*
+		画面内に入ってきたかどうか
+		false ---> 画面外
+		true ---> 画面内
+	*/
+	bool m_bInside;
 };
 #endif

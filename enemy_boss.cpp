@@ -23,6 +23,9 @@
 const float CEnemyBoss::START_POS_X = 0.0f;		//初期位置( X )
 const float CEnemyBoss::START_POS_Y = 100.0f;	//初期位置( Y )
 const float CEnemyBoss::ENEMY_SIZE = 270.0f;	//サイズ
+const float CEnemyBoss::CURVE_SIZE = 0.025f;	//カーブの大きさ
+const float CEnemyBoss::MOVE_SPEED_X = 1.0f;	//移動スピード( X )
+const float CEnemyBoss::MOVE_SPEED_Y = 5.0f;	//移動スピード( Y )
 
 //================================================
 //コンストラクタ
@@ -73,20 +76,11 @@ void CEnemyBoss::Update()
 {
 	CEnemy3D::Update();	//親クラス
 
-	Move();	//移動
+	//移動
+	Move();
 
-	m_nTimerInterval++;	//タイマーを進める
-
-	if (m_nTimerInterval % SHOT_INTERVAL == 0)
-	{//タイマーが一定時間になったら
-		D3DXVECTOR3 posBullet = CObject3D::GetPos();				//位置を取得
-		D3DXVECTOR3 moveBullet = D3DXVECTOR3(0.0f, -2.0f, 0.0f);	//弾の移動量を設定
-
-		CBullet3D::Create(/* 弾の生成 */
-			posBullet,					//位置
-			moveBullet,					//移動量
-			CObject::OBJ_TYPE::ENEMY);	//所有者
-	}
+	//弾の発射
+	Shot();
 }
 
 //================================================
@@ -111,5 +105,36 @@ void CEnemyBoss::Death()
 //================================================
 void CEnemyBoss::Move()
 {
+	D3DXVECTOR3 pos = CObject3D::GetPos();		//位置を取得
+	D3DXVECTOR3 move = CObject3D::GetMove();	//移動量を取得
 
+	//加算
+	m_fCurve += CURVE_SIZE;
+
+	//sinカーブ
+	move.x = cosf(D3DX_PI * m_fCurve) * MOVE_SPEED_X;
+
+	//移動量を位置に加算
+	pos += move;
+
+	CObject3D::SetPos(pos);	//位置を設定
+}
+
+//================================================
+//弾の発射
+//================================================
+void CEnemyBoss::Shot()
+{
+	m_nTimerInterval++;	//タイマーを進める
+
+	if (m_nTimerInterval % SHOT_INTERVAL == 0)
+	{//タイマーが一定時間になったら
+		D3DXVECTOR3 posBullet = CObject3D::GetPos();				//位置を取得
+		D3DXVECTOR3 moveBullet = D3DXVECTOR3(0.0f, -2.0f, 0.0f);	//弾の移動量を設定
+
+		CBullet3D::Create(/* 弾の生成 */
+			posBullet,					//位置
+			moveBullet,					//移動量
+			CObject::OBJ_TYPE::ENEMY);	//所有者
+	}
 }
