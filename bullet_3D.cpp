@@ -184,6 +184,8 @@ void CBullet3D::IsCollision()
 
 		/* 弾が対象の範囲内に入った場合 */
 
+		bool bPlayer = false;	//プレイヤーかどうか
+
 		if (pObjTarget3D->GetObjType() == CObject::ENEMY)
 		{//対象が敵だった場合
 			//敵の型にキャスト
@@ -192,6 +194,10 @@ void CBullet3D::IsCollision()
 			//死亡時の処理
 			pEnemy->Death();
 		}
+		else if (pObjTarget3D->GetObjType() == CObject::PLAYER)
+		{//対象がプレイヤーだった場合
+			bPlayer = true;	//プレイヤーである
+		}
 
 		//爆発の生成
 		CExplosion3D::Create(posTarget);
@@ -199,6 +205,16 @@ void CBullet3D::IsCollision()
 		pObjTarget3D->Release();	//対象の解放
 
 		Release();	//自身の解放
+
+		if (!bPlayer)
+		{//プレイヤーではない場合
+			return;
+		}
+
+		/* プレイヤーだった場合 */
+
+		//モードの設定
+		CApplication::GetMode()->Change(CMode::MODE::RESULT);
 	}
 }
 

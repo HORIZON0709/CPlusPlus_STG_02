@@ -8,6 +8,7 @@
 //インクルード
 //***************************
 #include "player_3D.h"
+
 #include "application.h"
 #include "renderer.h"
 #include "camera.h"
@@ -76,13 +77,13 @@ HRESULT CPlayer3D::Init()
 	m_getItem = CItem3D::TYPE::NONE;		//何も取得していない
 	m_bulletType = CBullet3D::TYPE::NORMAL;	//通常弾
 
-	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(PLAYER_SIZE, PLAYER_SIZE);
-	CObject3D::SetSize(size);
-
 	//位置を設定
 	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	CObject3D::SetPos(pos);
+
+	//サイズを設定
+	D3DXVECTOR2 size = D3DXVECTOR2(PLAYER_SIZE, PLAYER_SIZE);
+	CObject3D::SetSize(size);
 
 	// テクスチャの設定
 	CObject3D::SetTexture(CTexture::player000);
@@ -115,6 +116,9 @@ void CPlayer3D::Update()
 		CExplosion3D::Create(CObject3D::GetPos());
 
 		Release();	//解放
+
+		//モードの設定
+		CApplication::GetMode()->Change(CMode::MODE::RESULT);
 	}
 
 	if (m_getItem != CItem3D::TYPE::NONE)

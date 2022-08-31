@@ -194,7 +194,6 @@ void CGame::Update()
 
 	if (m_pCamera->GetPosV().x == 500.0f)
 	{
-		//Change(MODE::RESULT);
 		ChangeGamePart();
 	}
 }
@@ -228,6 +227,8 @@ void CGame::ChangeGamePart()
 
 		m_apEnemy3D[i] = nullptr;	//nullptrにする
 	}
+
+	m_pCamera->Init();	//カメラの初期化
 
 	m_bGamePart = true;	//ボスパートに切り替え
 
