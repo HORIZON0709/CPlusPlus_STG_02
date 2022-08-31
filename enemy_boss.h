@@ -25,6 +25,7 @@ private:
 	static const float CURVE_SIZE;		//カーブの大きさ
 	static const float MOVE_SPEED_X;	//移動スピード( X )
 	static const float MOVE_SPEED_Y;	//移動スピード( Y )
+	static const float SHOT_SPEED;		//弾のスピード
 
 	static const int SHOT_INTERVAL = 90;	//弾の連続発射の間隔
 	static const int NUM_SCORE = 100;		//獲得スコア量

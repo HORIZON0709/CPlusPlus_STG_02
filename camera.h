@@ -17,8 +17,9 @@
 //***************************
 class CCamera
 {/* 基本クラス */
-private: /* 定数の定義 */
-	static const float MOVE_SPEED;	//移動速度
+public: /* 定数の定義 */
+	static const float SCROLL_SPEED;	//スクロール速度
+	static const float MOVE_SPEED;		//移動速度
 
 public: /* コンストラクタ・デストラクタ */
 	CCamera();
@@ -30,10 +31,11 @@ public: /* メンバ関数 */
 	void Update();	//更新
 	void Set();		//設定
 
-	D3DXMATRIX GetMatrixView();
-	D3DXVECTOR3 GetPosV();
+	D3DXMATRIX GetMatrixView();	//ビューマトリクスの取得
+	D3DXVECTOR3 GetPosV();		//視点の位置の取得
+	D3DXVECTOR3 GetMove();		//移動量の取得
 private:
-	void Move();			//移動
+	void Move();	//移動
 
 private: /* メンバ変数 */
 	D3DXVECTOR3 m_posV;		//視点

@@ -236,14 +236,16 @@ void CGame::ChangeGamePart()
 
 	if (m_apEnemy3D[0] != nullptr)
 	{//NULLチェック
-		m_apEnemy3D[0] = nullptr;	//nullptrにする
-
-		//位置を設定
-		D3DXVECTOR3 pos = D3DXVECTOR3(CEnemyBoss::START_POS_X, CEnemyBoss::START_POS_Y, 0.0f);
-
-		//ボスを生成する
-		m_apEnemy3D[0] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::BOSS, pos);
+		assert(false);
 	}
+
+	/* 通常敵が全て解放できていた場合 */
+
+	//位置を設定
+	D3DXVECTOR3 pos = D3DXVECTOR3(CEnemyBoss::START_POS_X, CEnemyBoss::START_POS_Y, 0.0f);
+
+	//ボスを生成する
+	m_apEnemy3D[0] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::BOSS, pos);
 }
 
 //================================================

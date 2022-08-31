@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "game.h"
 
+#include "camera.h"
 #include "bullet_3D.h"
 #include "score.h"
 
@@ -21,11 +22,18 @@
 //定数の定義
 //***************************
 const float CEnemyBoss::START_POS_X = 0.0f;		//初期位置( X )
-const float CEnemyBoss::START_POS_Y = 100.0f;	//初期位置( Y )
+const float CEnemyBoss::START_POS_Y = 220.0f;	//初期位置( Y )
+
 const float CEnemyBoss::ENEMY_SIZE = 270.0f;	//サイズ
-const float CEnemyBoss::CURVE_SIZE = 0.025f;	//カーブの大きさ
-const float CEnemyBoss::MOVE_SPEED_X = 1.0f;	//移動スピード( X )
-const float CEnemyBoss::MOVE_SPEED_Y = 5.0f;	//移動スピード( Y )
+const float CEnemyBoss::CURVE_SIZE = 0.003f;	//カーブの大きさ
+
+const float CEnemyBoss::MOVE_SPEED_X = 4.0f;	//移動スピード( X )
+const float CEnemyBoss::MOVE_SPEED_Y = 
+{//移動スピード( Y )
+	CGame::GetCamera()->SCROLL_SPEED * CGame::GetCamera()->MOVE_SPEED
+};
+
+const float CEnemyBoss::SHOT_SPEED = -4.0f;	//弾のスピード
 
 //================================================
 //コンストラクタ
@@ -114,6 +122,9 @@ void CEnemyBoss::Move()
 	//sinカーブ
 	move.x = cosf(D3DX_PI * m_fCurve) * MOVE_SPEED_X;
 
+	//カメラに合わせてY軸を常時移動
+	move.y = MOVE_SPEED_Y;
+
 	//移動量を位置に加算
 	pos += move;
 
@@ -129,8 +140,8 @@ void CEnemyBoss::Shot()
 
 	if (m_nTimerInterval % SHOT_INTERVAL == 0)
 	{//タイマーが一定時間になったら
-		D3DXVECTOR3 posBullet = CObject3D::GetPos();				//位置を取得
-		D3DXVECTOR3 moveBullet = D3DXVECTOR3(0.0f, -2.0f, 0.0f);	//弾の移動量を設定
+		D3DXVECTOR3 posBullet = CObject3D::GetPos();					//位置を取得
+		D3DXVECTOR3 moveBullet = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);	//弾の移動量を設定
 
 		CBullet3D::Create(/* 弾の生成 */
 			posBullet,					//位置

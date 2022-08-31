@@ -13,7 +13,8 @@
 //***************************
 //定数の定義
 //***************************
-const float CCamera::MOVE_SPEED = 5.0f;	//移動量
+const float CCamera::SCROLL_SPEED = 0.1f;	//スクロール速度
+const float CCamera::MOVE_SPEED = 5.0f;		//移動速度
 
 //================================================
 //コンストラクタ
@@ -64,14 +65,14 @@ void CCamera::Update()
 {
 	if (!CGame::GetGamePart())
 	{//通常パート
-		m_move.x = 0.1f;	//X軸の移動
+		m_move.x = SCROLL_SPEED;	//X軸の移動
 	}
 	else
 	{//ボスパート
-		m_move.y = 0.1f;	//Y軸の移動
+		m_move.y = SCROLL_SPEED;	//Y軸の移動
 	}
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ時のみ
 
 	//移動
 	Move();
@@ -147,6 +148,14 @@ D3DXMATRIX CCamera::GetMatrixView()
 D3DXVECTOR3 CCamera::GetPosV()
 {
 	return m_posV;
+}
+
+//================================================
+//移動量の取得
+//================================================
+D3DXVECTOR3 CCamera::GetMove()
+{
+	return m_move;
 }
 
 //================================================
