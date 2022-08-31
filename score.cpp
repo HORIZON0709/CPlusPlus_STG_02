@@ -75,8 +75,6 @@ HRESULT CScore::Init()
 
 		m_apNumber[i] = CNumber::Create();	//ƒƒ‚ƒŠ‚Ì“®“IŠm•Û
 
-		m_apNumber[i]->Init();	//‰Šú‰»
-
 		//ˆÊ’u‚Ìİ’è
 		D3DXVECTOR3 pos = D3DXVECTOR3((CNumber::POS_X - (i * CNumber::NUMBER_WIDTH)),
 									  CNumber::POS_Y,

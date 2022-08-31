@@ -18,6 +18,7 @@
 //前方宣言
 //***************************
 class CObject2D;
+class CBg;
 
 //***************************
 //タイトルクラスの定義
@@ -41,7 +42,7 @@ public: /* オーバーライド関数 */
 	void Draw() override;		//描画
 
 private: /* 静的メンバ変数 */
+	static CBg* m_pBg;			//背景
 	static CObject2D* m_pLogo;	//タイトルロゴ
-	static CObject2D* m_pBg;	//背景
 };
 #endif

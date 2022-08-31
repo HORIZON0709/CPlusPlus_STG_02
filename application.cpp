@@ -14,6 +14,7 @@
 #include "camera.h"
 
 #include "mode.h"
+#include "title.h"
 
 //***************************
 //静的メンバ変数
@@ -23,7 +24,6 @@ CInputKeyboard* CApplication::m_pInputKeyboard = nullptr;	//キーボード
 
 CTexture* CApplication::m_pTexture = nullptr;	//テクスチャ
 CRenderer* CApplication::m_pRenderer = nullptr;	//レンダラー
-CCamera* CApplication::m_pCamera = nullptr;		//カメラ
 
 CMode* CApplication::m_pMode = nullptr;	//モード
 
@@ -57,14 +57,6 @@ CTexture* CApplication::GetTexture()
 CRenderer* CApplication::GetRenderer()
 {
 	return m_pRenderer;
-}
-
-//================================================
-//カメラ情報を取得
-//================================================
-CCamera* CApplication::GetCamera()
-{
-	return m_pCamera;
 }
 
 //================================================
@@ -137,19 +129,11 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 		return E_FAIL;
 	}
 
-	/* カメラ */
-
-	if (m_pCamera == nullptr)
-	{//NULLチェック
-		m_pCamera = new CCamera;	//メモリの動的確保
-		m_pCamera->Init();			//初期化
-	}
-
 	/* モード */
 
 	if (m_pMode == nullptr)
 	{//NULLチェック
-		m_pMode = new CMode;	//メモリの動的確保
+		m_pMode = new CTitle;	//メモリの動的確保
 	}
 
 	if (FAILED(m_pMode->Init()))
@@ -172,15 +156,6 @@ void CApplication::Uninit()
 		m_pMode->Uninit();	//終了
 		delete m_pMode;		//メモリの解放
 		m_pMode = nullptr;	//nullptrにする
-	}
-
-	/* カメラ */
-
-	if (m_pCamera != nullptr)
-	{//NULLチェック
-		m_pCamera->Uninit();	//終了
-		delete m_pCamera;		//メモリの解放
-		m_pCamera = nullptr;	//nullptrにする
 	}
 
 	/* レンダラー */
@@ -236,9 +211,9 @@ void CApplication::Update()
 		m_pRenderer->Update();	//レンダラー
 	}
 
-	if (m_pCamera != nullptr)
+	if (m_pMode != nullptr)
 	{//NULLチェック
-		m_pCamera->Update();	//カメラ
+		m_pMode->Update();	//モード
 	}
 }
 

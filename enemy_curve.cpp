@@ -177,10 +177,10 @@ void CEnemyCurve::OverRimitRight()
 	float fLeft		= (pos.x - fSizeHalf);	//左端
 
 	//カメラ情報の取得
-	D3DXMATRIX mtxCamera = CApplication::GetCamera()->GetMatrixView();
+	D3DXMATRIX mtxCamera = CApplication::GetMode()->GetGame()->GetCamera()->GetMatrixView();
 	
 	//カメラの視点の位置を取得
-	D3DXVECTOR3 posV = CApplication::GetCamera()->GetPosV();
+	D3DXVECTOR3 posV = CApplication::GetMode()->GetGame()->GetCamera()->GetPosV();
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
@@ -209,10 +209,10 @@ void CEnemyCurve::ReleaseOffScreen()
 	float fRight	= (pos.x + fSizeHalf);	//右端
 
 	//カメラ情報の取得
-	D3DXMATRIX mtxCamera = CApplication::GetCamera()->GetMatrixView();
+	D3DXMATRIX mtxCamera = CApplication::GetMode()->GetGame()->GetCamera()->GetMatrixView();
 	
 	//カメラの視点の位置を取得
-	D3DXVECTOR3 posV = CApplication::GetCamera()->GetPosV();
+	D3DXVECTOR3 posV = CApplication::GetMode()->GetGame()->GetCamera()->GetPosV();
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);

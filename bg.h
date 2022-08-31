@@ -22,11 +22,7 @@ public: /* 定数の定義 */
 	static const float BG_HEIGHT;	//縦幅
 
 public: /* 静的メンバ関数 */
-	/*
-		生成
-		CTexture::TEXTURE texture ---> 使用するテクスチャ
-	*/
-	static CBg* Create(CTexture::TEXTURE texture);
+	static CBg* Create();	//生成
 
 public: /* コンストラクタ・デストラクタ */
 	CBg();

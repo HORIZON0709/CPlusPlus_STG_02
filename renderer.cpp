@@ -16,7 +16,7 @@
 #include "renderer.h"
 #include "main.h"
 #include "application.h"
-#include "camera.h"
+#include "game.h"
 #include "object.h"
 
 #include <tchar.h> //_T
@@ -156,7 +156,8 @@ void CRenderer::Uninit()
 //================================================
 void CRenderer::Update()
 {
-	CObject::UpdateAll();	//オブジェクト
+	//モードの更新
+	CApplication::GetMode()->Update();
 }
 
 //================================================
@@ -172,10 +173,8 @@ void CRenderer::Draw()
 	//Direct3Dによる描画の開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{
-		//カメラの設定
-		CApplication::GetCamera()->Set();
-
-		CObject::DrawAll();	//オブジェクト
+		//モードの描画
+		CApplication::GetMode()->Draw();
 
 #ifdef _DEBUG
 		//FPS表示

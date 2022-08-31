@@ -34,6 +34,7 @@ const char* CTexture::s_FileName[] =
 
 	/* 背景 */
 	"data/TEXTURE/bg000.jpeg",	//何かユニバース
+	"data/TEXTURE/bg001.png",	//宇宙から見た夜明けみたいなやつ
 
 	/* アイテム */
 	"data/TEXTURE/item000.png",	//三角形

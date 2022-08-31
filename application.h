@@ -19,7 +19,6 @@ class CInput;
 class CInputKeyboard;
 class CRenderer;
 class CTexture;
-class CCamera;
 
 class CMode;
 
@@ -37,7 +36,6 @@ public: /* 静的メンバ関数 */
 
 	static CTexture* GetTexture();		//テクスチャ
 	static CRenderer* GetRenderer();	//レンダラー
-	static CCamera* GetCamera();		//カメラ
 
 	static CMode* GetMode();	//モード
 
@@ -61,7 +59,6 @@ private: /* 静的メンバ変数 */
 
 	static CTexture* m_pTexture;	//テクスチャ
 	static CRenderer* m_pRenderer;	//レンダラー
-	static CCamera* m_pCamera;		//カメラ
 
 	static CMode* m_pMode;	//モード
 };

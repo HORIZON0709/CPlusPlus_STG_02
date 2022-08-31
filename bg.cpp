@@ -22,7 +22,7 @@ const float CBg::BG_HEIGHT = CRenderer::SCREEN_HEIGHT;	//縦幅
 //================================================
 //生成
 //================================================
-CBg* CBg::Create(CTexture::TEXTURE texture)
+CBg* CBg::Create()
 {
 	CBg* pBg = nullptr;	//ポインタ
 
@@ -36,8 +36,6 @@ CBg* CBg::Create(CTexture::TEXTURE texture)
 	pBg = new CBg;	//メモリの動的確保
 
 	pBg->Init();	//初期化
-
-	pBg->SetTexture(texture);	//テクスチャの設定
 
 	return pBg;	//動的確保したものを返す
 }
@@ -66,7 +64,9 @@ HRESULT CBg::Init()
 	CObject2D::Init();	//親クラス
 
 	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.1f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(CRenderer::SCREEN_WIDTH * 0.5f,
+								  CRenderer::SCREEN_HEIGHT * 0.5f,
+								  0.0f);
 	CObject2D::SetPos(pos);
 
 	//サイズを設定

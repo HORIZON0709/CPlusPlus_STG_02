@@ -10,6 +10,7 @@
 #include "result.h"
 
 #include "input.h"
+#include "object2D.h"
 
 #include <assert.h>
 
@@ -52,6 +53,8 @@ void CResult::Uninit()
 //================================================
 void CResult::Update()
 {
+	CObject::UpdateAll();	//オブジェクト
+
 	CInput* pInput = CInput::GetKey();	//キーボード情報を取得
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::DECISION))
@@ -65,4 +68,5 @@ void CResult::Update()
 //================================================
 void CResult::Draw()
 {
+	CObject::DrawAll();	//オブジェクト
 }

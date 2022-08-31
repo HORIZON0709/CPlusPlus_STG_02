@@ -11,8 +11,8 @@
 #include "object2D.h"
 #include "object3D.h"
 
+#include "camera.h"
 #include "score.h"
-
 #include "player_3D.h"
 #include "enemy_curve.h"
 #include "enemy_boss.h"
@@ -23,10 +23,19 @@
 //***************************
 //静的メンバ変数
 //***************************
+CCamera* CGame::m_pCamera = nullptr;					//カメラ
 CScore* CGame::m_pScore = nullptr;						//スコア
 CPlayer3D* CGame::m_pPlayer3D = nullptr;				//プレイヤー(3D)
 CEnemy3D* CGame::m_apEnemy3D[CEnemy3D::MAX_ENEMY] = {};	//敵(3D)
 CBg3D* CGame::m_pBg3D = nullptr;						//背景(3D)
+
+//================================================
+//カメラ情報を取得
+//================================================
+CCamera* CGame::GetCamera()
+{
+	return m_pCamera;
+}
 
 //================================================
 //スコア情報を取得
@@ -83,6 +92,12 @@ HRESULT CGame::Init()
 
 	/* 生成 */
 
+	if (m_pCamera == nullptr)
+	{//NULLチェック
+		m_pCamera = new CCamera;	//カメラ
+		m_pCamera->Init();			//初期化
+	}
+
 	m_pScore = CScore::Create();	//スコア
 
 	m_pBg3D = CBg3D::Create();	//背景(3D)
@@ -119,6 +134,15 @@ void CGame::Uninit()
 
 	CObject2D::ReleaseAll();	//全ての解放(2D)
 	CObject3D::ReleaseAll();	//全ての解放(3D)
+
+	/* カメラ */
+
+	if (m_pCamera != nullptr)
+	{//NULLチェック
+		m_pCamera->Uninit();	//終了
+		delete m_pCamera;		//メモリの解放
+		m_pCamera = nullptr;	//nullptrにする
+	}
 
 	/* スコア */
 
@@ -160,6 +184,12 @@ void CGame::Uninit()
 //================================================
 void CGame::Update()
 {
+	if (m_pCamera != nullptr)
+	{//NULLチェック
+		m_pCamera->Update();	//カメラ
+	}
+
+	CObject::UpdateAll();	//オブジェクト
 }
 
 //================================================
@@ -167,6 +197,10 @@ void CGame::Update()
 //================================================
 void CGame::Draw()
 {
+	//カメラの設定
+	m_pCamera->Set();
+
+	CObject::DrawAll();	//オブジェクト
 }
 
 //================================================

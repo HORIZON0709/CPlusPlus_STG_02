@@ -18,6 +18,7 @@
 //***************************
 //前方宣言
 //***************************
+class CCamera;
 class CScore;
 class CPlayer3D;
 class CBg3D;
@@ -28,6 +29,9 @@ class CBg3D;
 class CGame : public CMode
 {/* CModeの派生クラス */
 public: /* 静的メンバ関数 */
+	/* カメラの情報を取得 */
+	static CCamera* GetCamera();
+
 	/* スコアの情報を取得 */
 	static CScore* GetScore();
 
@@ -57,6 +61,7 @@ public: /* オーバーライド関数 */
 	bool GetGamePart();		//ゲームパートの取得
 
 private: /* 静的メンバ変数 */
+	static CCamera* m_pCamera;							//カメラ
 	static CScore* m_pScore;							//スコア
 	static CPlayer3D* m_pPlayer3D;						//プレイヤー(3D)
 	static CEnemy3D* m_apEnemy3D[CEnemy3D::MAX_ENEMY];	//敵(3D)
