@@ -62,7 +62,7 @@ void CCamera::Uninit()
 //================================================
 void CCamera::Update()
 {
-	if (!CApplication::GetMode()->GetGame()->GetGamePart())
+	if (!CGame::GetGamePart())
 	{//’Êíƒp[ƒg
 		m_move.x = 0.1f;	//X²‚ÌˆÚ“®
 	}

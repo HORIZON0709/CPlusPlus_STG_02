@@ -97,7 +97,7 @@ void CEnemyBoss::Draw()
 void CEnemyBoss::Death()
 {
 	//ƒXƒRƒA‚ð‰ÁŽZ
-	CApplication::GetMode()->GetGame()->GetScore()->AddScore(NUM_SCORE);
+	CGame::GetScore()->AddScore(NUM_SCORE);
 }
 
 //================================================

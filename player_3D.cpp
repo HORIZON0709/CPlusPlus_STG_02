@@ -218,10 +218,10 @@ void CPlayer3D::Move()
 	float fBottom	= (pos.y - fSizeHalf);	//下端
 
 	//カメラ情報の取得
-	D3DXMATRIX mtxCamera = CApplication::GetMode()->GetGame()->GetCamera()->GetMatrixView();
+	D3DXMATRIX mtxCamera = CGame::GetCamera()->GetMatrixView();
 	
 	//カメラの視点の位置を取得
-	D3DXVECTOR3 posV = CApplication::GetMode()->GetGame()->GetCamera()->GetPosV();
+	D3DXVECTOR3 posV = CGame::GetCamera()->GetPosV();
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
@@ -325,7 +325,7 @@ void CPlayer3D::SetNormalBullet()
 	//移動量設定(+X方向)
 	move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);
 
-	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	if (CGame::GetGamePart())
 	{//ボスパートの場合
 	 //移動量設定(+Y方向)
 		move = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);
@@ -344,7 +344,7 @@ void CPlayer3D::SetDoubleBullet()
 
 	D3DXVECTOR3 move;	//移動量設定用
 
-	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	if (CGame::GetGamePart())
 	{//ボスパートの場合
 		//弾の位置を左右に少しずらす
 		D3DXVECTOR3 posLeft = pos + D3DXVECTOR3(10.0f, 0.0f, 0.0f);		//左
@@ -384,7 +384,7 @@ void CPlayer3D::SetTripleBullet()
 	
 	/*************************** 1弾目 ***************************/
 
-	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	if (CGame::GetGamePart())
 	{//ボスパートの場合
 		move = D3DXVECTOR3(-SHOT_SPEED, SHOT_SPEED, 0.0f);	//左斜め
 	}
@@ -396,7 +396,7 @@ void CPlayer3D::SetTripleBullet()
 
 	/*************************** 2弾目 ***************************/
 
-	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	if (CGame::GetGamePart())
 	{//ボスパートの場合
 		move = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);	//+Y方向
 	}
@@ -410,7 +410,7 @@ void CPlayer3D::SetTripleBullet()
 
 	move = D3DXVECTOR3(SHOT_SPEED, -SHOT_SPEED, 0.0f);	//斜め下
 
-	if (CApplication::GetMode()->GetGame()->GetGamePart())
+	if (CGame::GetGamePart())
 	{//ボスパートの場合
 		move = D3DXVECTOR3(SHOT_SPEED, SHOT_SPEED, 0.0f);	//右斜め
 	}

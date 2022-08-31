@@ -11,17 +11,19 @@
 
 #include "input.h"
 #include "object2D.h"
+#include "bg.h"
 
 #include <assert.h>
 
 //***************************
 //静的メンバ変数
 //***************************
+CBg* CResult::m_pBg = nullptr;	//背景
 
 //================================================
 //コンストラクタ
 //================================================
-CResult::CResult()
+CResult::CResult() : CMode(MODE::RESULT)
 {
 }
 
@@ -37,6 +39,17 @@ CResult::~CResult()
 //================================================
 HRESULT CResult::Init()
 {
+	/* 背景 */
+
+	//生成
+	m_pBg = CBg::Create();
+
+	//テクスチャの設定
+	m_pBg->SetTexture(CTexture::bg002);
+
+	//テクスチャ座標の設定
+	m_pBg->SetTexUV(1, 0);
+
 	return S_OK;
 }
 
@@ -45,7 +58,16 @@ HRESULT CResult::Init()
 //================================================
 void CResult::Uninit()
 {
+	/* オブジェクト */
 
+	CObject2D::ReleaseAll();	//全ての解放(2D)
+
+	/* 背景 */
+
+	if (m_pBg != nullptr)
+	{//NULLチェック
+		m_pBg = nullptr;	//nullptrにする
+	}
 }
 
 //================================================
@@ -59,7 +81,7 @@ void CResult::Update()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::DECISION))
 	{//決定キ―
-		SetMode(MODE::TITLE);	//モードの設定
+		Change(MODE::TITLE);	//モードの設定
 	}
 }
 

@@ -27,6 +27,7 @@ class CMode
 public: /* 列挙型の定義 */
 	enum MODE	//モードの種類
 	{
+		NONE = -1,
 		TITLE = 0,	//タイトル
 		GAME,		//ゲーム
 		RESULT,		//リザルト
@@ -35,16 +36,14 @@ public: /* 列挙型の定義 */
 
 public: /* 静的メンバ関数 */
 	/*
-		モードの設定
-		MODE mode ---> モードの種類
+		生成
+		const MODE &mode ---> 生成するモード
 	*/
-	static void SetMode(const MODE &mode);
-
-	//ゲーム情報の取得
-	static CGame* GetGame();
+	static CMode* CMode::Create(const MODE &mode);
 
 public: /* コンストラクタ・デストラクタ */
-	CMode();
+	CMode() = delete;	//デフォルト(使わない)
+	CMode(MODE mode);
 	virtual ~CMode();
 
 public: /* 純粋仮想関数 */
@@ -53,13 +52,13 @@ public: /* 純粋仮想関数 */
 	virtual void Update() = 0;	//更新
 	virtual void Draw() = 0;	//描画
 
-private: /* 静的メンバ変数 */
-	static MODE m_mode;	//モード
+public: /* メンバ関数 */
+	CMode* Set();					//モードの設定
+	MODE Get();						//モードの取得
+	void Change(const MODE &mode);	//モードの変更
 
-	//********** ポインタ **********//
-
-	static CTitle* m_pTitle;	//タイトル
-	static CGame* m_pGame;		//ゲーム
-	static CResult* m_pResult;	//リザルト
+private: /* メンバ変数 */
+	MODE m_mode;		//現在のモード
+	MODE m_modeNext;	//次のモード
 };
 #endif

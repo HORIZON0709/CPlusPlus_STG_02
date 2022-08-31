@@ -13,92 +13,54 @@
 #include "game.h"
 #include "result.h"
 
-//***************************
-//静的メンバ変数
-//***************************
-CMode::MODE CMode::m_mode = TITLE;		//モード
-CTitle* CMode::m_pTitle = nullptr;		//タイトル
-CGame* CMode::m_pGame = nullptr;		//ゲーム
-CResult* CMode::m_pResult = nullptr;	//リザルト
+#include <assert.h>
 
-//================================================
-//モードの設定
-//================================================
-void CMode::SetMode(const MODE &mode)
+//--------------------------------------------------
+// 生成
+//--------------------------------------------------
+CMode* CMode::Create(const MODE &mode)
 {
-	switch (m_mode)
-	{//現在のモードを終了する
+	CMode* pMode = nullptr;	//ポインタ
+
+	switch (mode)
+	{
 	case MODE::TITLE: /* タイトル */
-		if (m_pTitle != nullptr)
-		{//NULLチェック
-			m_pTitle->Uninit();	//終了
-			delete m_pTitle;	//メモリの解放
-			m_pTitle = nullptr;	//nullptrにする
-		}
+		pMode = new CTitle;	//メモリの動的確保
 		break;
 
 	case MODE::GAME: /* ゲーム */
-		if (m_pGame != nullptr)
-		{//NULLチェック
-			m_pGame->Uninit();	//終了
-			delete m_pGame;		//メモリの解放
-			m_pGame = nullptr;	//nullptrにする
-		}
+		pMode = new CGame;	//メモリの動的確保
 		break;
 
 	case MODE::RESULT: /* リザルト */
-		if (m_pResult != nullptr)
-		{//NULLチェック
-			m_pResult->Uninit();	//終了
-			delete m_pResult;		//メモリの解放
-			m_pResult = nullptr;	//nullptrにする
-		}
+		pMode = new CResult;	//メモリの動的確保
+		break;
+
+	case MODE::MAX:
+	default: /* それ以外 */
+		assert(false);
 		break;
 	}
 
-	m_mode = mode;	//モードを変更
-
-	switch (m_mode)
-	{//変更後のモードを初期化する
-	case MODE::TITLE: /* タイトル */
-		if (m_pTitle == nullptr)
-		{//NULLチェック
-			m_pTitle = new CTitle;	//メモリの動的確保
-			m_pTitle->Init();		//初期化
-		}
-		break;
-
-	case MODE::GAME: /* ゲーム */
-		if (m_pGame == nullptr)
-		{//NULLチェック
-			m_pGame = new CGame;	//メモリの動的確保
-			m_pGame->Init();		//初期化
-		}
-		break;
-
-	case MODE::RESULT: /* リザルト */
-		if (m_pResult == nullptr)
-		{//NULLチェック
-			m_pResult = new CResult;	//メモリの動的確保
-			m_pResult->Init();			//初期化
-		}
-		break;
+	if (pMode == nullptr)
+	{// NULLチェック
+		assert(false);
 	}
-}
 
-//================================================
-//ゲーム情報を取得
-//================================================
-CGame* CMode::GetGame()
-{
-	return m_pGame;
+	/* nullptrではない場合 */
+
+	pMode->Init();	//初期化
+
+	return pMode;	//動的確保したものを返す
 }
 
 //================================================
 //コンストラクタ
 //================================================
-CMode::CMode()
+CMode::CMode(MODE mode) :
+	m_modeNext(MODE::NONE)
 {
+	m_mode = mode;
 }
 
 //================================================
@@ -106,4 +68,41 @@ CMode::CMode()
 //================================================
 CMode::~CMode()
 {
+}
+
+//================================================
+//モードの設定
+//================================================
+CMode* CMode::Set()
+{
+	if (m_modeNext == MODE::NONE)
+	{//次のモードが決まっていない
+		return this;
+	}
+
+	//現在のモードを終了
+	Uninit();
+
+	m_mode = m_modeNext;		//モードを変更
+	m_modeNext = MODE::NONE;	//何もない状態にする
+	
+	return Create(m_mode);	//変更後のモードを生成して返す
+}
+
+//================================================
+//モードの取得
+//================================================
+CMode::MODE CMode::Get()
+{
+	return m_mode;
+}
+
+//================================================
+//モードの変更
+//================================================
+void CMode::Change(const MODE &mode)
+{
+	assert(mode > MODE::NONE && mode < MODE::MAX);
+
+	m_modeNext = mode;
 }

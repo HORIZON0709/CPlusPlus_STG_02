@@ -20,10 +20,10 @@ class CEnemy3D : public CObject3D
 public: /* 列挙型の定義 */
 	enum ENM_TYPE /* 敵の種類 */
 	{
+		NONE = -1,
 		CURVE = 0,	//sinカーブ
 		BOSS,		//ボス
 		MAX,
-		NONE
 	};
 
 public: /* 定数の定義 */

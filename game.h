@@ -29,14 +29,11 @@ class CBg3D;
 class CGame : public CMode
 {/* CModeの派生クラス */
 public: /* 静的メンバ関数 */
-	/* カメラの情報を取得 */
-	static CCamera* GetCamera();
+	static CCamera* GetCamera();	//カメラの情報を取得
 
-	/* スコアの情報を取得 */
-	static CScore* GetScore();
+	static CScore* GetScore();	//スコアの情報を取得
 
-	/* プレイヤー(3D)の情報を取得 */
-	static CPlayer3D* GetPlayer3D();
+	static CPlayer3D* GetPlayer3D();	//プレイヤー(3D)の情報を取得
 
 	/*
 		敵(3D)の情報を取得
@@ -44,8 +41,10 @@ public: /* 静的メンバ関数 */
 	*/
 	static CEnemy3D* GetEnemy3D(const int nIdx);
 
-	/* 背景(3D)の情報を取得 */
-	static CBg3D* GetBg3D();
+	static CBg3D* GetBg3D();	//背景(3D)の情報を取得
+
+	static void ChangeGamePart();	//ゲームパートの切り替え
+	static bool GetGamePart();		//ゲームパートの取得
 
 public: /* コンストラクタ・デストラクタ */
 	CGame();
@@ -57,22 +56,18 @@ public: /* オーバーライド関数 */
 	void Update() override;	//更新
 	void Draw() override;	//描画
 
-	void ChangeGamePart();	//ゲームパートの切り替え
-	bool GetGamePart();		//ゲームパートの取得
-
 private: /* 静的メンバ変数 */
 	static CCamera* m_pCamera;							//カメラ
 	static CScore* m_pScore;							//スコア
 	static CPlayer3D* m_pPlayer3D;						//プレイヤー(3D)
 	static CEnemy3D* m_apEnemy3D[CEnemy3D::MAX_ENEMY];	//敵(3D)
 	static CBg3D* m_pBg3D;								//背景(3D)
-	
-private: /* メンバ変数 */
+
 	/*
 		ゲームパートの判別
 		false ---> 通常パート
 		true ---> ボスパート
 	*/
-	bool m_bGamePart;
+	static bool m_bGamePart;
 };
 #endif

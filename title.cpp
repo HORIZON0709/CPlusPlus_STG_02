@@ -19,8 +19,6 @@
 //***************************
 //定数の定義
 //***************************
-const float CTitle::START_POS_X = 0.0f;		//初期位置( X )
-const float CTitle::START_POS_Y = 150.0f;	//初期位置( Y )
 const float CTitle::LOGO_WIDTH = 300.0f;	//ロゴの幅
 const float CTitle::LOGO_HEIGHT = 150.0f;	//ロゴの高さ
 
@@ -33,7 +31,7 @@ CObject2D* CTitle::m_pLogo = nullptr;	//タイトルロゴ
 //================================================
 //コンストラクタ
 //================================================
-CTitle::CTitle()
+CTitle::CTitle() : CMode(MODE::TITLE)
 {
 }
 
@@ -62,18 +60,18 @@ HRESULT CTitle::Init()
 
 	/* タイトルロゴ */
 
-	////生成
-	//m_pLogo = CObject2D::Create();
+	//生成
+	m_pLogo = CObject2D::Create();
 
-	////位置を設定
-	//D3DXVECTOR3 pos = D3DXVECTOR3(CRenderer::SCREEN_WIDTH * 0.5f,
-	//							 (CRenderer::SCREEN_HEIGHT / 3.0f),
-	//							  0.0f);
-	//m_pLogo->SetPos(pos);
+	//位置を設定
+	D3DXVECTOR3 pos = D3DXVECTOR3(CRenderer::SCREEN_WIDTH * 0.5f,
+								 (CRenderer::SCREEN_HEIGHT / 3.0f),
+								  0.0f);
+	m_pLogo->SetPos(pos);
 
-	////サイズを設定
-	//D3DXVECTOR2 size = D3DXVECTOR2(LOGO_WIDTH, LOGO_HEIGHT);
-	//m_pLogo->SetSize(size);
+	//サイズを設定
+	D3DXVECTOR2 size = D3DXVECTOR2(LOGO_WIDTH, LOGO_HEIGHT);
+	m_pLogo->SetSize(size);
 
 	return S_OK;
 }
@@ -83,6 +81,10 @@ HRESULT CTitle::Init()
 //================================================
 void CTitle::Uninit()
 {
+	/* オブジェクト */
+
+	CObject2D::ReleaseAll();	//全ての解放(2D)
+
 	/* タイトルロゴ */
 
 	if (m_pLogo != nullptr)
@@ -109,7 +111,7 @@ void CTitle::Update()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::DECISION))
 	{//決定キ―
-		SetMode(MODE::GAME);	//モードの設定
+		Change(MODE::GAME);	//モードの設定
 	}
 }
 

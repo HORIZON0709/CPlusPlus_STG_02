@@ -26,8 +26,6 @@ class CBg;
 class CTitle : public CMode
 {/* CModeの派生クラス */
 private: /* 定数の定義 */
-	static const float START_POS_X;	//初期位置( X )
-	static const float START_POS_Y;	//初期位置( Y )
 	static const float LOGO_WIDTH;	//ロゴの幅
 	static const float LOGO_HEIGHT;	//ロゴの高さ
 

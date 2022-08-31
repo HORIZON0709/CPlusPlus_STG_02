@@ -133,7 +133,7 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	if (m_pMode == nullptr)
 	{//NULLチェック
-		m_pMode = new CTitle;	//メモリの動的確保
+		m_pMode = CMode::Create(CMode::MODE::TITLE);	//メモリの動的確保
 	}
 
 	if (FAILED(m_pMode->Init()))
@@ -213,7 +213,7 @@ void CApplication::Update()
 
 	if (m_pMode != nullptr)
 	{//NULLチェック
-		m_pMode->Update();	//モード
+		m_pMode = m_pMode->Set();	//モードの設定
 	}
 }
 

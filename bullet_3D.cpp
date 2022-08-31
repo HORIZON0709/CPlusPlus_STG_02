@@ -215,10 +215,10 @@ void CBullet3D::ReleaseOffScreen()
 	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
 
 	//カメラ情報の取得
-	D3DXMATRIX mtxCamera = CApplication::GetMode()->GetGame()->GetCamera()->GetMatrixView();
+	D3DXMATRIX mtxCamera = CGame::GetCamera()->GetMatrixView();
 	
 	//カメラの視点の位置を取得
-	D3DXVECTOR3 posV = CApplication::GetMode()->GetGame()->GetCamera()->GetPosV();
+	D3DXVECTOR3 posV = CGame::GetCamera()->GetPosV();
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);

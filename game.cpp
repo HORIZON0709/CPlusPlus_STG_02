@@ -28,6 +28,7 @@ CScore* CGame::m_pScore = nullptr;						//スコア
 CPlayer3D* CGame::m_pPlayer3D = nullptr;				//プレイヤー(3D)
 CEnemy3D* CGame::m_apEnemy3D[CEnemy3D::MAX_ENEMY] = {};	//敵(3D)
 CBg3D* CGame::m_pBg3D = nullptr;						//背景(3D)
+bool CGame::m_bGamePart = false;						//ゲームパート
 
 //================================================
 //カメラ情報を取得
@@ -72,7 +73,7 @@ CBg3D* CGame::GetBg3D()
 //================================================
 //コンストラクタ
 //================================================
-CGame::CGame()
+CGame::CGame() : CMode(MODE::GAME)
 {
 }
 
@@ -190,6 +191,12 @@ void CGame::Update()
 	}
 
 	CObject::UpdateAll();	//オブジェクト
+
+	if (m_pCamera->GetPosV().x == 500.0f)
+	{
+		//Change(MODE::RESULT);
+		ChangeGamePart();
+	}
 }
 
 //================================================
