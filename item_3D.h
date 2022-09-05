@@ -20,11 +20,11 @@ class CItem3D : public CObject3D
 public: /* 列挙型の定義 */
 	enum TYPE	/* アイテムの種類 */
 	{
+		NONE = -1,
 		CHANGE_BUlLET_NORMAL = 0,	//通常弾に変化
 		CHANGE_BUlLET_DOUBLE,		//二連弾に変化
 		CHANGE_BUlLET_TRIPLE,		//三方向拡散弾に変化
 		MAX,
-		NONE
 	};
 
 private: /* 定数の定義 */

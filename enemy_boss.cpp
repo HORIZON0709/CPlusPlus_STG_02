@@ -33,7 +33,7 @@ const float CEnemyBoss::MOVE_SPEED_Y =
 	CGame::GetCamera()->SCROLL_SPEED * CGame::GetCamera()->MOVE_SPEED
 };
 
-const float CEnemyBoss::SHOT_SPEED = -4.0f;	//弾のスピード
+const float CEnemyBoss::SHOT_SPEED = 3.0f;	//弾のスピード
 
 //================================================
 //コンストラクタ
@@ -138,14 +138,23 @@ void CEnemyBoss::Shot()
 {
 	m_nTimerInterval++;	//タイマーを進める
 
-	if (m_nTimerInterval % SHOT_INTERVAL == 0)
-	{//タイマーが一定時間になったら
-		D3DXVECTOR3 posBullet = CObject3D::GetPos();					//位置を取得
-		D3DXVECTOR3 moveBullet = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);	//弾の移動量を設定
+	if (m_nTimerInterval % SHOT_INTERVAL != 0)
+	{//タイマーが一定時間経過していない場合
+		return;
+	}
 
-		CBullet3D::Create(/* 弾の生成 */
-			posBullet,					//位置
-			moveBullet,					//移動量
-			CObject::OBJ_TYPE::ENEMY);	//所有者
+	/* タイマーが一定時間経過した場合 */
+
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置を取得
+
+	for (int i = 0; i < (NUM_BULLETS / 2); i++)
+	{
+		//移動量の設定
+		float x = sinf(D3DX_PI * (1.0f / NUM_BULLETS) * i) * SHOT_SPEED;
+		float y = cosf(D3DX_PI * (1.0f / NUM_BULLETS) * i) * SHOT_SPEED;
+
+		//弾の生成
+		CBullet3D::Create(pos, D3DXVECTOR3(x, -y, 0.0f), CObject::OBJ_TYPE::ENEMY);		//+方向
+		CBullet3D::Create(pos, D3DXVECTOR3(-x, -y, 0.0f), CObject::OBJ_TYPE::ENEMY);	//-方向
 	}
 }
