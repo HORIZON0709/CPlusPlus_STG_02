@@ -162,6 +162,7 @@
     <ClCompile Include="enemy_3D.cpp" />
     <ClCompile Include="enemy_boss.cpp" />
     <ClCompile Include="enemy_curve.cpp" />
+    <ClCompile Include="enemy_straight.cpp" />
     <ClCompile Include="explosion.cpp" />
     <ClCompile Include="explosion_3D.cpp" />
     <ClCompile Include="game.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="enemy_3D.h" />
     <ClInclude Include="enemy_boss.h" />
     <ClInclude Include="enemy_curve.h" />
+    <ClInclude Include="enemy_straight.h" />
     <ClInclude Include="explosion.h" />
     <ClInclude Include="explosion_3D.h" />
     <ClInclude Include="game.h" />

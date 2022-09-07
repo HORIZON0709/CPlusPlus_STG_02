@@ -20,25 +20,25 @@
 const char* CTexture::s_FileName[] =
 {// テクスチャのパス
 	/* プレイヤー */
-	"data/TEXTURE/player000.jpg",	//モチモチの余さん
+	"data/TEXTURE/player000.jpg",	//モチモチの余さん(仮)
 
 	/* 弾 */
-	"data/TEXTURE/bullet000.png",	//桜のサークル
-	"data/TEXTURE/bullet001.png",	//スラックのアイコン
+	"data/TEXTURE/bullet000.png",	//桜のサークル(仮)
+	"data/TEXTURE/bullet001.png",	//スラックのアイコン(仮)
 
 	/* 爆発 */
 	"data/TEXTURE/explosion000.png",	//配布の爆発アニメーション画像
 
 	/* 敵 */
-	"data/TEXTURE/enemy000.jpg",	//全部違うネタ画像のやつ
+	"data/TEXTURE/enemy000.jpg",	//全部違うネタ画像のやつ(仮)
 
 	/* 背景 */
-	"data/TEXTURE/bg000.jpeg",	//何かユニバース
+	"data/TEXTURE/bg000.jpeg",	//何かユニバース(仮)
 	"data/TEXTURE/bg001.png",	//仮背景：タイトル
 	"data/TEXTURE/bg002.png",	//仮背景：リザルト
 
 	/* アイテム */
-	"data/TEXTURE/item000.png",	//三角形
+	"data/TEXTURE/item000.png",	//三角形(仮)
 	"data/TEXTURE/item001.png",	//通常弾に変更
 	"data/TEXTURE/item002.png",	//二連弾に変更
 	"data/TEXTURE/item003.png",	//三連各散弾に変更

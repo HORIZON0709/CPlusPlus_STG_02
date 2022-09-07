@@ -22,6 +22,7 @@ public: /* 列挙型の定義 */
 	{
 		NONE = -1,
 		CURVE = 0,	//sinカーブ
+		STRAIGHT,	//直線
 		BOSS,		//ボス
 		MAX,
 	};
