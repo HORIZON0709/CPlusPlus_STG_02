@@ -293,10 +293,6 @@ void CPlayer3D::Shot()
 //================================================
 void CPlayer3D::CreateBulletByType()
 {
-	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
-
-	D3DXVECTOR3 move;	//移動量設定用
-
 	switch (m_bulletType)
 	{/* 取得したアイテム毎の処理 */
 	case CBullet3D::TYPE::NORMAL:	/* 通常弾 */
@@ -331,7 +327,7 @@ void CPlayer3D::SetNormalBullet()
 
 	if (CGame::GetGamePart())
 	{//ボスパートの場合
-	 //移動量設定(+Y方向)
+		//移動量設定(+Y方向)
 		move = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);
 	}
 

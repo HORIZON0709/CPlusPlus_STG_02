@@ -49,6 +49,9 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
+private: /* メンバ関数 */
+	void SetTexForEachItem();	//アイテム毎のテクスチャの設定
+
 private: /* メンバ変数 */
 	CItem3D::TYPE m_type;	//種類
 };

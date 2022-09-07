@@ -39,6 +39,8 @@ CItem3D* CItem3D::Create(const D3DXVECTOR3 &pos, const CItem3D::TYPE type)
 	pItem3D->Init();		//初期化
 	pItem3D->SetPos(pos);	//位置を設定
 	pItem3D->m_type = type;	//タイプを設定
+	
+	pItem3D->SetTexForEachItem();	//アイテム毎のテクスチャの設定
 
 	return pItem3D;	//動的確保したものを返す
 }
@@ -73,13 +75,6 @@ HRESULT CItem3D::Init()
 	//サイズを設定
 	D3DXVECTOR2 size = D3DXVECTOR2(ITEM_SIZE, ITEM_SIZE);
 	CObject3D::SetSize(size);
-
-	//色を設定
-	D3DXCOLOR col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-	CObject3D::SetCol(col);
-
-	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::bullet001);
 
 	return S_OK;
 }
@@ -116,4 +111,28 @@ void CItem3D::Update()
 void CItem3D::Draw()
 {
 	CObject3D::Draw();	//親クラス
+}
+
+//================================================
+//アイテム毎のテクスチャの設定
+//================================================
+void CItem3D::SetTexForEachItem()
+{
+	switch (m_type)
+	{
+	case CHANGE_BUlLET_NORMAL: /* 通常弾に変更 */
+		CObject3D::SetTexture(CTexture::item001);	// テクスチャの設定
+		break;
+
+	case CHANGE_BUlLET_DOUBLE: /* 二連弾に変更 */
+		CObject3D::SetTexture(CTexture::item002);	// テクスチャの設定
+		break;
+
+	case CHANGE_BUlLET_TRIPLE: /* 三連各散弾に変更 */
+		CObject3D::SetTexture(CTexture::item003);	// テクスチャの設定
+		break;
+
+	default:
+		break;
+	}
 }

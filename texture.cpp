@@ -39,6 +39,9 @@ const char* CTexture::s_FileName[] =
 
 	/* アイテム */
 	"data/TEXTURE/item000.png",	//三角形
+	"data/TEXTURE/item001.png",	//通常弾に変更
+	"data/TEXTURE/item002.png",	//二連弾に変更
+	"data/TEXTURE/item003.png",	//三連各散弾に変更
 
 	/* ナンバー */
 	"data/TEXTURE/number000.png"	//0～9の数字(横並び)
