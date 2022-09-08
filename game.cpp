@@ -8,8 +8,10 @@
 //インクルード
 //***************************
 #include "game.h"
+#include "renderer.h"
 #include "object2D.h"
 #include "object3D.h"
+
 
 #include "camera.h"
 #include "score.h"
@@ -19,6 +21,7 @@
 #include "bg_3D.h"
 
 #include <assert.h>
+#include <time.h>
 
 //***************************
 //静的メンバ変数
@@ -28,7 +31,13 @@ CScore* CGame::m_pScore = nullptr;						//スコア
 CPlayer3D* CGame::m_pPlayer3D = nullptr;				//プレイヤー(3D)
 CEnemy3D* CGame::m_apEnemy3D[CEnemy3D::MAX_ENEMY] = {};	//敵(3D)
 CBg3D* CGame::m_pBg3D = nullptr;						//背景(3D)
-bool CGame::m_bGamePart = false;						//ゲームパート
+
+/*
+	ゲームパートの判別
+	false ---> 通常パート
+	true ---> ボスパート
+*/
+bool CGame::m_bGamePart = false;
 
 //================================================
 //カメラ情報を取得
@@ -71,9 +80,57 @@ CBg3D* CGame::GetBg3D()
 }
 
 //================================================
+//ゲームパートの切り替え
+//================================================
+void CGame::ChangeGamePart()
+{
+	/* 通常敵を解放 */
+
+	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
+	{
+		if (m_apEnemy3D[i] == nullptr)
+		{//NULLチェック
+			continue;
+		}
+
+		/* nullptrではない場合 */
+
+		m_apEnemy3D[i] = nullptr;	//nullptrにする
+	}
+
+	m_pCamera->Init();	//カメラの初期化
+
+	m_bGamePart = true;	//ボスパートに切り替え
+
+	/* ボスの生成 */
+
+	if (m_apEnemy3D[0] != nullptr)
+	{//NULLチェック
+		assert(false);
+	}
+
+	/* 通常敵が全て解放できていた場合 */
+
+	//位置を設定
+	D3DXVECTOR3 pos = D3DXVECTOR3(CEnemyBoss::START_POS_X, CEnemyBoss::START_POS_Y, 0.0f);
+
+	//ボスを生成する
+	m_apEnemy3D[0] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::BOSS, pos);
+}
+
+//================================================
+//ゲームパートの取得
+//================================================
+bool CGame::GetGamePart()
+{
+	return m_bGamePart;
+}
+
+//================================================
 //コンストラクタ
 //================================================
-CGame::CGame() : CMode(MODE::GAME)
+CGame::CGame() : CMode(MODE::GAME),
+m_nCntStraight(0)
 {
 }
 
@@ -89,6 +146,8 @@ CGame::~CGame()
 //================================================
 HRESULT CGame::Init()
 {
+	srand((unsigned)time(NULL));	//ランダム種子の初期化
+
 	m_bGamePart = false;	//通常パート
 
 	/* 生成 */
@@ -104,24 +163,6 @@ HRESULT CGame::Init()
 	m_pBg3D = CBg3D::Create();	//背景(3D)
 
 	m_pPlayer3D = CPlayer3D::Create();	//プレイヤー(3D)
-
-	for (int i = 0; i < CEnemy3D::NUM_ENEMY_CURVE; i++)
-	{//カーブ敵
-		if (m_apEnemy3D[i] != nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrの場合 */
-
-		//位置を設定
-		D3DXVECTOR3 pos = D3DXVECTOR3(CEnemyCurve::START_POS_X + (200.0f * i),
-										(100.0f * i),
-										0.0f);
-
-		//生成
-		m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::CURVE, pos);
-	}
 
 	return S_OK;
 }
@@ -185,17 +226,40 @@ void CGame::Uninit()
 //================================================
 void CGame::Update()
 {
+	//if (!m_bGamePart && m_pCamera->GetPosV().x == 500.0f)
+	//{
+	//	ChangeGamePart();	//ゲームパート切り替え
+	//}
+
 	if (m_pCamera != nullptr)
 	{//NULLチェック
 		m_pCamera->Update();	//カメラ
 	}
 
-	CObject::UpdateAll();	//オブジェクト
+	m_nCntStraight++;	//カウントアップ
 
-	if (m_pCamera->GetPosV().x == 500.0f)
-	{
-		ChangeGamePart();
+	if (!m_bGamePart && m_nCntStraight % INTERVAL_STRAIGHT == 0)
+	{//『通常パート』 & 『一定間隔までカウントしたら』
+		float fPosY = 0.0f;	//生成位置( Y軸 )
+		float aPosY[5] =
+		{//ランダムで生成したい高さ(上から)
+			200.0f,
+			100.0f,
+			0.0f,
+			-100.0f,
+			-200.0f 
+		};
+
+		int nRandam = rand() % 5;	//ランダム
+
+		//高さを決定
+		fPosY = aPosY[nRandam];
+
+		//直線敵の生成
+		CreateEnemyStraight(fPosY);
 	}
+	
+	CObject::UpdateAll();	//オブジェクト
 }
 
 //================================================
@@ -210,48 +274,49 @@ void CGame::Draw()
 }
 
 //================================================
-//ゲームパートの切り替え
+//直線敵の生成
 //================================================
-void CGame::ChangeGamePart()
+void CGame::CreateEnemyStraight(const float fPosY)
 {
-	/* 通常敵を解放 */
+	//カメラ情報の取得
+	D3DXMATRIX mtxCamera = m_pCamera->GetMatrixView();
 
-	for (int i = 0; i < CEnemy3D::MAX_ENEMY; i++)
+	//カメラの視点の位置を取得
+	D3DXVECTOR3 posV = m_pCamera->GetPosV();
+
+	//位置を反映
+	D3DXMatrixTranslation(&mtxCamera, posV.x, posV.y, posV.z);
+
+	//カメラの画角の右の限界を設定
+	float fRimitRight = (mtxCamera._41 + (CRenderer::SCREEN_WIDTH * 0.5f));
+
+	//先頭が生成される位置を設定
+	float fPosFirst = (fRimitRight + 100.0f);
+
+	int nNumCreate = 5;	//一度に生成する数
+
+	for (int i = 0,nCnt = 0; i < CEnemy3D::MAX_ENEMY; i++)
 	{
-		if (m_apEnemy3D[i] == nullptr)
+		if (nCnt == nNumCreate)
+		{//設定数分全て生成したら
+			break;
+		}
+
+		/* 設定数分全て生成していない場合 */
+
+		if (m_apEnemy3D[i] != nullptr)
 		{//NULLチェック
 			continue;
 		}
 
-		/* nullptrではない場合 */
+		/* nullptrの場合 */
 
-		m_apEnemy3D[i] = nullptr;	//nullptrにする
+		//位置を設定
+		D3DXVECTOR3 pos = D3DXVECTOR3(fPosFirst + (i * 100.0f), fPosY, 0.0f);
+
+		//生成
+		m_apEnemy3D[i] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::STRAIGHT, pos);
+
+		nCnt++;	//生成したらカウント
 	}
-
-	m_pCamera->Init();	//カメラの初期化
-
-	m_bGamePart = true;	//ボスパートに切り替え
-
-	/* ボスの生成 */
-
-	if (m_apEnemy3D[0] != nullptr)
-	{//NULLチェック
-		assert(false);
-	}
-
-	/* 通常敵が全て解放できていた場合 */
-
-	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(CEnemyBoss::START_POS_X, CEnemyBoss::START_POS_Y, 0.0f);
-
-	//ボスを生成する
-	m_apEnemy3D[0] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::BOSS, pos);
-}
-
-//================================================
-//ゲームパートの取得
-//================================================
-bool CGame::GetGamePart()
-{
-	return m_bGamePart;
 }

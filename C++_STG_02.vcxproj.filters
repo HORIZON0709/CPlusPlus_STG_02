@@ -148,7 +148,7 @@
       <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="enemy_straight.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Object\3D\enemy3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,7 +243,7 @@
       <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="enemy_straight.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Object\3D\enemy3D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

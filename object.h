@@ -33,7 +33,7 @@ public: /* 列挙型の定義 */
 	};
 
 public: /* 定数の定義 */
-	static const int MAX_OBJECT = 64;		//ポリゴンの最大数
+	static const int MAX_OBJECT = 128;		//ポリゴンの最大数
 	//static const int MAX_NUM_PRIORITY = 5;	//優先順位の最大数
 
 public: /* 静的メンバ関数 */

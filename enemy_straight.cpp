@@ -31,7 +31,7 @@ CEnemyStraight::CEnemyStraight():
 	m_bInside(false)
 {
 	//“G‚Ìí—Ş‚ğİ’è
-	CEnemy3D::SetEnmType(CEnemy3D::ENM_TYPE::CURVE);
+	CEnemy3D::SetEnmType(CEnemy3D::ENM_TYPE::STRAIGHT);
 }
 
 //================================================

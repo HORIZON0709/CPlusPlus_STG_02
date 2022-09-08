@@ -28,6 +28,9 @@ class CBg3D;
 //***************************
 class CGame : public CMode
 {/* CModeの派生クラス */
+private: /* 定数の定義 */
+	static const int INTERVAL_STRAIGHT = 120;	//直線敵の生成間隔
+
 public: /* 静的メンバ関数 */
 	static CCamera* GetCamera();	//カメラの情報を取得
 
@@ -56,6 +59,14 @@ public: /* オーバーライド関数 */
 	void Update() override;	//更新
 	void Draw() override;	//描画
 
+private: /* メンバ関数 */
+	/*
+		直線敵の生成
+		const float fPosY ---> 生成する位置( Y軸 )
+	*/
+	void CreateEnemyStraight(const float fPosY);
+
+
 private: /* 静的メンバ変数 */
 	static CCamera* m_pCamera;							//カメラ
 	static CScore* m_pScore;							//スコア
@@ -69,5 +80,8 @@ private: /* 静的メンバ変数 */
 		true ---> ボスパート
 	*/
 	static bool m_bGamePart;
+
+private: /* メンバ変数 */
+	int m_nCntStraight;	//直線敵の生成間隔カウント用
 };
 #endif

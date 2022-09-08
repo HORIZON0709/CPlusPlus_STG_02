@@ -8,6 +8,7 @@
 //インクルード
 //***************************
 #include "enemy_3D.h"
+#include "enemy_straight.h"
 #include "enemy_curve.h"
 #include "enemy_boss.h"
 
@@ -29,6 +30,10 @@ CEnemy3D* CEnemy3D::Create(const ENM_TYPE &type, const D3DXVECTOR3 &pos)
 
 	switch (type)
 	{
+	case ENM_TYPE::STRAIGHT: /* 直線 */
+		pEnemy3D = new CEnemyStraight;	//メモリの動的
+		break;
+
 	case ENM_TYPE::CURVE: /* sinカーブ */
 		pEnemy3D = new CEnemyCurve;	//メモリの動的確保
 		break;
