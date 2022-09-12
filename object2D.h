@@ -82,6 +82,13 @@ public: /* Move */
 	*/
 	D3DXVECTOR3 GetMove();
 
+public: /* Color */
+	/*
+		色を設定
+		const D3DXCOLOR &col ---> 任意の色
+	*/
+	void SetCol(const D3DXCOLOR &col);
+
 public: /* Texture */
 	/*
 		テクスチャの設定
@@ -106,6 +113,7 @@ private: /* メンバ変数 */
 	D3DXVECTOR3 m_rot;	//向き
 	D3DXVECTOR3 m_move;	//移動量
 	D3DXVECTOR2 m_size;	//サイズ
+	D3DXCOLOR m_col;	//色
 };
 
 #endif

@@ -20,6 +20,7 @@ class CObject
 public: /* 列挙型の定義 */
 	enum OBJ_TYPE
 	{/* オブジェクトの種類 */
+		NONE = -1,
 		PLAYER = 0,	//プレイヤー
 		ENEMY,		//敵
 		BULLET,		//弾
@@ -28,8 +29,8 @@ public: /* 列挙型の定義 */
 		ITEM,		//アイテム
 		SCORE,		//スコア
 		NUMBER,		//ナンバー
-		MAX,
-		NONE
+		FADE,		//フェード
+		MAX
 	};
 
 public: /* 定数の定義 */

@@ -44,6 +44,7 @@ CObject2D::CObject2D() :
 	m_rot(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_move(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	m_size(D3DXVECTOR2(0.0f,0.0f)),
+	m_col(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f)),
 	m_texture(CTexture::NONE)
 {
 }
@@ -79,6 +80,7 @@ HRESULT CObject2D::Init()
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_size = D3DXVECTOR2(0.0f, 0.0f);
+	m_col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	m_texture = CTexture::NONE;
 
 	//頂点バッファの生成
@@ -211,36 +213,6 @@ D3DXVECTOR3 CObject2D::GetPos()
 }
 
 //================================================
-//テクスチャの設定
-//================================================
-void CObject2D::SetTexture(CTexture::TEXTURE texture)
-{
-	m_texture = texture;
-}
-
-//================================================
-//テクスチャ座標の設定(アニメーションに対応)
-//================================================
-void CObject2D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
-{
-	VERTEX_2D *pVtx;	//頂点情報へのポインタ
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
- 	float fDivide = (1.0f / nDivNum);	//乗算用にfloatに変換
-
-	//テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(fDivide * nPtnAnim,		0.0f);
-	pVtx[1].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 0.0f);
- 	pVtx[2].tex = D3DXVECTOR2(fDivide * nPtnAnim,		1.0f);
-	pVtx[3].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 1.0f);
-
-	//頂点バッファをアンロックする
-	m_pVtxBuff->Unlock();
-}
-
-//================================================
 //サイズの設定
 //================================================
 void CObject2D::SetSize(const D3DXVECTOR2 &size)
@@ -287,4 +259,56 @@ void CObject2D::SetMove(const D3DXVECTOR3 &move)
 D3DXVECTOR3 CObject2D::GetMove()
 {
 	return m_move;
+}
+
+//================================================
+//色の設定
+//================================================
+void CObject2D::SetCol(const D3DXCOLOR &col)
+{
+	m_col = col;	//色を設定
+
+	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点情報を設定
+	pVtx[0].col = m_col;
+	pVtx[1].col = m_col;
+	pVtx[2].col = m_col;
+	pVtx[3].col = m_col;
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
+}
+
+//================================================
+//テクスチャの設定
+//================================================
+void CObject2D::SetTexture(CTexture::TEXTURE texture)
+{
+	m_texture = texture;
+}
+
+//================================================
+//テクスチャ座標の設定(アニメーションに対応)
+//================================================
+void CObject2D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
+{
+	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+ 	float fDivide = (1.0f / nDivNum);	//乗算用にfloatに変換
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(fDivide * nPtnAnim,		0.0f);
+	pVtx[1].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 0.0f);
+ 	pVtx[2].tex = D3DXVECTOR2(fDivide * nPtnAnim,		1.0f);
+	pVtx[3].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 1.0f);
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
 }

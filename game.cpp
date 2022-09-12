@@ -240,7 +240,6 @@ void CGame::Update()
 
 	if (!m_bGamePart && m_nCntStraight % INTERVAL_STRAIGHT == 0)
 	{//『通常パート』 & 『一定間隔までカウントしたら』
-		float fPosY = 0.0f;	//生成位置( Y軸 )
 		float aPosY[5] =
 		{//ランダムで生成したい高さ(上から)
 			200.0f,
@@ -252,11 +251,8 @@ void CGame::Update()
 
 		int nRandam = rand() % 5;	//ランダム
 
-		//高さを決定
-		fPosY = aPosY[nRandam];
-
 		//直線敵の生成
-		CreateEnemyStraight(fPosY);
+		CreateEnemyStraight(aPosY[nRandam]);
 	}
 	
 	CObject::UpdateAll();	//オブジェクト
