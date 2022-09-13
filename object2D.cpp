@@ -37,7 +37,7 @@ CObject2D* CObject2D::Create()
 //================================================
 //コンストラクタ
 //================================================
-CObject2D::CObject2D() : 
+CObject2D::CObject2D() :
 	m_pTexture(nullptr),
 	m_pVtxBuff(nullptr),
 	m_pos(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
@@ -151,7 +151,6 @@ void CObject2D::Uninit()
 //================================================
 void CObject2D::Update()
 {
-	
 }
 
 //================================================
@@ -284,6 +283,14 @@ void CObject2D::SetCol(const D3DXCOLOR &col)
 }
 
 //================================================
+//色の設定
+//================================================
+D3DXCOLOR CObject2D::GetCol()
+{
+	return m_col;
+}
+
+//================================================
 //テクスチャの設定
 //================================================
 void CObject2D::SetTexture(CTexture::TEXTURE texture)
@@ -294,7 +301,7 @@ void CObject2D::SetTexture(CTexture::TEXTURE texture)
 //================================================
 //テクスチャ座標の設定(アニメーションに対応)
 //================================================
-void CObject2D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
+void CObject2D::SetTexUV(const int nDivNum, const int nPtnAnim)
 {
 	VERTEX_2D *pVtx;	//頂点情報へのポインタ
 

@@ -89,6 +89,11 @@ public: /* Color */
 	*/
 	void SetCol(const D3DXCOLOR &col);
 
+	/*
+		色を取得
+	*/
+	D3DXCOLOR GetCol();
+
 public: /* Texture */
 	/*
 		テクスチャの設定
@@ -102,7 +107,7 @@ public: /* Texture */
 		const int &nPtnAnim ---> アニメーションパターン数
 		(単体画像の場合は「1,0」を送る。)
 	*/
-	void SetTexUV(const int &nDivNum,const int &nPtnAnim);
+	void SetTexUV(const int nDivNum,const int nPtnAnim);
 
 private: /* メンバ変数 */
 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ
