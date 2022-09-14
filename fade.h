@@ -10,13 +10,18 @@
 //***************************
 //インクルード
 //***************************
-#include "object2D.h"
+#include <d3dx9.h>
+
+//***************************
+//定数の定義
+//***************************
+const DWORD FVF_VERTEX_2D = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);	//頂点フォーマット
 
 //***************************
 //背景クラスの定義
 //***************************
-class CFade : public CObject2D
-{/* CObject2Dの派生クラス */
+class CFade
+{/* 基本クラス */
 public: /* 列挙型の定義 */	
 	enum STATE	//フェード状態
 	{
@@ -26,22 +31,27 @@ public: /* 列挙型の定義 */
 		MAX
 	};
 
-private: /* 定数の定義 */
-	static const float FADE_WIDTH;	//横幅
-	static const float FADE_HEIGHT;	//縦幅
+private: /* 構造体の定義 */
+	struct VERTEX_2D
+	{//頂点データ
+		D3DXVECTOR3 pos;	//位置
+		float rhw;			//法線
+		D3DCOLOR col;		//色
+		D3DXVECTOR2 tex;	//テクスチャ座標
+	};
 
 public: /* 静的メンバ関数 */
 	static CFade* Create();	//生成
 
 public: /* コンストラクタ・デストラクタ */
 	CFade();
-	~CFade() override;
+	~CFade();
 
 public: /* オーバーライド関数 */
-	HRESULT Init() override;	//初期化
-	void Uninit() override;		//終了
-	void Update() override;		//更新
-	void Draw() override;		//描画
+	HRESULT Init();	//初期化
+	void Uninit();	//終了
+	void Update();	//更新
+	void Draw();	//描画
 
 public: /* メンバ関数 */
 	/*
@@ -51,6 +61,10 @@ public: /* メンバ関数 */
 	void Set(const STATE &state);
 
 private: /* メンバ変数 */
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	//頂点バッファへのポインタ
+
 	STATE m_state;	//フェード状態
+
+	D3DXCOLOR m_col;	//色
 };
 #endif

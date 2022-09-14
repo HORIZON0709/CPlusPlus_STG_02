@@ -29,7 +29,6 @@ public: /* 列挙型の定義 */
 		ITEM,		//アイテム
 		SCORE,		//スコア
 		NUMBER,		//ナンバー
-		FADE,		//フェード
 		MAX
 	};
 

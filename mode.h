@@ -39,7 +39,7 @@ public: /* 静的メンバ関数 */
 		生成
 		const MODE &mode ---> 生成するモード
 	*/
-	static CMode* CMode::Create(const MODE &mode);
+	static CMode* Create(const MODE &mode);
 
 public: /* コンストラクタ・デストラクタ */
 	CMode() = delete;	//デフォルト(使わない)

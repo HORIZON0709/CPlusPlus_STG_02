@@ -8,15 +8,10 @@
 //インクルード
 //***************************
 #include "fade.h"
+#include "application.h"
 #include "renderer.h"
 
 #include <assert.h>
-
-//***************************
-//定数の定義
-//***************************
-const float CFade::FADE_WIDTH = CRenderer::SCREEN_WIDTH;	//横幅
-const float CFade::FADE_HEIGHT = CRenderer::SCREEN_HEIGHT;	//縦幅
 
 //================================================
 //生成
@@ -43,10 +38,10 @@ CFade* CFade::Create()
 //コンストラクタ
 //================================================
 CFade::CFade() :
-	m_state(STATE::NONE)
+	m_pVtxBuff(nullptr),
+	m_state(STATE::NONE),
+	m_col(D3DXCOLOR(0.0f,0.0f,0.0f,0.0f))
 {
-	//タイプの設定
-	CObject::SetObjType(CObject::OBJ_TYPE::FADE);
 }
 
 //================================================
@@ -54,6 +49,8 @@ CFade::CFade() :
 //================================================
 CFade::~CFade()
 {
+	/* 解放漏れの確認 */
+	assert(m_pVtxBuff == nullptr);
 }
 
 //================================================
@@ -63,20 +60,53 @@ HRESULT CFade::Init()
 {
 	//メンバ変数の初期化
 	m_state = STATE::NONE;
+	m_col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 
-	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(CRenderer::SCREEN_WIDTH * 0.5f,
-								  CRenderer::SCREEN_HEIGHT * 0.5f,
-								  0.0f);
-	CObject2D::SetPos(pos);
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
-	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(FADE_WIDTH, FADE_HEIGHT);
-	CObject2D::SetSize(size);
+	//頂点バッファの生成
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
+								D3DUSAGE_WRITEONLY,
+								FVF_VERTEX_2D,
+								D3DPOOL_MANAGED,
+								&m_pVtxBuff,
+								NULL);
 
-	//色を設定
-	D3DXCOLOR col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-	CObject2D::SetCol(col);
+	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	float fHalfWidth = (CRenderer::SCREEN_WIDTH * 0.5f);	//横幅の半分
+	float fHalfHeight = (CRenderer::SCREEN_HEIGHT * 0.5f);	//縦幅の半分
+
+	//頂点情報を設定
+	pVtx[0].pos = D3DXVECTOR3(-fHalfWidth, -fHalfHeight, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(+fHalfWidth, -fHalfHeight, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-fHalfWidth, +fHalfHeight, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(+fHalfWidth, +fHalfHeight, 0.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	pVtx[1].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	pVtx[2].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	pVtx[3].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
 
 	return S_OK;
 }
@@ -86,7 +116,12 @@ HRESULT CFade::Init()
 //================================================
 void CFade::Uninit()
 {
-	CObject2D::Uninit();	//親クラス
+	//頂点バッファの破棄
+	if (m_pVtxBuff != nullptr)
+	{
+		m_pVtxBuff->Release();
+		m_pVtxBuff = nullptr;
+	}
 }
 
 //================================================
@@ -94,8 +129,6 @@ void CFade::Uninit()
 //================================================
 void CFade::Update()
 {
-	CObject2D::Update();	//親クラス
-
 	if (m_state == STATE::NONE)
 	{//フェードしていない場合
 		return;
@@ -103,34 +136,40 @@ void CFade::Update()
 
 	/* フェードしているとき */
 
-	D3DXCOLOR col = CObject2D::GetCol();	//色を取得
-
 	if (m_state == STATE::FADE_IN)
-	{//フェードイン( 不透明 ---> 透明 )
-		col.a -= 0.01f;	//透明にしていく
+	{//フェードイン( 暗転 )
+		m_col.a -= 0.01f;	//透明にしていく
 
-		//色を設定
-		CObject2D::SetCol(col);
-
-		if (col.a <= 0.0f)
+		if (m_col.a <= 0.0f)
 		{//完全に透明になったら
-			col.a = 0.0f;			//0.0にする
+			m_col.a = 0.0f;			//0.0にする
 			m_state = STATE::NONE;	//フェードしていない状態にする
 		}
 	}
 	else if (m_state == STATE::FADE_OUT)
-	{//フェードアウト( 透明 ---> 不透明 )
-		col.a += 0.01f;	//不透明にしていく
+	{//フェードアウト( 明転 )
+		m_col.a += 0.01f;	//不透明にしていく
 
-		//色を設定
-		CObject2D::SetCol(col);
-
-		if (col.a >= 1.0f)
+		if (m_col.a >= 1.0f)
 		{//完全に不透明になったら
-			col.a = 1.0f;			//1.0にする
+			m_col.a = 1.0f;			//1.0にする
 			m_state = STATE::NONE;	//フェードしていない状態にする
 		}
 	}
+
+	VERTEX_2D *pVtx;	//頂点情報へのポインタ
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点カラーの設定
+	pVtx[0].col = m_col;
+	pVtx[1].col = m_col;
+	pVtx[2].col = m_col;
+	pVtx[3].col = m_col;
+
+	//頂点バッファをアンロックする
+	m_pVtxBuff->Unlock();
 }
 
 //================================================
@@ -138,7 +177,22 @@ void CFade::Update()
 //================================================
 void CFade::Draw()
 {
-	CObject2D::Draw();	//親クラス
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
+
+	//頂点バッファをデータストリームに設定
+	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
+
+	//頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	//テクスチャの設定
+	pDevice->SetTexture(0, nullptr);
+
+	//ポリゴンの描画
+	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+							0,					//描画する最初の頂点インデックス
+							2);					//描画するプリミティブ数
 }
 
 //================================================
@@ -147,4 +201,6 @@ void CFade::Draw()
 void CFade::Set(const STATE &state)
 {
 	m_state = state;	//フェード状態を設定
+
+	m_col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);	//透明な黒ポリゴンにする
 }

@@ -32,10 +32,8 @@ private: /* 定数の定義 */
 	static const int INTERVAL_STRAIGHT = 120;	//直線敵の生成間隔
 
 public: /* 静的メンバ関数 */
-	static CCamera* GetCamera();	//カメラの情報を取得
-
-	static CScore* GetScore();	//スコアの情報を取得
-
+	static CCamera* GetCamera();		//カメラの情報を取得
+	static CScore* GetScore();			//スコアの情報を取得
 	static CPlayer3D* GetPlayer3D();	//プレイヤー(3D)の情報を取得
 
 	/*
