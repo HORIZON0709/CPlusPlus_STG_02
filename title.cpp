@@ -9,8 +9,11 @@
 //***************************
 #include "title.h"
 
+#include "application.h"
 #include "renderer.h"
 #include "input.h"
+#include "fade.h"
+
 #include "object2D.h"
 #include "bg.h"
 
@@ -73,6 +76,9 @@ HRESULT CTitle::Init()
 	D3DXVECTOR2 size = D3DXVECTOR2(LOGO_WIDTH, LOGO_HEIGHT);
 	m_pLogo->SetSize(size);
 
+	//明転
+	CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+
 	return S_OK;
 }
 
@@ -111,6 +117,8 @@ void CTitle::Update()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::DECISION))
 	{//決定キ―
+		CApplication::GetFade()->Set(CFade::STATE::FADE_IN);	//暗転
+
 		Change(MODE::GAME);	//モードの設定
 	}
 }

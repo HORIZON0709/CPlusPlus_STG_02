@@ -130,7 +130,8 @@ bool CGame::GetGamePart()
 //コンストラクタ
 //================================================
 CGame::CGame() : CMode(MODE::GAME),
-m_nCntStraight(0)
+m_nCntStraight(0),
+m_nCntBoss(0)
 {
 }
 
@@ -149,6 +150,10 @@ HRESULT CGame::Init()
 	srand((unsigned)time(NULL));	//ランダム種子の初期化
 
 	m_bGamePart = false;	//通常パート
+
+	//メンバ変数の初期化
+	m_nCntStraight = 0;
+	m_nCntBoss = 0;
 
 	/* 生成 */
 
@@ -226,36 +231,21 @@ void CGame::Uninit()
 //================================================
 void CGame::Update()
 {
-	//if (!m_bGamePart && m_pCamera->GetPosV().x == 500.0f)
-	//{
-	//	ChangeGamePart();	//ゲームパート切り替え
-	//}
+	CObject::UpdateAll();	//オブジェクト
 
 	if (m_pCamera != nullptr)
 	{//NULLチェック
 		m_pCamera->Update();	//カメラ
 	}
 
-	m_nCntStraight++;	//カウントアップ
-
-	if (!m_bGamePart && m_nCntStraight % INTERVAL_STRAIGHT == 0)
-	{//『通常パート』 & 『一定間隔までカウントしたら』
-		float aPosY[5] =
-		{//ランダムで生成したい高さ(上から)
-			200.0f,
-			100.0f,
-			0.0f,
-			-100.0f,
-			-200.0f 
-		};
-
-		int nRandam = rand() % 5;	//ランダム
-
-		//直線敵の生成
-		CreateEnemyStraight(aPosY[nRandam]);
+	if (!m_bGamePart)
+	{//通常パートの場合
+		UpdateNormalPart();	//通常パートの更新
 	}
-	
-	CObject::UpdateAll();	//オブジェクト
+	else
+	{//ボスパートの場合
+		UpdateBossPart();	//ボスパートの更新
+	}
 }
 
 //================================================
@@ -315,4 +305,50 @@ void CGame::CreateEnemyStraight(const float fPosY)
 
 		nCnt++;	//生成したらカウント
 	}
+}
+
+//================================================
+//通常パートの更新
+//================================================
+void CGame::UpdateNormalPart()
+{
+	//if (!m_bGamePart && m_pCamera->GetPosV().x == 500.0f)
+	//{
+	//	ChangeGamePart();	//ゲームパート切り替え
+	//	return;
+	//}
+
+	m_nCntStraight++;	//カウントアップ
+
+	if (m_nCntStraight % INTERVAL_STRAIGHT == 0)
+	{//『一定間隔までカウントしたら』
+		float aPosY[5] =
+		{//ランダムで生成したい高さ(上から)
+			200.0f,
+			100.0f,
+			0.0f,
+			-100.0f,
+			-200.0f 
+		};
+
+		int nRandam = rand() % 5;	//ランダム
+
+		//直線敵の生成
+		CreateEnemyStraight(aPosY[nRandam]);
+	}
+}
+
+//================================================
+//ボスパートの更新
+//================================================
+void CGame::UpdateBossPart()
+{
+	if (m_apEnemy3D[0] != nullptr)
+	{//ボスが死んでない場合
+		return;
+	}
+
+	/* ボスが死んだ場合 */
+
+
 }

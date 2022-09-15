@@ -13,8 +13,8 @@
 #include "texture.h"
 #include "camera.h"
 
+#include "fade.h"
 #include "mode.h"
-#include "title.h"
 
 //***************************
 //静的メンバ変数
@@ -25,6 +25,7 @@ CInputKeyboard* CApplication::m_pInputKeyboard = nullptr;	//キーボード
 CTexture* CApplication::m_pTexture = nullptr;	//テクスチャ
 CRenderer* CApplication::m_pRenderer = nullptr;	//レンダラー
 
+CFade* CApplication::m_pFade = nullptr;	//フェード
 CMode* CApplication::m_pMode = nullptr;	//モード
 
 //================================================
@@ -60,6 +61,14 @@ CRenderer* CApplication::GetRenderer()
 }
 
 //================================================
+//フェード情報を取得
+//================================================
+CFade* CApplication::GetFade()
+{
+	return m_pFade;
+}
+
+//================================================
 //モード情報を取得
 //================================================
 CMode* CApplication::GetMode()
@@ -90,7 +99,7 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 
 	if (m_pInput == nullptr)
 	{//NULLチェック
-		m_pInput = CInput::Create();	//メモリの動的確保
+		m_pInput = CInput::Create();	//生成
 	}
 
 	if (FAILED(m_pInput->Init(hInstance, hWnd)))
@@ -129,16 +138,18 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 		return E_FAIL;
 	}
 
+	/* フェード */
+
+	if (m_pFade == nullptr)
+	{//NULLチェック
+		m_pFade = CFade::Create();	//生成
+	}
+
 	/* モード */
 
 	if (m_pMode == nullptr)
 	{//NULLチェック
-		m_pMode = CMode::Create(CMode::MODE::TITLE);	//メモリの動的確保
-	}
-
-	if (FAILED(m_pMode->Init()))
-	{//初期化処理が失敗した場合
-		return E_FAIL;
+		m_pMode = CMode::Create(CMode::MODE::TITLE);	//生成
 	}
 
 	return S_OK;
@@ -156,6 +167,15 @@ void CApplication::Uninit()
 		m_pMode->Uninit();	//終了
 		delete m_pMode;		//メモリの解放
 		m_pMode = nullptr;	//nullptrにする
+	}
+
+	/* フェード */
+
+	if (m_pFade != nullptr)
+	{//NULLチェック
+		m_pFade->Uninit();	//終了
+		delete m_pFade;		//メモリの解放
+		m_pFade = nullptr;	//nullptrにする
 	}
 
 	/* レンダラー */
@@ -211,6 +231,11 @@ void CApplication::Update()
 		m_pRenderer->Update();	//レンダラー
 	}
 
+	if (m_pFade != nullptr)
+	{//NULLチェック
+		m_pFade->Update();	//フェード
+	}
+
 	if (m_pMode != nullptr)
 	{//NULLチェック
 		m_pMode = m_pMode->Set();	//モードの設定
@@ -225,5 +250,10 @@ void CApplication::Draw()
 	if (m_pRenderer != nullptr)
 	{//NULLチェック
 		m_pRenderer->Draw();	//レンダラー
+	}
+
+	if (m_pFade != nullptr)
+	{//NULLチェック
+		m_pFade->Draw();	//フェード
 	}
 }

@@ -13,6 +13,13 @@
 
 #include <assert.h>
 
+//***************************
+//定数の定義
+//***************************
+const DWORD CFade::FVF_VERTEX_2D = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);	//頂点フォーマット
+
+const float CFade::FADE_SPEED = 0.001f;	//フェードの速度
+
 //================================================
 //生成
 //================================================
@@ -138,21 +145,21 @@ void CFade::Update()
 
 	if (m_state == STATE::FADE_IN)
 	{//フェードイン( 暗転 )
-		m_col.a -= 0.01f;	//透明にしていく
+		m_col.a += FADE_SPEED;	//不透明にしていく
 
-		if (m_col.a <= 0.0f)
-		{//完全に透明になったら
-			m_col.a = 0.0f;			//0.0にする
+		if (m_col.a >= 1.0f)
+		{//完全に不透明になったら
+			m_col.a = 1.0f;			//1.0にする
 			m_state = STATE::NONE;	//フェードしていない状態にする
 		}
 	}
 	else if (m_state == STATE::FADE_OUT)
 	{//フェードアウト( 明転 )
-		m_col.a += 0.01f;	//不透明にしていく
+		m_col.a -= FADE_SPEED;	//透明にしていく
 
-		if (m_col.a >= 1.0f)
-		{//完全に不透明になったら
-			m_col.a = 1.0f;			//1.0にする
+		if (m_col.a <= 0.0f)
+		{//完全に透明になったら
+			m_col.a = 0.0f;			//0.0にする
 			m_state = STATE::NONE;	//フェードしていない状態にする
 		}
 	}
@@ -203,4 +210,12 @@ void CFade::Set(const STATE &state)
 	m_state = state;	//フェード状態を設定
 
 	m_col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);	//透明な黒ポリゴンにする
+}
+
+//================================================
+//フェード状態の取得
+//================================================
+CFade::STATE CFade::GetState()
+{
+	return m_state;
 }

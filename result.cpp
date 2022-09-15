@@ -9,6 +9,8 @@
 //***************************
 #include "result.h"
 
+#include "application.h"
+#include "fade.h"
 #include "input.h"
 #include "object2D.h"
 #include "bg.h"
@@ -50,6 +52,9 @@ HRESULT CResult::Init()
 	//テクスチャ座標の設定
 	m_pBg->SetTexUV(1, 0);
 
+	//明転
+	CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+
 	return S_OK;
 }
 
@@ -81,6 +86,8 @@ void CResult::Update()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::DECISION))
 	{//決定キ―
+		CApplication::GetFade()->Set(CFade::STATE::FADE_IN);	//暗転
+
 		Change(MODE::TITLE);	//モードの設定
 	}
 }

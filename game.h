@@ -64,6 +64,8 @@ private: /* メンバ関数 */
 	*/
 	void CreateEnemyStraight(const float fPosY);
 
+	void UpdateNormalPart();	//通常パートの更新
+	void UpdateBossPart();		//ボスパートの更新
 
 private: /* 静的メンバ変数 */
 	static CCamera* m_pCamera;							//カメラ
@@ -81,5 +83,7 @@ private: /* 静的メンバ変数 */
 
 private: /* メンバ変数 */
 	int m_nCntStraight;	//直線敵の生成間隔カウント用
+
+	int m_nCntBoss;	//ボス死亡から暗転開始までの間隔カウント用
 };
 #endif

@@ -13,11 +13,6 @@
 #include <d3dx9.h>
 
 //***************************
-//定数の定義
-//***************************
-const DWORD FVF_VERTEX_2D = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);	//頂点フォーマット
-
-//***************************
 //背景クラスの定義
 //***************************
 class CFade
@@ -26,10 +21,15 @@ public: /* 列挙型の定義 */
 	enum STATE	//フェード状態
 	{
 		NONE = -1,		//フェードしていない
-		FADE_IN = 0,	//フェードイン
-		FADE_OUT,		//フェードアウト
+		FADE_IN = 0,	//暗転
+		FADE_OUT,		//明転
 		MAX
 	};
+
+private: /* 定数の定義 */
+	static const DWORD FVF_VERTEX_2D;	//頂点フォーマット
+
+	static const float FADE_SPEED;	//フェードの速度
 
 private: /* 構造体の定義 */
 	struct VERTEX_2D
@@ -59,6 +59,8 @@ public: /* メンバ関数 */
 		const STATE &state ---> フェード状態
 	*/
 	void Set(const STATE &state);
+
+	STATE GetState();	//フェード状態の取得
 
 private: /* メンバ変数 */
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	//頂点バッファへのポインタ
