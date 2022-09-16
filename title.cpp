@@ -34,7 +34,8 @@ CObject2D* CTitle::m_pLogo = nullptr;	//タイトルロゴ
 //================================================
 //コンストラクタ
 //================================================
-CTitle::CTitle() : CMode(MODE::TITLE)
+CTitle::CTitle() : CMode(MODE::TITLE),
+m_bFadeOut(false)
 {
 }
 
@@ -50,6 +51,9 @@ CTitle::~CTitle()
 //================================================
 HRESULT CTitle::Init()
 {
+	//メンバ変数の初期化
+	m_bFadeOut = false;
+
 	/* 背景 */
 
 	//生成
@@ -77,7 +81,7 @@ HRESULT CTitle::Init()
 	m_pLogo->SetSize(size);
 
 	//明転
-	CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+	CApplication::GetFade()->Set(CFade::STATE::FADE_IN);
 
 	return S_OK;
 }
@@ -117,8 +121,12 @@ void CTitle::Update()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::DECISION))
 	{//決定キ―
-		CApplication::GetFade()->Set(CFade::STATE::FADE_IN);	//暗転
+		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);	//暗転
+		m_bFadeOut = true;	//暗転した
+	}
 
+	if (m_bFadeOut && (CApplication::GetFade()->GetState() == CFade::STATE::NONE))
+	{//フェードが終わって暗転中の場合
 		Change(MODE::GAME);	//モードの設定
 	}
 }

@@ -116,9 +116,6 @@ void CPlayer3D::Update()
 		CExplosion3D::Create(CObject3D::GetPos());
 
 		Release();	//‰ð•ú
-
-		//ƒ‚[ƒh‚ÌÝ’è
-		CApplication::GetMode()->Change(CMode::MODE::RESULT);
 	}
 
 	if (m_getItem != CItem3D::TYPE::NONE)

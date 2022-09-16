@@ -36,5 +36,8 @@ public: /* オーバーライド関数 */
 
 private: /* 静的メンバ変数 */
 	static CBg* m_pBg;	//背景
+
+private: /* メンバ変数 */
+	bool m_bFadeOut;	//暗転したかどうか
 };
 #endif

@@ -10,6 +10,7 @@
 #include "fade.h"
 #include "application.h"
 #include "renderer.h"
+#include "mode.h"
 
 #include <assert.h>
 
@@ -18,7 +19,7 @@
 //***************************
 const DWORD CFade::FVF_VERTEX_2D = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);	//頂点フォーマット
 
-const float CFade::FADE_SPEED = 0.001f;	//フェードの速度
+const float CFade::FADE_SPEED = 0.02f;	//フェードの速度
 
 //================================================
 //生成
@@ -85,14 +86,14 @@ HRESULT CFade::Init()
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	float fHalfWidth = (CRenderer::SCREEN_WIDTH * 0.5f);	//横幅の半分
-	float fHalfHeight = (CRenderer::SCREEN_HEIGHT * 0.5f);	//縦幅の半分
+	float fWidth = (float)(CRenderer::SCREEN_WIDTH);	//横幅
+	float fHeight = (float)(CRenderer::SCREEN_HEIGHT);	//縦幅
 
 	//頂点情報を設定
-	pVtx[0].pos = D3DXVECTOR3(-fHalfWidth, -fHalfHeight, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(+fHalfWidth, -fHalfHeight, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(-fHalfWidth, +fHalfHeight, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(+fHalfWidth, +fHalfHeight, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(fWidth, 0.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(0.0f, fHeight, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(fWidth, fHeight, 0.0f);
 
 	//rhwの設定
 	pVtx[0].rhw = 1.0f;
@@ -101,10 +102,10 @@ HRESULT CFade::Init()
 	pVtx[3].rhw = 1.0f;
 
 	//頂点カラーの設定
-	pVtx[0].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-	pVtx[1].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-	pVtx[2].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-	pVtx[3].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	pVtx[0].col = m_col;
+	pVtx[1].col = m_col;
+	pVtx[2].col = m_col;
+	pVtx[3].col = m_col;
 
 	//テクスチャ座標の設定
 	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -144,22 +145,22 @@ void CFade::Update()
 	/* フェードしているとき */
 
 	if (m_state == STATE::FADE_IN)
-	{//フェードイン( 暗転 )
-		m_col.a += FADE_SPEED;	//不透明にしていく
-
-		if (m_col.a >= 1.0f)
-		{//完全に不透明になったら
-			m_col.a = 1.0f;			//1.0にする
-			m_state = STATE::NONE;	//フェードしていない状態にする
-		}
-	}
-	else if (m_state == STATE::FADE_OUT)
-	{//フェードアウト( 明転 )
+	{//フェードイン( 明転 )
 		m_col.a -= FADE_SPEED;	//透明にしていく
 
 		if (m_col.a <= 0.0f)
 		{//完全に透明になったら
 			m_col.a = 0.0f;			//0.0にする
+			m_state = STATE::NONE;	//フェードしていない状態にする
+		}
+	}
+	else if (m_state == STATE::FADE_OUT)
+	{//フェードアウト( 暗転 )
+		m_col.a += FADE_SPEED;	//不透明にしていく
+
+		if (m_col.a >= 1.0f)
+		{//完全に不透明になったら
+			m_col.a = 1.0f;				//1.0にする
 			m_state = STATE::NONE;	//フェードしていない状態にする
 		}
 	}
@@ -208,8 +209,6 @@ void CFade::Draw()
 void CFade::Set(const STATE &state)
 {
 	m_state = state;	//フェード状態を設定
-
-	m_col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);	//透明な黒ポリゴンにする
 }
 
 //================================================

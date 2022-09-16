@@ -42,5 +42,8 @@ public: /* オーバーライド関数 */
 private: /* 静的メンバ変数 */
 	static CBg* m_pBg;			//背景
 	static CObject2D* m_pLogo;	//タイトルロゴ
+
+private: /* メンバ変数 */
+	bool m_bFadeOut;	//暗転したかどうか
 };
 #endif

@@ -19,8 +19,8 @@ class CInput;
 class CInputKeyboard;
 class CRenderer;
 class CTexture;
-class CFade;
 class CMode;
+class CFade;
 
 //***************************
 //アプリケーションクラスの定義
@@ -37,8 +37,8 @@ public: /* 静的メンバ関数 */
 	static CTexture* GetTexture();		//テクスチャ
 	static CRenderer* GetRenderer();	//レンダラー
 
-	static CFade* GetFade();	//フェード
 	static CMode* GetMode();	//モード
+	static CFade* GetFade();	//フェード
 
 public: /* コンストラクタ・デストラクタ */
 	CApplication();
@@ -61,7 +61,7 @@ private: /* 静的メンバ変数 */
 	static CTexture* m_pTexture;	//テクスチャ
 	static CRenderer* m_pRenderer;	//レンダラー
 
-	static CFade* m_pFade;	//フェード
 	static CMode* m_pMode;	//モード
+	static CFade* m_pFade;	//フェード
 };
 #endif

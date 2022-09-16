@@ -25,8 +25,8 @@ CInputKeyboard* CApplication::m_pInputKeyboard = nullptr;	//キーボード
 CTexture* CApplication::m_pTexture = nullptr;	//テクスチャ
 CRenderer* CApplication::m_pRenderer = nullptr;	//レンダラー
 
-CFade* CApplication::m_pFade = nullptr;	//フェード
 CMode* CApplication::m_pMode = nullptr;	//モード
+CFade* CApplication::m_pFade = nullptr;	//フェード
 
 //================================================
 //インプット情報を取得
@@ -61,19 +61,19 @@ CRenderer* CApplication::GetRenderer()
 }
 
 //================================================
-//フェード情報を取得
-//================================================
-CFade* CApplication::GetFade()
-{
-	return m_pFade;
-}
-
-//================================================
 //モード情報を取得
 //================================================
 CMode* CApplication::GetMode()
 {
 	return m_pMode;
+}
+
+//================================================
+//フェード情報を取得
+//================================================
+CFade* CApplication::GetFade()
+{
+	return m_pFade;
 }
 
 //================================================
@@ -160,15 +160,6 @@ HRESULT CApplication::Init(HWND hWnd, BOOL bWindow, HINSTANCE hInstance)
 //================================================
 void CApplication::Uninit()
 {
-	/* モード */
-
-	if (m_pMode != nullptr)
-	{//NULLチェック
-		m_pMode->Uninit();	//終了
-		delete m_pMode;		//メモリの解放
-		m_pMode = nullptr;	//nullptrにする
-	}
-
 	/* フェード */
 
 	if (m_pFade != nullptr)
@@ -178,6 +169,14 @@ void CApplication::Uninit()
 		m_pFade = nullptr;	//nullptrにする
 	}
 
+	/* モード */
+
+	if (m_pMode != nullptr)
+	{//NULLチェック
+		m_pMode->Uninit();	//終了
+		delete m_pMode;		//メモリの解放
+		m_pMode = nullptr;	//nullptrにする
+	}
 	/* レンダラー */
 
 	if (m_pRenderer != nullptr)
@@ -231,14 +230,14 @@ void CApplication::Update()
 		m_pRenderer->Update();	//レンダラー
 	}
 
-	if (m_pFade != nullptr)
-	{//NULLチェック
-		m_pFade->Update();	//フェード
-	}
-
 	if (m_pMode != nullptr)
 	{//NULLチェック
 		m_pMode = m_pMode->Set();	//モードの設定
+	}
+
+	if (m_pFade != nullptr)
+	{//NULLチェック
+		m_pFade->Update();	//フェード
 	}
 }
 
@@ -250,10 +249,5 @@ void CApplication::Draw()
 	if (m_pRenderer != nullptr)
 	{//NULLチェック
 		m_pRenderer->Draw();	//レンダラー
-	}
-
-	if (m_pFade != nullptr)
-	{//NULLチェック
-		m_pFade->Draw();	//フェード
 	}
 }

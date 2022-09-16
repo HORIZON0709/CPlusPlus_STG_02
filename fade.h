@@ -21,8 +21,8 @@ public: /* 列挙型の定義 */
 	enum STATE	//フェード状態
 	{
 		NONE = -1,		//フェードしていない
-		FADE_IN = 0,	//暗転
-		FADE_OUT,		//明転
+		FADE_IN = 0,	//明転
+		FADE_OUT,		//暗転
 		MAX
 	};
 

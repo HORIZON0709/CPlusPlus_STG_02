@@ -25,7 +25,8 @@ CBg* CResult::m_pBg = nullptr;	//背景
 //================================================
 //コンストラクタ
 //================================================
-CResult::CResult() : CMode(MODE::RESULT)
+CResult::CResult() : CMode(MODE::RESULT),
+m_bFadeOut(false)
 {
 }
 
@@ -41,6 +42,9 @@ CResult::~CResult()
 //================================================
 HRESULT CResult::Init()
 {
+	//メンバ変数の初期化
+	m_bFadeOut = false;
+
 	/* 背景 */
 
 	//生成
@@ -53,7 +57,7 @@ HRESULT CResult::Init()
 	m_pBg->SetTexUV(1, 0);
 
 	//明転
-	CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+	CApplication::GetFade()->Set(CFade::STATE::FADE_IN);
 
 	return S_OK;
 }
@@ -86,8 +90,12 @@ void CResult::Update()
 
 	if (pInput->Trigger(CInput::STANDARD_KEY::DECISION))
 	{//決定キ―
-		CApplication::GetFade()->Set(CFade::STATE::FADE_IN);	//暗転
+		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);	//暗転
+		m_bFadeOut = true;	//暗転した
+	}
 
+	if (m_bFadeOut && (CApplication::GetFade()->GetState() == CFade::STATE::NONE))
+	{//フェードが終わって暗転中の場合
 		Change(MODE::TITLE);	//モードの設定
 	}
 }

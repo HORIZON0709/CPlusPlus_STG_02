@@ -16,8 +16,9 @@
 #include "renderer.h"
 #include "main.h"
 #include "application.h"
-#include "game.h"
+#include "mode.h"
 #include "object.h"
+#include "fade.h"
 
 #include <tchar.h> //_T
 #include <assert.h>
@@ -175,6 +176,9 @@ void CRenderer::Draw()
 	{
 		//モードの描画
 		CApplication::GetMode()->Draw();
+
+		//フェードの描画
+		CApplication::GetFade()->Draw();
 
 #ifdef _DEBUG
 		//FPS表示

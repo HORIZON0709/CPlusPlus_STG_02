@@ -8,10 +8,11 @@
 //インクルード
 //***************************
 #include "game.h"
+#include "application.h"
 #include "renderer.h"
+#include "fade.h"
 #include "object2D.h"
 #include "object3D.h"
-
 
 #include "camera.h"
 #include "score.h"
@@ -169,6 +170,9 @@ HRESULT CGame::Init()
 
 	m_pPlayer3D = CPlayer3D::Create();	//プレイヤー(3D)
 
+	//明転
+	CApplication::GetFade()->Set(CFade::STATE::FADE_IN);
+
 	return S_OK;
 }
 
@@ -236,6 +240,21 @@ void CGame::Update()
 	if (m_pCamera != nullptr)
 	{//NULLチェック
 		m_pCamera->Update();	//カメラ
+	}
+
+	if (m_pPlayer3D == nullptr)
+	{
+		int nCnt = 0;
+
+		while (nCnt != 60)
+		{
+			nCnt++;
+		}
+
+		//暗転
+		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+
+		Change(MODE::RESULT);	//モードの設定
 	}
 
 	if (!m_bGamePart)
