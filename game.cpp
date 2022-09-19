@@ -132,7 +132,9 @@ bool CGame::GetGamePart()
 //================================================
 CGame::CGame() : CMode(MODE::GAME),
 m_nCntStraight(0),
-m_nCntBoss(0)
+m_nCntDeathBoss(0),
+m_nCntDeathPlayer(0),
+m_bFadeOut(false)
 {
 }
 
@@ -154,7 +156,9 @@ HRESULT CGame::Init()
 
 	//メンバ変数の初期化
 	m_nCntStraight = 0;
-	m_nCntBoss = 0;
+	m_nCntDeathBoss = 0;
+	m_nCntDeathPlayer = 0;
+	m_bFadeOut = false;
 
 	/* 生成 */
 
@@ -242,19 +246,23 @@ void CGame::Update()
 		m_pCamera->Update();	//カメラ
 	}
 
-	if (m_pPlayer3D == nullptr)
-	{
-		int nCnt = 0;
+	if (m_pPlayer3D->GetObjType() != CObject::OBJ_TYPE::PLAYER)
+	{//プレイヤーが死亡したら
+		m_nCntDeathPlayer++;	//カウントアップ
 
-		while (nCnt != 60)
-		{
-			nCnt++;
+		if (!m_bFadeOut && (m_nCntDeathPlayer >= 60))
+		{//暗転していない & カウントが一定数を超えた
+			//暗転
+			CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+
+			//暗転した
+			m_bFadeOut = true;
 		}
 
-		//暗転
-		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
-
-		Change(MODE::RESULT);	//モードの設定
+		if (m_bFadeOut && (CApplication::GetFade()->GetState() == CFade::STATE::NONE))
+		{//暗転した & 現在フェードしていない
+			Change(MODE::RESULT);	//モードの設定
+		}
 	}
 
 	if (!m_bGamePart)

@@ -84,6 +84,10 @@ private: /* 静的メンバ変数 */
 private: /* メンバ変数 */
 	int m_nCntStraight;	//直線敵の生成間隔カウント用
 
-	int m_nCntBoss;	//ボス死亡から暗転開始までの間隔カウント用
+	int m_nCntDeathBoss;	//ボス死亡から暗転開始までの間隔カウント用
+
+	int m_nCntDeathPlayer;	//プレイヤー死亡から暗転開始までの間隔カウント用
+
+	bool m_bFadeOut;	//暗転したかどうか
 };
 #endif
