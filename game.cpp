@@ -101,7 +101,7 @@ void CGame::ChangeGamePart()
 
 	m_pCamera->Init();	//カメラの初期化
 
-	m_bGamePart = true;	//ボスパートに切り替え
+	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));	//初期位置に戻す
 
 	/* ボスの生成 */
 
@@ -117,6 +117,11 @@ void CGame::ChangeGamePart()
 
 	//ボスを生成する
 	m_apEnemy3D[0] = CEnemy3D::Create(CEnemy3D::ENM_TYPE::BOSS, pos);
+
+	m_bGamePart = true;	//ボスパートに切り替え
+
+	//明転
+	CApplication::GetFade()->Set(CFade::STATE::FADE_IN);
 }
 
 //================================================
@@ -339,11 +344,23 @@ void CGame::CreateEnemyStraight(const float fPosY)
 //================================================
 void CGame::UpdateNormalPart()
 {
-	//if (!m_bGamePart && m_pCamera->GetPosV().x == 500.0f)
-	//{
-	//	ChangeGamePart();	//ゲームパート切り替え
-	//	return;
-	//}
+	if (!m_bGamePart && m_pCamera->GetPosV().x == 500.0f)
+	{//通常パート & カメラが一定距離まで進んだら
+		//暗転
+		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+
+		//暗転した
+		m_bFadeOut = true;
+
+		//ゲームパート切り替え
+		ChangeGamePart();
+		return;
+	}
+
+	if (!m_bGamePart && m_pCamera->GetPosV().x >= 450.0f)
+	{//通常パート & カメラが一定位置を越したら
+		return;
+	}
 
 	m_nCntStraight++;	//カウントアップ
 
@@ -370,12 +387,42 @@ void CGame::UpdateNormalPart()
 //================================================
 void CGame::UpdateBossPart()
 {
-	if (m_apEnemy3D[0] != nullptr)
+	//敵のタイプがボスかどうか
+	bool bBossType = (m_apEnemy3D[0]->GetEnmType() == CEnemy3D::ENM_TYPE::BOSS);
+
+	if (!bBossType)
+	{//ボスではない場合
+		return;
+	}
+
+	/* ボスの場合 */
+
+	//ボスの型にキャスト
+	CEnemyBoss* pBoss = (CEnemyBoss*)m_apEnemy3D[0];
+
+	//ボスの体力が尽きたかどうか
+	bool bBossAlive = (pBoss->GetLife() > 0);
+
+	if (bBossAlive)
 	{//ボスが死んでない場合
 		return;
 	}
 
 	/* ボスが死んだ場合 */
 
+	m_nCntDeathBoss++;	//カウントアップ
 
+	if (!m_bFadeOut && (m_nCntDeathBoss >= 60))
+	{//暗転していない & カウントが一定数を超えた
+		//暗転
+		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+
+		//暗転した
+		m_bFadeOut = true;
+	}
+
+	if (m_bFadeOut && (CApplication::GetFade()->GetState() == CFade::STATE::NONE))
+	{//暗転した & 現在フェードしていない
+		Change(MODE::RESULT);	//モードの設定
+	}
 }

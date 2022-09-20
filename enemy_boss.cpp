@@ -39,7 +39,9 @@ const float CEnemyBoss::SHOT_SPEED = 3.0f;	//弾のスピード
 //コンストラクタ
 //================================================
 CEnemyBoss::CEnemyBoss():
-	m_nTimerInterval(0)
+	m_fCurve(0.0f),
+	m_nTimerInterval(0),
+	m_nLife(0)
 {
 	//敵の種類を設定
 	CEnemy3D::SetEnmType(CEnemy3D::ENM_TYPE::BOSS);
@@ -58,6 +60,11 @@ CEnemyBoss::~CEnemyBoss()
 HRESULT CEnemyBoss::Init()
 {
 	CEnemy3D::Init();	//親クラス
+
+	//メンバ変数の初期化
+	m_fCurve = 0.0f;
+	m_nTimerInterval = 0;
+	m_nLife = MAX_LIFE;
 
 	//サイズを設定
 	D3DXVECTOR2 size = D3DXVECTOR2(ENEMY_SIZE, ENEMY_SIZE);
@@ -83,7 +90,7 @@ void CEnemyBoss::Uninit()
 void CEnemyBoss::Update()
 {
 	CEnemy3D::Update();	//親クラス
-
+	
 	//移動
 	Move();
 
@@ -106,6 +113,22 @@ void CEnemyBoss::Death()
 {
 	//スコアを加算
 	CGame::GetScore()->AddScore(NUM_SCORE);
+}
+
+//================================================
+//体力の減算
+//================================================
+void CEnemyBoss::SubLife(const int nDamage)
+{
+	m_nLife -= nDamage;
+}
+
+//================================================
+//体力の取得
+//================================================
+int CEnemyBoss::GetLife()
+{
+	return m_nLife;
 }
 
 //================================================

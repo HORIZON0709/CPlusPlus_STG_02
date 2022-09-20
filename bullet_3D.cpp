@@ -16,6 +16,7 @@
 #include "explosion_3D.h"
 #include "item_3D.h"
 #include "enemy_3D.h"
+#include "enemy_boss.h"
 
 #include <assert.h>
 
@@ -140,14 +141,10 @@ void CBullet3D::IsCollision()
 
 		CObject::OBJ_TYPE typeTarget = pObjectTarget->GetObjType();	//タイプの取得
 
-		if (!(((GetHaveType() == CObject::PLAYER) && (typeTarget == CObject::ENEMY)) || 
-			((GetHaveType() == CObject::ENEMY) && (typeTarget == CObject::PLAYER))))
-			/*
-			『「所有者がプレイヤー　かつ　対象が敵」
-			もしくは
-			「所有者が敵　かつ　対象がプレイヤー」』
-			ではない
-			*/
+		bool isPlayerToEnemy = (GetHaveType() == CObject::PLAYER) && (typeTarget == CObject::ENEMY);	// 「所有者がプレイヤー　かつ　対象が敵」
+		bool isEnemyToPlayer = (GetHaveType() == CObject::ENEMY) && (typeTarget == CObject::PLAYER);	// 「所有者が敵　かつ　対象がプレイヤー」
+
+		if (!(isPlayerToEnemy || isEnemyToPlayer))
 		{
 			continue;
 		}
@@ -179,7 +176,7 @@ void CBullet3D::IsCollision()
 
 		if (!bInvadeFromRight || !bInvadeFromLeft || !bInvadeFromBottom || !bInvadeFromTop)
 		{//弾が対象の範囲内に入っていない場合
-			break;
+			continue;
 		}
 
 		/* 弾が対象の範囲内に入った場合 */
@@ -189,8 +186,28 @@ void CBullet3D::IsCollision()
 			//敵の型にキャスト
 			CEnemy3D* pEnemy = (CEnemy3D*)pObjTarget3D;
 
-			//死亡時の処理
-			pEnemy->Death();
+			if (pEnemy->GetEnmType() != CEnemy3D::ENM_TYPE::BOSS)  
+			{//通常敵の場合
+				pEnemy->Death();	//死亡時の処理
+			}
+			else if (pEnemy->GetEnmType() == CEnemy3D::ENM_TYPE::BOSS)
+			{//ボス敵の場合
+				//ボスの型にキャスト
+				CEnemyBoss* pBoss = (CEnemyBoss*)pEnemy;
+
+				//体力の減算
+				pBoss->SubLife(1);
+
+				if (pBoss->GetLife() > 0)
+				{//まだ生きている
+					CExplosion3D::Create(pos);	//爆発の生成
+					return;
+				}
+				else if (pBoss->GetLife() <= 0)
+				{//死亡した
+					pBoss->Death();	//死亡時の処理
+				}
+			}
 		}
 		
 		//爆発の生成

@@ -30,6 +30,7 @@ private:
 	static const int SHOT_INTERVAL = 120;	//弾の連続発射の間隔
 	static const int NUM_SCORE = 100;		//獲得スコア量
 	static const int NUM_BULLETS = 8;		//同時発射数
+	static const int MAX_LIFE = 30;			//体力の最大値
 
 public: /* コンストラクタ・デストラクタ */
 	CEnemyBoss();
@@ -40,15 +41,24 @@ public: /* オーバーライド関数 */
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
+	void Death() override;		//死亡時の処理
 
-	void Death() override;	//死亡時の処理
+public: /* メンバ関数 */
+	/*
+		体力の減算
+		const int nDamage ---> ダメージ量
+	*/
+	void SubLife(const int nDamage);
 
-private: /* メンバ関数 */
+	int GetLife();	//体力の取得
+private:
 	void Move();	//移動
 	void Shot();	//弾の発射
 
 private: /* メンバ変数 */
 	float m_fCurve;			//カーブ度合
+
 	int m_nTimerInterval;	//弾の連続発射の間隔
+	int m_nLife;			//体力
 };
 #endif
