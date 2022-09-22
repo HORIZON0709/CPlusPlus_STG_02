@@ -200,8 +200,7 @@ void CBullet3D::IsCollision()
 
 				if (pBoss->GetLife() > 0)
 				{//‚Ü‚¾¶‚«‚Ä‚¢‚é
-					CExplosion3D::Create(pos);	//”š”­‚Ì¶¬
-					return;
+					break;
 				}
 				else if (pBoss->GetLife() <= 0)
 				{//Ž€–S‚µ‚½

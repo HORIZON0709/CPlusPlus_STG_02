@@ -137,8 +137,7 @@ bool CGame::GetGamePart()
 //================================================
 CGame::CGame() : CMode(MODE::GAME),
 m_nCntStraight(0),
-m_nCntDeathBoss(0),
-m_nCntDeathPlayer(0),
+m_nCntIntervalFade(0),
 m_bFadeOut(false)
 {
 }
@@ -161,8 +160,7 @@ HRESULT CGame::Init()
 
 	//メンバ変数の初期化
 	m_nCntStraight = 0;
-	m_nCntDeathBoss = 0;
-	m_nCntDeathPlayer = 0;
+	m_nCntIntervalFade = 0;
 	m_bFadeOut = false;
 
 	/* 生成 */
@@ -253,9 +251,9 @@ void CGame::Update()
 
 	if (m_pPlayer3D->GetObjType() != CObject::OBJ_TYPE::PLAYER)
 	{//プレイヤーが死亡したら
-		m_nCntDeathPlayer++;	//カウントアップ
+		m_nCntIntervalFade++;	//カウントアップ
 
-		if (!m_bFadeOut && (m_nCntDeathPlayer >= 60))
+		if (!m_bFadeOut && (m_nCntIntervalFade >= 60))
 		{//暗転していない & カウントが一定数を超えた
 			//暗転
 			CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
@@ -270,14 +268,15 @@ void CGame::Update()
 		}
 	}
 
-	if (!m_bGamePart)
-	{//通常パートの場合
-		UpdateNormalPart();	//通常パートの更新
-	}
-	else
+	if (m_bGamePart)
 	{//ボスパートの場合
 		UpdateBossPart();	//ボスパートの更新
+		return;
 	}
+
+	/* 通常パートの場合 */
+
+	UpdateNormalPart();	//通常パートの更新
 }
 
 //================================================
@@ -344,8 +343,15 @@ void CGame::CreateEnemyStraight(const float fPosY)
 //================================================
 void CGame::UpdateNormalPart()
 {
-	if (!m_bGamePart && m_pCamera->GetPosV().x == 500.0f)
-	{//通常パート & カメラが一定距離まで進んだら
+	if (m_bGamePart)
+	{//ボスパートの場合
+		return;
+	}
+
+	/* 通常パートの場合 */
+
+	if (m_pCamera->GetPosV().x >= 500.0f)
+	{//カメラが一定距離まで進んだら
 		//暗転
 		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
 
@@ -354,25 +360,30 @@ void CGame::UpdateNormalPart()
 
 		//ゲームパート切り替え
 		ChangeGamePart();
+
+		//明転した
+		m_bFadeOut = false;
 		return;
 	}
 
-	if (!m_bGamePart && m_pCamera->GetPosV().x >= 450.0f)
-	{//通常パート & カメラが一定位置を越したら
-		return;
-	}
+	if (m_pCamera->GetPosV().x < 450.0f)
+	{//カメラが一定距離の手前に来るまで
+		m_nCntStraight++;	//カウントアップ
 
-	m_nCntStraight++;	//カウントアップ
+		if (m_nCntStraight % INTERVAL_STRAIGHT != 0)
+		{//一定間隔までカウントしていない
+			return;
+		}
+		
+		/* 一定間隔までカウントした場合 */
 
-	if (m_nCntStraight % INTERVAL_STRAIGHT == 0)
-	{//『一定間隔までカウントしたら』
 		float aPosY[5] =
 		{//ランダムで生成したい高さ(上から)
 			200.0f,
 			100.0f,
 			0.0f,
 			-100.0f,
-			-200.0f 
+			-200.0f
 		};
 
 		int nRandam = rand() % 5;	//ランダム
@@ -387,32 +398,29 @@ void CGame::UpdateNormalPart()
 //================================================
 void CGame::UpdateBossPart()
 {
-	//敵のタイプがボスかどうか
-	bool bBossType = (m_apEnemy3D[0]->GetEnmType() == CEnemy3D::ENM_TYPE::BOSS);
-
-	if (!bBossType)
-	{//ボスではない場合
+	if (!m_bGamePart)
+	{//通常パートの場合
 		return;
 	}
 
-	/* ボスの場合 */
+	/* ボスパートの場合 */
 
 	//ボスの型にキャスト
 	CEnemyBoss* pBoss = (CEnemyBoss*)m_apEnemy3D[0];
 
 	//ボスの体力が尽きたかどうか
-	bool bBossAlive = (pBoss->GetLife() > 0);
+	bool bBossAlive = (pBoss->GetLife() <= 0);
 
-	if (bBossAlive)
+	if (!bBossAlive)
 	{//ボスが死んでない場合
 		return;
 	}
 
 	/* ボスが死んだ場合 */
 
-	m_nCntDeathBoss++;	//カウントアップ
+	m_nCntIntervalFade++;	//カウントアップ
 
-	if (!m_bFadeOut && (m_nCntDeathBoss >= 60))
+	if (!m_bFadeOut && (m_nCntIntervalFade >= 60))
 	{//暗転していない & カウントが一定数を超えた
 		//暗転
 		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
