@@ -212,9 +212,11 @@ void CBullet3D::IsCollision()
 		//”š”­‚Ì¶¬
 		CExplosion3D::Create(posTarget);
 
-		pObjTarget3D->Release();	//‘ÎÛ‚Ì‰ğ•ú
+		//‘ÎÛ‚Ì‰ğ•ú
+		pObjTarget3D->Release();
 
-		Release();	//©g‚Ì‰ğ•ú
+		//©g‚Ì‰ğ•ú
+		Release();
 	}
 }
 

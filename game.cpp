@@ -99,6 +99,25 @@ void CGame::ChangeGamePart()
 		m_apEnemy3D[i] = nullptr;	//nullptrにする
 	}
 
+	for (int i = 0; i < CObject::MAX_OBJECT; i++)
+	{
+		CObject* pObject = CObject::GetObjects(i);
+
+		if (pObject == nullptr)
+		{
+			continue;
+		}
+
+		CObject::OBJ_TYPE type = pObject->GetObjType();
+
+		if (type != CObject::OBJ_TYPE::ENEMY)
+		{
+			continue;
+		}
+
+		CObject::SetObject(i, nullptr);
+	}
+
 	m_pCamera->Init();	//カメラの初期化
 
 	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));	//初期位置に戻す
@@ -360,6 +379,9 @@ void CGame::UpdateNormalPart()
 
 		//ゲームパート切り替え
 		ChangeGamePart();
+
+		//カウントを初期化(ボスパートでは使用しない)
+		m_nCntStraight = 0;
 
 		//明転した
 		m_bFadeOut = false;

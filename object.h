@@ -41,6 +41,19 @@ public: /* 静的メンバ関数 */
 	static void UpdateAll();	//全ての更新
 	static void DrawAll();		//全ての描画
 
+	/*
+		オブジェクト情報の取得
+		const int &nIdx ---> インデックス数
+	*/
+	static CObject* GetObjects(const int &nIdx);
+
+	/*
+		オブジェクト情報の設定
+		const int &nIdx ---> インデックス数
+		void* pObject ---> 任意の型のオブジェクト
+	*/
+	static void SetObject(const int &nIdx, void* pObject);
+
 public: /* コンストラクタ・デストラクタ */
 	CObject();
 	//explicit CObject(const int &nPriority = 3);	//デフォルト引数(引数に値を設定しない場合は「3」になる)
@@ -53,12 +66,6 @@ public: /* 純粋仮想関数 */
 	virtual void Draw() = 0;	//描画
 
 public: /* メンバ関数 */
-	/*
-		オブジェクト情報の取得
-		const int &nIdx ---> インデックス数
-	*/
-	CObject* GetObjects(const int &nIdx);
-
 	void Release();	//解放
 
 public:	/* ObjType */
