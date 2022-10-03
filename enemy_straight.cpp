@@ -59,7 +59,7 @@ HRESULT CEnemyStraight::Init()
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::enemy000);
+	CObject3D::SetTexture(CTexture::enemy003);
 
 	//初期位置が画面外である
 	m_bInside = false;

@@ -33,7 +33,6 @@ public: /* メンバ関数 */
 
 	D3DXMATRIX GetMatrixView();	//ビューマトリクスの取得
 	D3DXVECTOR3 GetPosV();		//視点の位置の取得
-	D3DXVECTOR3 GetMove();		//移動量の取得
 private:
 	void Move();	//移動
 

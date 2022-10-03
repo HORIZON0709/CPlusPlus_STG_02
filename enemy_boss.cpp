@@ -11,6 +11,7 @@
 #include "application.h"
 #include "renderer.h"
 #include "game.h"
+#include "fade.h"
 
 #include "camera.h"
 #include "bullet_3D.h"
@@ -71,7 +72,7 @@ HRESULT CEnemyBoss::Init()
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::enemy000);
+	CObject3D::SetTexture(CTexture::enemy002);
 
 	return S_OK;
 }
@@ -89,6 +90,11 @@ void CEnemyBoss::Uninit()
 //================================================
 void CEnemyBoss::Update()
 {
+	if (CApplication::GetFade()->GetState() == CFade::STATE::FADE_OUT)
+	{//暗転中
+		return;
+	}
+
 	CEnemy3D::Update();	//親クラス
 	
 	//移動

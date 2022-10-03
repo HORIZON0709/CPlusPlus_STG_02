@@ -8,16 +8,17 @@
 //インクルード
 //***************************
 #include "bg_3D.h"
-#include "application.h"
 #include "renderer.h"
+#include "game.h"
+#include "camera.h"
 
 #include <assert.h>
 
 //***************************
 //定数の定義
 //***************************
-const float CBg3D::BG_WIDTH = CRenderer::SCREEN_WIDTH * 0.9f;	//横幅
-const float CBg3D::BG_HEIGHT = CRenderer::SCREEN_HEIGHT * 0.9f;	//縦幅
+const float CBg3D::BG_WIDTH = CRenderer::SCREEN_WIDTH;		//横幅
+const float CBg3D::BG_HEIGHT = CRenderer::SCREEN_HEIGHT;	//縦幅
 
 //================================================
 //生成
@@ -68,7 +69,7 @@ HRESULT CBg3D::Init()
 	CObject3D::SetSize(size);
 
 	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.1f);
+	D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	CObject3D::SetPos(pos);
 
 	// テクスチャの設定
@@ -91,6 +92,16 @@ void CBg3D::Uninit()
 void CBg3D::Update()
 {
 	CObject3D::Update();	//親クラス
+
+	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置を取得
+
+	//カメラに合わせて移動する
+	pos = CGame::GetCamera()->GetPosV();
+
+	pos.z = 0.0f;	//Z軸は元の位置に戻しておく
+
+	//位置を設定
+	CObject3D::SetPos(pos);
 }
 
 //================================================
