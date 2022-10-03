@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "camera.h"
 #include "game.h"
+#include "fade.h"
 
 #include "bullet_3D.h"
 #include "item_3D.h"
@@ -85,6 +86,11 @@ void CEnemyCurve::Uninit()
 //================================================
 void CEnemyCurve::Update()
 {
+	if (CApplication::GetFade()->GetState() == CFade::STATE::FADE_OUT)
+	{//ˆÃ“]’†
+		return;
+	}
+
 	CEnemy3D::Update();	//eƒNƒ‰ƒX
 
 	//ˆÚ“®

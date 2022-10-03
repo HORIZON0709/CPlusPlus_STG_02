@@ -9,6 +9,7 @@
 #include "inputKeyboard.h"
 #include "renderer.h"
 #include "game.h"
+#include "fade.h"
 
 //***************************
 //定数の定義
@@ -63,6 +64,11 @@ void CCamera::Uninit()
 //================================================
 void CCamera::Update()
 {
+	if (CApplication::GetFade()->GetState() == CFade::STATE::FADE_OUT)
+	{//暗転中
+		return;
+	}
+
 	if (!CGame::GetGamePart())
 	{//通常パート
 		m_move.x = SCROLL_SPEED;	//X軸の移動

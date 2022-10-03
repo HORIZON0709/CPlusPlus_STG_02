@@ -101,20 +101,25 @@ void CGame::ChangeGamePart()
 
 	for (int i = 0; i < CObject::MAX_OBJECT; i++)
 	{
-		CObject* pObject = CObject::GetObjects(i);
+		CObject* pObject = CObject::GetObjects(i);	//オブジェクト情報の取得
 
 		if (pObject == nullptr)
-		{
+		{//NULLチェック
 			continue;
 		}
 
-		CObject::OBJ_TYPE type = pObject->GetObjType();
+		/* nullptrでは無い場合 */
+
+		CObject::OBJ_TYPE type = pObject->GetObjType();	//オブジェクトの種類の取得
 
 		if (type != CObject::OBJ_TYPE::ENEMY)
-		{
+		{//敵では無い場合
 			continue;
 		}
 
+		/* 敵のオブジェクトだった場合 */
+
+		//nullptrにする
 		CObject::SetObject(i, nullptr);
 	}
 
@@ -122,7 +127,7 @@ void CGame::ChangeGamePart()
 
 	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));	//初期位置に戻す
 
-	/* ボスの生成 */
+	//***** ボスの生成 *****//
 
 	if (m_apEnemy3D[0] != nullptr)
 	{//NULLチェック
@@ -371,21 +376,29 @@ void CGame::UpdateNormalPart()
 
 	if (m_pCamera->GetPosV().x >= 500.0f)
 	{//カメラが一定距離まで進んだら
-		//暗転
-		CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
+		m_nCntIntervalFade++;	//カウントアップ
 
-		//暗転した
-		m_bFadeOut = true;
+		if (!m_bFadeOut && (m_nCntIntervalFade >= 60))
+		{//暗転していない & カウントが一定数を超えた
+			//暗転
+			CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
 
-		//ゲームパート切り替え
-		ChangeGamePart();
+			//暗転した
+			m_bFadeOut = true;
+		}
+		
+		if (m_bFadeOut && (CApplication::GetFade()->GetState() == CFade::STATE::NONE))
+		{//暗転した & 現在フェードしていない
+			//ゲームパート切り替え
+			ChangeGamePart();
 
-		//カウントを初期化(ボスパートでは使用しない)
-		m_nCntStraight = 0;
+			//カウントを初期化(ボスパートでは使用しない)
+			m_nCntStraight = 0;
 
-		//明転した
-		m_bFadeOut = false;
-		return;
+			//明転した
+			m_bFadeOut = false;
+			return;
+		}
 	}
 
 	if (m_pCamera->GetPosV().x < 450.0f)

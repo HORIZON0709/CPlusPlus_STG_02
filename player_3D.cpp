@@ -14,6 +14,7 @@
 #include "camera.h"
 #include "input.h"
 #include "game.h"
+#include "fade.h"
 
 #include "explosion_3D.h"
 
@@ -104,6 +105,11 @@ void CPlayer3D::Uninit()
 //================================================
 void CPlayer3D::Update()
 {
+	if (CApplication::GetFade()->GetState() == CFade::STATE::FADE_OUT)
+	{//ˆÃ“]’†
+		return;
+	}
+
 	CObject3D::Update();	//eƒNƒ‰ƒX
 
 	Move();	//ˆÚ“®

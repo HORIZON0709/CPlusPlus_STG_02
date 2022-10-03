@@ -8,9 +8,11 @@
 //インクルード
 //***************************
 #include "enemy_straight.h"
+#include "application.h"
 #include "renderer.h"
 #include "camera.h"
 #include "game.h"
+#include "fade.h"
 
 #include "score.h"
 
@@ -78,6 +80,11 @@ void CEnemyStraight::Uninit()
 //================================================
 void CEnemyStraight::Update()
 {
+	if (CApplication::GetFade()->GetState() == CFade::STATE::FADE_OUT)
+	{//暗転中
+		return;
+	}
+
 	CEnemy3D::Update();	//親クラス
 
 	//移動

@@ -24,13 +24,13 @@ const char* CTexture::s_FileName[] =
 
 	/* 弾 */
 	"data/TEXTURE/bullet000.png",	//桜のサークル(仮)
-	"data/TEXTURE/bullet001.png",	//スラックのアイコン(仮)
+	"data/TEXTURE/bullet002.png",	//スラックのアイコン(仮)
 
 	/* 爆発 */
 	"data/TEXTURE/explosion000.png",	//配布の爆発アニメーション画像
 
 	/* 敵 */
-	"data/TEXTURE/enemy000.jpg",	//全部違うネタ画像のやつ(仮)
+	"data/TEXTURE/enemy001.png",	//全部違うネタ画像のやつ(仮)
 
 	/* 背景 */
 	"data/TEXTURE/bg000.jpeg",	//何かユニバース(仮)

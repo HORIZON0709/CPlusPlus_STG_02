@@ -12,6 +12,7 @@
 #include "renderer.h"
 #include "camera.h"
 #include "game.h"
+#include "fade.h"
 
 #include "explosion_3D.h"
 #include "item_3D.h"
@@ -101,6 +102,11 @@ void CBullet3D::Uninit()
 //================================================
 void CBullet3D::Update()
 {
+	if (CApplication::GetFade()->GetState() == CFade::STATE::FADE_OUT)
+	{//暗転中
+		return;
+	}
+
 	CObject3D::Update();	//親クラス
 
 	D3DXVECTOR3 pos = CObject3D::GetPos();		//位置設定用
