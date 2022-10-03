@@ -2,6 +2,7 @@
 // 
 // texture.cpp
 // Author  : katsuki mizuki
+// Author : KIshimoto Eiji
 // 
 //**************************************************
 

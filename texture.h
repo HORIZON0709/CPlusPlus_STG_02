@@ -2,6 +2,7 @@
 // 
 // texture.h
 // Author  : katsuki mizuki
+// Author : KIshimoto Eiji
 // 
 //**************************************************
 #ifndef _TEXTURE_H_	//‚±‚Ìƒ}ƒNƒ’è‹`‚ª‚³‚ê‚Ä‚È‚©‚Á‚½‚ç
