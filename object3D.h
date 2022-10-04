@@ -92,11 +92,11 @@ public: /* Texture */
 
 	/*
 		テクスチャ座標の設定(アニメーション対応)
-		const int &nDivNum ---> テクスチャの分割数
-		const int &nPtnAnim ---> アニメーションパターン数
-		(単体画像の場合は「1,0」を送る。)
+		const int nDivNumU ---> テクスチャの分割数( U )
+		const int nDivNumV ---> テクスチャの分割数( V )
+		const int nPtnAnim ---> アニメーションパターン数
 	*/
-	void SetTexUV(const int &nDivNum,const int &nPtnAnim);
+	void SetTexUV(const int nDivNumU, const int nDivNumV, const int nPtnAnim);
 
 public: /* Color */
 	/*

@@ -187,8 +187,18 @@ void CEnemyBoss::Shot()
 		float x = sinf(D3DX_PI * (1.0f / NUM_BULLETS) * i) * SHOT_SPEED;
 		float y = cosf(D3DX_PI * (1.0f / NUM_BULLETS) * i) * SHOT_SPEED;
 
-		//弾の生成
-		CBullet3D::Create(pos, D3DXVECTOR3(x, -y, 0.0f), CObject::OBJ_TYPE::ENEMY);		//+方向
-		CBullet3D::Create(pos, D3DXVECTOR3(-x, -y, 0.0f), CObject::OBJ_TYPE::ENEMY);	//-方向
+		/* 弾の生成 */
+
+		//+方向
+		CBullet3D::Create(pos,						//位置
+						  D3DXVECTOR3(x, -y, 0.0f),	//移動量
+						  CObject::OBJ_TYPE::ENEMY,	//所有者
+						  CTexture::bullet004);		//テクスチャ
+
+		//-方向
+		CBullet3D::Create(pos,							//位置
+						  D3DXVECTOR3(-x, -y, 0.0f),	//移動量
+						  CObject::OBJ_TYPE::ENEMY,		//所有者
+						  CTexture::bullet004);			//テクスチャ
 	}
 }

@@ -31,7 +31,8 @@ const float CBullet3D::BULLET_SIZE = 30.0f;	//サイズ
 //================================================
 CBullet3D* CBullet3D::Create(const D3DXVECTOR3 &pos,
 							 const D3DXVECTOR3 &move,
-							 const CObject::OBJ_TYPE &haveType)
+							 const CObject::OBJ_TYPE &haveType,
+							 const CTexture::TEXTURE &texture)
 {
 	CBullet3D* pBullet3D = nullptr;	//ポインタ
 
@@ -51,6 +52,8 @@ CBullet3D* CBullet3D::Create(const D3DXVECTOR3 &pos,
 	pBullet3D->SetMove(move);	//移動量を設定
 
 	pBullet3D->SetHaveType(haveType);	//所有者を設定
+
+	pBullet3D->SetTexture(texture);	//テクスチャの設定
 
 	return pBullet3D;	//動的確保したものを返す
 }

@@ -17,7 +17,12 @@
 //***************************
 const float CExplosion3D::EXPLOSION_SIZE = 60.0f;	//サイズ
 
-const int CExplosion3D::DIVIDE_TEX_U = 8;	//テクスチャの分割数( U方向 )
+const int CExplosion3D::DIVIDE_TEX_U = 5;	//テクスチャの分割数( U方向 )
+const int CExplosion3D::DIVIDE_TEX_V = 8;	//テクスチャの分割数( V方向 )
+const int CExplosion3D::ANIM_SPEED = 1;		//アニメーション速度
+
+//テクスチャの総パターン数
+const int CExplosion3D::NUM_PATTERN = (DIVIDE_TEX_U * DIVIDE_TEX_V);
 
 //================================================
 //生成
@@ -72,10 +77,10 @@ HRESULT CExplosion3D::Init()
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::explosion000);
+	CObject3D::SetTexture(CTexture::explosion001);
 
 	//テクスチャ座標の設定
-	CObject3D::SetTexUV(DIVIDE_TEX_U, 0);
+	CObject3D::SetTexUV(DIVIDE_TEX_U, DIVIDE_TEX_V, 0);
 
 	return S_OK;
 }
@@ -97,16 +102,16 @@ void CExplosion3D::Update()
 
 	m_nCntAnim++;	//カウントアップ
 
-	if (m_nCntAnim % 5 == 0)
+	if (m_nCntAnim % ANIM_SPEED == 0)
 	{//一定間隔
 		//パターン番号を更新する
-		m_nPtnAnim = (m_nPtnAnim + 1) % DIVIDE_TEX_U;
+		m_nPtnAnim = (m_nPtnAnim + 1) % NUM_PATTERN;
 
 		//テクスチャ座標の設定
-		CObject3D::SetTexUV(DIVIDE_TEX_U, m_nPtnAnim);
+		CObject3D::SetTexUV(DIVIDE_TEX_U, DIVIDE_TEX_V, m_nPtnAnim);
 	}
 
-	if (m_nPtnAnim == (DIVIDE_TEX_U - 1))
+	if (m_nPtnAnim == (NUM_PATTERN - 1))
 	{//アニメーションが終わったら
  		Release();	//解放
 	}

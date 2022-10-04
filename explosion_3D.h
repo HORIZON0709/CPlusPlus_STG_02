@@ -20,6 +20,9 @@ class CExplosion3D : public CObject3D
 private: /* 定数の定義 */
 	static const float EXPLOSION_SIZE;	//サイズ
 	static const int DIVIDE_TEX_U;		//テクスチャの分割数( U方向 )
+	static const int DIVIDE_TEX_V;		//テクスチャの分割数( V方向 )
+	static const int ANIM_SPEED;		//アニメーション速度
+	static const int NUM_PATTERN;		//テクスチャの総パターン数
 
 public: /* 静的メンバ関数 */
 	static CExplosion3D* Create(D3DXVECTOR3 pos);	//生成

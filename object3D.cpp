@@ -267,20 +267,25 @@ void CObject3D::SetTexture(CTexture::TEXTURE texture)
 //================================================
 //テクスチャ座標の設定(アニメーションに対応)
 //================================================
-void CObject3D::SetTexUV(const int &nDivNum, const int &nPtnAnim)
+void CObject3D::SetTexUV(const int nDivNumU, const int nDivNumV, const int nPtnAnim)
 {
 	VERTEX_3D *pVtx;	//頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
- 	float fDivide = (1.0f / nDivNum);	//乗算用にfloatに変換
+	//乗算用にfloatに変換
+ 	float fDivideU = (1.0f / nDivNumU);	//U方向
+	float fDivideV = (1.0f / nDivNumV);	//V方向
+
+	//V座標が何段目か
+	int nNumV = (nPtnAnim / nDivNumU);
 
 	//テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(fDivide * nPtnAnim,		0.0f);
-	pVtx[1].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 0.0f);
- 	pVtx[2].tex = D3DXVECTOR2(fDivide * nPtnAnim,		1.0f);
-	pVtx[3].tex = D3DXVECTOR2(fDivide * (nPtnAnim + 1), 1.0f);
+	pVtx[0].tex = D3DXVECTOR2(fDivideU * nPtnAnim,		 fDivideV * nNumV);
+	pVtx[1].tex = D3DXVECTOR2(fDivideU * (nPtnAnim + 1), fDivideV * nNumV);
+ 	pVtx[2].tex = D3DXVECTOR2(fDivideU * nPtnAnim,		 fDivideV * (nNumV + 1));
+	pVtx[3].tex = D3DXVECTOR2(fDivideU * (nPtnAnim + 1), fDivideV * (nNumV + 1));
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();

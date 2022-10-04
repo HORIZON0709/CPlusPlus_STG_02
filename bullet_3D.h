@@ -36,10 +36,12 @@ public: /* 静的メンバ関数 */
 		const D3DXVECTOR3 &pos ---> 位置
 		const D3DXVECTOR3 &move ---> 移動量
 		const CObject::OBJ_TYPE &haveType ---> 所有者
+		const CTexture::TEXTURE &texture ---> テクスチャ
 	*/
 	static CBullet3D* Create(const D3DXVECTOR3 &pos,
 							 const D3DXVECTOR3 &move,
-							 const CObject::OBJ_TYPE &haveType);
+							 const CObject::OBJ_TYPE &haveType,
+							 const CTexture::TEXTURE &texture);
 
 public: /* コンストラクタ・デストラクタ */
 	CBullet3D();

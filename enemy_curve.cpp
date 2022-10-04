@@ -171,7 +171,8 @@ void CEnemyCurve::Shot()
 		CBullet3D::Create(/* 弾の生成 */
 			posBullet,					//位置
 			moveBullet,					//移動量
-			CObject::OBJ_TYPE::ENEMY);	//所有者
+			CObject::OBJ_TYPE::ENEMY,	//所有者
+			CTexture::bullet004);		//テクスチャ
 	}
 }
 

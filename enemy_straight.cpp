@@ -27,7 +27,7 @@ const float CEnemyStraight::ENEMY_SIZE = 75.0f;		//サイズ
 const float CEnemyStraight::MOVE_SPEED_X = 2.0f;	//移動スピード( X )
 
 const int CEnemyStraight::NUM_SCORE = 10;	//獲得スコア量
-const int CEnemyStraight::NUM_DIVIDE = 4;	//テクスチャの分割数
+const int CEnemyStraight::DIVIDE_TEX_U = 4;	//テクスチャの分割数( U方向 )
 const int CEnemyStraight::ANIM_SPEED = 10;	//アニメーション速度
 
 //================================================
@@ -72,7 +72,7 @@ HRESULT CEnemyStraight::Init()
 	CObject3D::SetTexture(CTexture::enemy003);
 
 	//UV座標の設定
-	CObject3D::SetTexUV(NUM_DIVIDE, 0);
+	CObject3D::SetTexUV(DIVIDE_TEX_U, 1, 0);
 
 	//初期位置が画面外である
 	m_bInside = false;
@@ -160,10 +160,10 @@ void CEnemyStraight::TexAnim()
 	if (m_nCntAnim % ANIM_SPEED == 0)
 	{//一定数カウントしたら
 		//パターン番号を更新する
-		m_nPtnAnim = (m_nPtnAnim + 1) % NUM_DIVIDE;
+		m_nPtnAnim = (m_nPtnAnim + 1) % DIVIDE_TEX_U;
 
 		//UV座標の設定
-		CObject3D::SetTexUV(NUM_DIVIDE, m_nPtnAnim);
+		CObject3D::SetTexUV(DIVIDE_TEX_U, 1, m_nPtnAnim);
 	}
 }
 

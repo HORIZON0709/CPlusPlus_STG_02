@@ -25,7 +25,7 @@ private:
 	static const float MOVE_SPEED_X;	//移動スピード( X )
 
 	static const int NUM_SCORE;		//獲得スコア量
-	static const int NUM_DIVIDE;	//テクスチャの分割数
+	static const int DIVIDE_TEX_U;	//テクスチャの分割数( U方向 )
 	static const int ANIM_SPEED;	//アニメーション速度
 
 public: /* コンストラクタ・デストラクタ */

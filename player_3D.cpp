@@ -337,7 +337,7 @@ void CPlayer3D::SetNormalBullet()
 	}
 
 	//íeÇÃê∂ê¨
-	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);
 }
 
 //================================================
@@ -359,8 +359,8 @@ void CPlayer3D::SetDoubleBullet()
 		move = D3DXVECTOR3(0.0f, SHOT_SPEED, 0.0f);
 
 		//íeÇÃê∂ê¨
-		CBullet3D::Create(posLeft, move, CObject::OBJ_TYPE::PLAYER);	//ç∂
-		CBullet3D::Create(posRight, move, CObject::OBJ_TYPE::PLAYER);	//âE
+		CBullet3D::Create(posLeft, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);	//ç∂
+		CBullet3D::Create(posRight, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);	//âE
 		return;
 	}
 
@@ -374,8 +374,8 @@ void CPlayer3D::SetDoubleBullet()
 	move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);
 
 	//íeÇÃê∂ê¨
-	CBullet3D::Create(posOver, move, CObject::OBJ_TYPE::PLAYER);	//è„
-	CBullet3D::Create(posUnder, move, CObject::OBJ_TYPE::PLAYER);	//â∫
+	CBullet3D::Create(posOver, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);	//è„
+	CBullet3D::Create(posUnder, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);	//â∫
 }
 
 //================================================
@@ -397,7 +397,7 @@ void CPlayer3D::SetTripleBullet()
 	move = D3DXVECTOR3(SHOT_SPEED, SHOT_SPEED, 0.0f);	//éŒÇﬂè„
 
 	//íeÇÃê∂ê¨
-	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);
 
 	/*************************** 2íeñ⁄ ***************************/
 
@@ -409,7 +409,7 @@ void CPlayer3D::SetTripleBullet()
 	move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);	//êÖïΩ
 
 	//íeÇÃê∂ê¨
-	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);
 
 	/*************************** 3íeñ⁄ ***************************/
 
@@ -421,7 +421,7 @@ void CPlayer3D::SetTripleBullet()
 	}
 
 	//íeÇÃê∂ê¨
-	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER);
+	CBullet3D::Create(pos, move, CObject::OBJ_TYPE::PLAYER, CTexture::bullet003);
 }
 
 //================================================
