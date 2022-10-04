@@ -29,6 +29,7 @@ const char* CTexture::s_FileName[] =
 	"data/TEXTURE/bullet002.png",	//配布の弾(仮)
 	"data/TEXTURE/bullet003.png",	//気弾(青白)
 	"data/TEXTURE/bullet004.png",	//気弾(赤黒)
+	"data/TEXTURE/bullet005.png",	//火球(赤黒)
 
 	/* 爆発 */
 	"data/TEXTURE/explosion000.png",	//配布の爆発アニメーション画像

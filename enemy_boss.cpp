@@ -47,7 +47,8 @@ const int CEnemyBoss::MAX_LIFE = 30;		//体力の最大値
 CEnemyBoss::CEnemyBoss():
 	m_fCurve(0.0f),
 	m_nTimerInterval(0),
-	m_nLife(0)
+	m_nLife(0),
+	m_state(STATE::NONE)
 {
 	//敵の種類を設定
 	CEnemy3D::SetEnmType(CEnemy3D::ENM_TYPE::BOSS);
@@ -71,6 +72,7 @@ HRESULT CEnemyBoss::Init()
 	m_fCurve = 0.0f;
 	m_nTimerInterval = 0;
 	m_nLife = MAX_LIFE;
+	m_state = STATE::NORMAL;
 
 	//サイズを設定
 	D3DXVECTOR2 size = D3DXVECTOR2(ENEMY_SIZE, ENEMY_SIZE);
@@ -107,6 +109,18 @@ void CEnemyBoss::Update()
 
 	//弾の発射
 	Shot();
+
+	switch (m_state)
+	{
+	case STATE::DAMAGE: /* ダメージ状態 */
+		break;
+
+	case STATE::NONE: /* 上記以外 */
+	case STATE::NORMAL:
+	case STATE::MAX:
+	default:
+		break;
+	}
 }
 
 //================================================
@@ -193,12 +207,12 @@ void CEnemyBoss::Shot()
 		CBullet3D::Create(pos,						//位置
 						  D3DXVECTOR3(x, -y, 0.0f),	//移動量
 						  CObject::OBJ_TYPE::ENEMY,	//所有者
-						  CTexture::bullet004);		//テクスチャ
+						  CTexture::bullet005);		//テクスチャ
 
 		//-方向
 		CBullet3D::Create(pos,							//位置
 						  D3DXVECTOR3(-x, -y, 0.0f),	//移動量
 						  CObject::OBJ_TYPE::ENEMY,		//所有者
-						  CTexture::bullet004);			//テクスチャ
+						  CTexture::bullet005);			//テクスチャ
 	}
 }

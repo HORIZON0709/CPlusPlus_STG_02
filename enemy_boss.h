@@ -17,6 +17,15 @@
 //***************************
 class CEnemyBoss : public CEnemy3D
 {/* CEnemy3Dの派生クラス */
+private: /* 列挙型の定義 */
+	enum STATE	/* 状態 */
+	{
+		NONE = -1,
+		NORMAL = 0,	//通常状態
+		DAMAGE,		//ダメージ状態
+		MAX
+	};
+
 public: /* 定数の定義 */
 	static const float START_POS_X;		//初期位置( X )
 	static const float START_POS_Y;		//初期位置( Y )
@@ -60,5 +69,7 @@ private: /* メンバ変数 */
 
 	int m_nTimerInterval;	//弾の連続発射の間隔
 	int m_nLife;			//体力
+
+	STATE m_state;	//状態
 };
 #endif
