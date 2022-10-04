@@ -28,7 +28,7 @@ public: /* 列挙型の定義 */
 	};
 
 private: /* 定数の定義 */
-	static const int MAX_ITEM = 16;	//最大数
+	static const int MAX_ITEM;		//最大数
 	static const float ITEM_SIZE;	//サイズ
 
 public: /* 静的メンバ関数 */

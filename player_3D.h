@@ -24,7 +24,7 @@ private: /* 定数の定義 */
 	static const float MOVE_SPEED;	//移動速度
 	static const float SHOT_SPEED;	//弾発射の速さ
 
-	static const int SHOT_INTERVAL = 30;	//弾の連続発射の間隔
+	static const int SHOT_INTERVAL;	//弾の連続発射の間隔
 
 public: /* 静的メンバ関数 */
 	static CPlayer3D* Create();	//生成

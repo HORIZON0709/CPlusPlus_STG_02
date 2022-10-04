@@ -24,7 +24,9 @@ private:
 	static const float ENEMY_SIZE;		//サイズ
 	static const float MOVE_SPEED_X;	//移動スピード( X )
 
-	static const int NUM_SCORE = 10;		//獲得スコア量
+	static const int NUM_SCORE;		//獲得スコア量
+	static const int NUM_DIVIDE;	//テクスチャの分割数
+	static const int ANIM_SPEED;	//アニメーション速度
 
 public: /* コンストラクタ・デストラクタ */
 	CEnemyStraight();
@@ -39,6 +41,7 @@ public: /* オーバーライド関数 */
 	
 private: /* メンバ関数 */
 	void Move();				//移動
+	void TexAnim();				//テクスチャアニメーション
 	void OverRimitRight();		//画面右端を超えたかどうか
 	void ReleaseOffScreen();	//画面外に出たら解放する
 
@@ -49,5 +52,8 @@ private: /* メンバ変数 */
 		true ---> 画面内
 	*/
 	bool m_bInside;
+
+	int m_nCntAnim;	//アニメーションカウント
+	int m_nPtnAnim;	//パターン番号
 };
 #endif

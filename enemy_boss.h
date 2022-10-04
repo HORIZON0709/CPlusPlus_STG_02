@@ -27,10 +27,10 @@ private:
 	static const float MOVE_SPEED_Y;	//移動スピード( Y )
 	static const float SHOT_SPEED;		//弾のスピード
 
-	static const int SHOT_INTERVAL = 120;	//弾の連続発射の間隔
-	static const int NUM_SCORE = 100;		//獲得スコア量
-	static const int NUM_BULLETS = 8;		//同時発射数
-	static const int MAX_LIFE = 30;			//体力の最大値
+	static const int SHOT_INTERVAL;	//弾の連続発射の間隔
+	static const int NUM_SCORE;		//獲得スコア量
+	static const int NUM_BULLETS;	//同時発射数
+	static const int MAX_LIFE;		//体力の最大値
 
 public: /* コンストラクタ・デストラクタ */
 	CEnemyBoss();

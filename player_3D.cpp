@@ -27,6 +27,8 @@ const float CPlayer3D::PLAYER_SIZE = 60.0f;	//サイズ
 const float CPlayer3D::MOVE_SPEED = 8.0f;	//移動速度
 const float CPlayer3D::SHOT_SPEED = 12.0f;	//弾発射の速さ
 
+const int CPlayer3D::SHOT_INTERVAL = 30;	//弾の連続発射の間隔
+
 //================================================
 //生成
 //================================================

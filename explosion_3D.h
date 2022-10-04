@@ -19,7 +19,7 @@ class CExplosion3D : public CObject3D
 {/* CObject3Dの派生クラス */
 private: /* 定数の定義 */
 	static const float EXPLOSION_SIZE;	//サイズ
-	static const int DIVIDE_TEX_U = 8;	//テクスチャの分割数( U方向 )
+	static const int DIVIDE_TEX_U;		//テクスチャの分割数( U方向 )
 
 public: /* 静的メンバ関数 */
 	static CExplosion3D* Create(D3DXVECTOR3 pos);	//生成

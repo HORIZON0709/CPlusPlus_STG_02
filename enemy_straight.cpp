@@ -26,11 +26,17 @@ const float CEnemyStraight::START_POS_Y = 100.0f;	//初期位置( Y )
 const float CEnemyStraight::ENEMY_SIZE = 75.0f;		//サイズ
 const float CEnemyStraight::MOVE_SPEED_X = 2.0f;	//移動スピード( X )
 
+const int CEnemyStraight::NUM_SCORE = 10;	//獲得スコア量
+const int CEnemyStraight::NUM_DIVIDE = 4;	//テクスチャの分割数
+const int CEnemyStraight::ANIM_SPEED = 10;	//アニメーション速度
+
 //================================================
 //コンストラクタ
 //================================================
 CEnemyStraight::CEnemyStraight():
-	m_bInside(false)
+	m_bInside(false),
+	m_nCntAnim(0),
+	m_nPtnAnim(0)
 {
 	//敵の種類を設定
 	CEnemy3D::SetEnmType(CEnemy3D::ENM_TYPE::STRAIGHT);
@@ -50,6 +56,10 @@ HRESULT CEnemyStraight::Init()
 {
 	CEnemy3D::Init();	//親クラス
 
+	//メンバ変数の初期化
+	m_nCntAnim = 0;
+	m_nPtnAnim = 0;
+
 	//移動量を設定
 	D3DXVECTOR3 move = D3DXVECTOR3(-MOVE_SPEED_X, 0.0f, 0.0f);
 	CObject3D::SetMove(move);
@@ -60,6 +70,9 @@ HRESULT CEnemyStraight::Init()
 
 	// テクスチャの設定
 	CObject3D::SetTexture(CTexture::enemy003);
+
+	//UV座標の設定
+	CObject3D::SetTexUV(NUM_DIVIDE, 0);
 
 	//初期位置が画面外である
 	m_bInside = false;
@@ -89,6 +102,9 @@ void CEnemyStraight::Update()
 
 	//移動
 	Move();
+
+	//テクスチャアニメーション
+	TexAnim();
 
 	if (!m_bInside)
 	{//画面内に入ってきていない場合
@@ -132,6 +148,23 @@ void CEnemyStraight::Move()
 	pos += CObject3D::GetMove();
 
 	CObject3D::SetPos(pos);	//位置を設定
+}
+
+//================================================
+//テクスチャアニメーション
+//================================================
+void CEnemyStraight::TexAnim()
+{
+	m_nCntAnim++;	//カウントアップ
+
+	if (m_nCntAnim % ANIM_SPEED == 0)
+	{//一定数カウントしたら
+		//パターン番号を更新する
+		m_nPtnAnim = (m_nPtnAnim + 1) % NUM_DIVIDE;
+
+		//UV座標の設定
+		CObject3D::SetTexUV(NUM_DIVIDE, m_nPtnAnim);
+	}
 }
 
 //================================================

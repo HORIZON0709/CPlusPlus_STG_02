@@ -30,6 +30,9 @@ const float CEnemyCurve::CURVE_SIZE = 0.025f;	//カーブのサイズ
 const float CEnemyCurve::MOVE_SPEED_X = 1.0f;	//移動スピード( X )
 const float CEnemyCurve::MOVE_SPEED_Y = 5.0f;	//移動スピード( Y )
 
+const int CEnemyCurve::SHOT_INTERVAL = 90;	//弾の連続発射の間隔
+const int CEnemyCurve::NUM_SCORE = 10;		//獲得スコア量
+
 //================================================
 //コンストラクタ
 //================================================

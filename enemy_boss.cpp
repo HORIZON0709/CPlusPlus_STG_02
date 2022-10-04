@@ -36,6 +36,11 @@ const float CEnemyBoss::MOVE_SPEED_Y =
 
 const float CEnemyBoss::SHOT_SPEED = 3.0f;	//弾のスピード
 
+const int CEnemyBoss::SHOT_INTERVAL = 120;	//弾の連続発射の間隔
+const int CEnemyBoss::NUM_SCORE = 100;		//獲得スコア量
+const int CEnemyBoss::NUM_BULLETS = 8;		//同時発射数
+const int CEnemyBoss::MAX_LIFE = 30;		//体力の最大値
+
 //================================================
 //コンストラクタ
 //================================================

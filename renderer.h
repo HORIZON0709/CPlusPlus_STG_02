@@ -18,8 +18,8 @@
 class CRenderer
 {/* 基本クラス */
 public: /* 定数の定義 */
-	static const int SCREEN_WIDTH = 1280;	//スクリーンの幅
-	static const int SCREEN_HEIGHT = 720;	//スクリーンの高さ
+	static const int SCREEN_WIDTH;	//スクリーンの幅
+	static const int SCREEN_HEIGHT;	//スクリーンの高さ
 	
 public: /* コンストラクタ・デストラクタ */
 	CRenderer();

@@ -26,8 +26,8 @@ private:
 	static const float MOVE_SPEED_X;	//移動スピード( X )
 	static const float MOVE_SPEED_Y;	//移動スピード( Y )
 
-	static const int SHOT_INTERVAL = 90;	//弾の連続発射の間隔
-	static const int NUM_SCORE = 10;		//獲得スコア量
+	static const int SHOT_INTERVAL;	//弾の連続発射の間隔
+	static const int NUM_SCORE;		//獲得スコア量
 
 public: /* コンストラクタ・デストラクタ */
 	CEnemyCurve();
