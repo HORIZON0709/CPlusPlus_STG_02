@@ -121,15 +121,15 @@ void CPlayer3D::Update()
 	if(CObject3D::Collision(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY))
 	{//敵と接触した場合
 		//爆発の生成
-		CExplosion3D::Create(CObject3D::GetPos());
+		CExplosion3D::Create(CObject3D::GetPos(), CTexture::TEXTURE::explosion001);
 
 		Release();	//解放
 	}
 
 	if (m_getItem != CItem3D::TYPE::NONE)
 	{//何かアイテムを取得した場合
-		//アイテム毎の処理
-		ProcessingForEachItem();
+		//所持アイテム毎の処理
+		HaveItem();
 	}
 }
 
@@ -425,9 +425,9 @@ void CPlayer3D::SetTripleBullet()
 }
 
 //================================================
-//アイテム毎の処理
+//所持アイテム毎の処理
 //================================================
-void CPlayer3D::ProcessingForEachItem()
+void CPlayer3D::HaveItem()
 {
 	switch (m_getItem)
 	{//タイプを変更

@@ -54,9 +54,7 @@ public: /* Pos */
 	*/
 	void SetPos(const D3DXVECTOR3 &pos);
 
-	/*
-		位置を取得
-	*/
+	//位置を取得
 	D3DXVECTOR3 GetPos();
 
 public: /* Size */
@@ -66,9 +64,7 @@ public: /* Size */
 	*/
 	void SetSize(const D3DXVECTOR2 &size);
 
-	/*
-		サイズを取得
-	*/
+	//サイズを取得
 	D3DXVECTOR2 GetSize();
 
 public: /* Move */
@@ -78,9 +74,7 @@ public: /* Move */
 	*/
 	void SetMove(const D3DXVECTOR3 &move);
 
-	/*
-		移動量を取得
-	*/
+	//移動量を取得
 	D3DXVECTOR3 GetMove();
 
 public: /* Texture */

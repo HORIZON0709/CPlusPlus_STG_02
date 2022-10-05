@@ -63,12 +63,14 @@ public: /* メンバ関数 */
 private:
 	void Move();	//移動
 	void Shot();	//弾の発射
+	void State();	//状態毎の処理
 
 private: /* メンバ変数 */
 	float m_fCurve;			//カーブ度合
 
 	int m_nTimerInterval;	//弾の連続発射の間隔
 	int m_nLife;			//体力
+	int m_nCnt;				//カウント
 
 	STATE m_state;	//状態
 };

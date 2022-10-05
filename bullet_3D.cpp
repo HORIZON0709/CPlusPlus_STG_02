@@ -195,11 +195,14 @@ void CBullet3D::IsCollision()
 			//“G‚ÌŒ^‚ÉƒLƒƒƒXƒg
 			CEnemy3D* pEnemy = (CEnemy3D*)pObjTarget3D;
 
-			if (pEnemy->GetEnmType() != CEnemy3D::ENM_TYPE::BOSS)  
+			//“G‚ªƒ{ƒX‚©‚Ç‚¤‚©
+			bool bBoss = (pEnemy->GetEnmType() == CEnemy3D::ENM_TYPE::BOSS);
+
+			if (!bBoss)
 			{//’Êí“G‚Ìê‡
 				pEnemy->Death();	//Ž€–SŽž‚Ìˆ—
 			}
-			else if (pEnemy->GetEnmType() == CEnemy3D::ENM_TYPE::BOSS)
+			else
 			{//ƒ{ƒX“G‚Ìê‡
 				//ƒ{ƒX‚ÌŒ^‚ÉƒLƒƒƒXƒg
 				CEnemyBoss* pBoss = (CEnemyBoss*)pEnemy;
@@ -210,7 +213,7 @@ void CBullet3D::IsCollision()
 				if (pBoss->GetLife() > 0)
 				{//‚Ü‚¾¶‚«‚Ä‚¢‚é
 					//”š”­‚Ì¶¬
-					CExplosion3D::Create(posTarget);
+					CExplosion3D::Create(pos, CTexture::TEXTURE::explosion001);
 
 					//Ž©g‚Ì‰ð•ú
 					Release();
@@ -224,7 +227,7 @@ void CBullet3D::IsCollision()
 		}
 		
 		//”š”­‚Ì¶¬
-		CExplosion3D::Create(posTarget);
+		CExplosion3D::Create(pos, CTexture::TEXTURE::explosion001);
 
 		//‘ÎÛ‚Ì‰ð•ú
 		pObjTarget3D->Release();

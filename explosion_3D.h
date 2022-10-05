@@ -19,13 +19,15 @@ class CExplosion3D : public CObject3D
 {/* CObject3Dの派生クラス */
 private: /* 定数の定義 */
 	static const float EXPLOSION_SIZE;	//サイズ
-	static const int DIVIDE_TEX_U;		//テクスチャの分割数( U方向 )
-	static const int DIVIDE_TEX_V;		//テクスチャの分割数( V方向 )
 	static const int ANIM_SPEED;		//アニメーション速度
-	static const int NUM_PATTERN;		//テクスチャの総パターン数
 
 public: /* 静的メンバ関数 */
-	static CExplosion3D* Create(D3DXVECTOR3 pos);	//生成
+	/*
+		生成
+		const D3DXVECTOR3 &pos ---> 位置
+		const CTexture::TEXTURE &texture ---> テクスチャ
+	*/
+	static CExplosion3D* Create(const D3DXVECTOR3 &pos, const CTexture::TEXTURE &texture);
 
 public: /* コンストラクタ・デストラクタ */
 	CExplosion3D();
@@ -37,7 +39,13 @@ public: /* オーバーライド関数 */
 	void Update() override;		//更新
 	void Draw() override;		//描画
 
+private: /* 静的メンバ変数 */
+	static CTexture::TEXTURE m_tex;	//テクスチャ
+
 private: /* メンバ変数 */
+	int m_nDivideTexU;	//テクスチャの分割数( U方向 )
+	int m_nDivideTexV;	//テクスチャの分割数( V方向 )
+	int m_nNumPtnAll;	//テクスチャの総パターン数
 	int m_nCntAnim;		//テクスチャアニメーション用カウント
 	int m_nPtnAnim;		//パターン番号
 };

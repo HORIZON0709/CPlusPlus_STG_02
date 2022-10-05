@@ -54,7 +54,7 @@ private:
 	void SetNormalBullet();			//通常弾の設定
 	void SetDoubleBullet();			//二連弾の設定
 	void SetTripleBullet();			//三方向各散弾の設定
-	void ProcessingForEachItem();	//アイテム毎の処理
+	void HaveItem();				//所持アイテム毎の処理
 
 private: /* メンバ変数 */
 	int m_nTimerInterval;			//弾の連続発射の間隔

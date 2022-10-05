@@ -14,6 +14,7 @@
 #include "fade.h"
 
 #include "camera.h"
+#include "explosion_3D.h"
 #include "bullet_3D.h"
 #include "score.h"
 
@@ -48,6 +49,7 @@ CEnemyBoss::CEnemyBoss():
 	m_fCurve(0.0f),
 	m_nTimerInterval(0),
 	m_nLife(0),
+	m_nCnt(0),
 	m_state(STATE::NONE)
 {
 	//敵の種類を設定
@@ -72,6 +74,7 @@ HRESULT CEnemyBoss::Init()
 	m_fCurve = 0.0f;
 	m_nTimerInterval = 0;
 	m_nLife = MAX_LIFE;
+	m_nCnt = 0;
 	m_state = STATE::NORMAL;
 
 	//サイズを設定
@@ -110,17 +113,8 @@ void CEnemyBoss::Update()
 	//弾の発射
 	Shot();
 
-	switch (m_state)
-	{
-	case STATE::DAMAGE: /* ダメージ状態 */
-		break;
-
-	case STATE::NONE: /* 上記以外 */
-	case STATE::NORMAL:
-	case STATE::MAX:
-	default:
-		break;
-	}
+	//状態毎の処理
+	State();
 }
 
 //================================================
@@ -136,6 +130,9 @@ void CEnemyBoss::Draw()
 //================================================
 void CEnemyBoss::Death()
 {
+	//爆発を生成
+	CExplosion3D::Create(CObject3D::GetPos(), CTexture::TEXTURE::explosion002);
+
 	//スコアを加算
 	CGame::GetScore()->AddScore(NUM_SCORE);
 }
@@ -145,7 +142,11 @@ void CEnemyBoss::Death()
 //================================================
 void CEnemyBoss::SubLife(const int nDamage)
 {
+	//減算
 	m_nLife -= nDamage;
+
+	//ダメージ状態にする
+	m_state = STATE::DAMAGE;
 }
 
 //================================================
@@ -214,5 +215,44 @@ void CEnemyBoss::Shot()
 						  D3DXVECTOR3(-x, -y, 0.0f),	//移動量
 						  CObject::OBJ_TYPE::ENEMY,		//所有者
 						  CTexture::bullet005);			//テクスチャ
+	}
+}
+
+//================================================
+//状態毎の処理
+//================================================
+void CEnemyBoss::State()
+{
+	switch (m_state)
+	{
+	case STATE::DAMAGE: /* ダメージ状態 */
+	{
+		D3DXCOLOR colRed = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);		//赤(ダメージ状態)
+		D3DXCOLOR colNormal = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	//白(元の状態)
+
+		//色を赤にする
+		CObject3D::SetCol(colRed);
+
+		m_nCnt++;	//カウントアップ
+
+		if (m_nCnt % 20 != 0)
+		{
+			break;
+		}
+
+		/* 一定数カウントしたら */
+
+		//色を元に戻す
+		CObject3D::SetCol(colNormal);
+
+		//通常状態にする
+		m_state = STATE::NONE;
+		break;
+	}
+	case STATE::NONE: /* 上記以外 */
+	case STATE::NORMAL:
+	case STATE::MAX:
+	default:
+		break;
 	}
 }

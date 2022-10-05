@@ -33,7 +33,8 @@ const char* CTexture::s_FileName[] =
 
 	/* 爆発 */
 	"data/TEXTURE/explosion000.png",	//配布の爆発アニメーション画像
-	"data/TEXTURE/explosion001.png",	//爆発アニメーション画像(分割数 : 縦5 * 横7)
+	"data/TEXTURE/explosion001.png",	//爆発アニメーション画像(分割数 : 縦8 * 横5)
+	"data/TEXTURE/explosion002.png",	//爆発アニメーション画像(分割数 : 縦10 * 横5)
 
 	/* 敵 */
 	"data/TEXTURE/enemy000.png",	//全部違うネタ画像のやつ(仮)
