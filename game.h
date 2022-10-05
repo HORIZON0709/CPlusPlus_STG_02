@@ -31,6 +31,7 @@ class CGame : public CMode
 private: /* 定数の定義 */
 	static const int INTERVAL_STRAIGHT;			//直線敵の生成間隔
 	static const int FADE_INTERVAL_PARTCHANGE;	//フェードまでの間隔(パート切り替え時)
+	static const int FADE_INTERVAL_GAMEOVER;	//フェードまでの間隔(ゲームオーバー時)
 	static const int FADE_INTERVAL_GAMECLEAR;	//フェードまでの間隔(ゲームクリア時)
 
 public: /* 静的メンバ関数 */

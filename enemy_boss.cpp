@@ -131,7 +131,7 @@ void CEnemyBoss::Draw()
 void CEnemyBoss::Death()
 {
 	//”š”­‚ð¶¬
-	CExplosion3D::Create(CObject3D::GetPos(), CTexture::TEXTURE::explosion002);
+	CExplosion3D::Create(CObject3D::GetPos(), CTexture::TEXTURE::explosion001);
 
 	//ƒXƒRƒA‚ð‰ÁŽZ
 	CGame::GetScore()->AddScore(NUM_SCORE);

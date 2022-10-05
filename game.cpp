@@ -29,6 +29,7 @@
 //***************************
 const int CGame::INTERVAL_STRAIGHT = 120;		//直線敵の生成間隔
 const int CGame::FADE_INTERVAL_PARTCHANGE = 60;	//フェードまでの間隔(パート切り替え時)
+const int CGame::FADE_INTERVAL_GAMEOVER = 60;	//フェードまでの間隔(ゲームオーバー時)
 const int CGame::FADE_INTERVAL_GAMECLEAR = 180;	//フェードまでの間隔(ゲームクリア時)
 
 //***************************
@@ -284,7 +285,7 @@ void CGame::Update()
 	{//プレイヤーが死亡したら
 		m_nCntIntervalFade++;	//カウントアップ
 
-		if (!m_bFadeOut && (m_nCntIntervalFade % FADE_INTERVAL_PARTCHANGE == 0))
+		if (!m_bFadeOut && (m_nCntIntervalFade % FADE_INTERVAL_GAMEOVER == 0))
 		{//暗転していない & カウントが一定数を超えた
 			//暗転
 			CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
@@ -385,7 +386,7 @@ void CGame::UpdateNormalPart()
 	{//カメラが一定距離まで進んだら
 		m_nCntIntervalFade++;	//カウントアップ
 
-		if (!m_bFadeOut && (m_nCntIntervalFade >= 60))
+		if (!m_bFadeOut && (m_nCntIntervalFade >= FADE_INTERVAL_PARTCHANGE))
 		{//暗転していない & カウントが一定数を超えた
 			//暗転
 			CApplication::GetFade()->Set(CFade::STATE::FADE_OUT);
