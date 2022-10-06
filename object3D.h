@@ -85,12 +85,19 @@ public: /* Texture */
 	void SetTexture(CTexture::TEXTURE texture);
 
 	/*
-		テクスチャ座標の設定(アニメーション対応)
-		const int nDivNumU ---> テクスチャの分割数( U )
-		const int nDivNumV ---> テクスチャの分割数( V )
-		const int nPtnAnim ---> アニメーションパターン数
+		テクスチャ座標の設定(テクスチャアニメーション用)
+		int nDivNumU ---> テクスチャの分割数( U )
+		int nDivNumV ---> テクスチャの分割数( V )
+		int nPtnAnim ---> アニメーションパターン数
 	*/
-	void SetTexUV(const int nDivNumU, const int nDivNumV, const int nPtnAnim);
+	void SetTexUV(int nDivNumU, int nDivNumV, int nPtnAnim);
+
+	/*
+		テクスチャ座標の設定(スクロール用)
+		bool bDirection ---> スクロール方向[ false : X軸 / true : Y軸 ]
+		float fMove ---> 
+	*/
+	void SetTexUV(bool bDirection, float fMove);
 
 public: /* Color */
 	/*

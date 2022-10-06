@@ -33,5 +33,9 @@ public: /* オーバーライド関数 */
 	void Uninit() override;		//終了
 	void Update() override;		//更新
 	void Draw() override;		//描画
+
+private: /* メンバ関数 */
+	void Move();	//移動
+	void Scroll();	//スクロール
 };
 #endif
