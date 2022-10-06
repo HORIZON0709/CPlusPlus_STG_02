@@ -17,6 +17,7 @@
 #include "bullet_3D.h"
 #include "item_3D.h"
 #include "score.h"
+#include "explosion_3D.h"
 
 #include <assert.h>
 
@@ -131,6 +132,12 @@ void CEnemyCurve::Death()
 
 	//アイテムの生成
 	CItem3D::Create(pos, CItem3D::TYPE::CHANGE_BUlLET_DOUBLE);
+
+	//爆発を生成
+	CExplosion3D::Create(
+		CObject3D::GetPos(),
+		CObject3D::GetSize(),
+		CTexture::TEXTURE::explosion001);
 
 	//スコアを加算
 	CGame::GetScore()->AddScore(NUM_SCORE);

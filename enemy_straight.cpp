@@ -13,8 +13,8 @@
 #include "camera.h"
 #include "game.h"
 #include "fade.h"
-
 #include "score.h"
+#include "explosion_3D.h"
 
 #include <assert.h>
 
@@ -131,7 +131,11 @@ void CEnemyStraight::Draw()
 //================================================
 void CEnemyStraight::Death()
 {
-	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置を取得
+	//爆発を生成
+	CExplosion3D::Create(
+		CObject3D::GetPos(),
+		CObject3D::GetSize(),
+		CTexture::TEXTURE::explosion001);
 
 	//スコアを加算
 	CGame::GetScore()->AddScore(NUM_SCORE);

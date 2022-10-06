@@ -158,13 +158,14 @@ void CBullet3D::IsCollision()
 			continue;
 		}
 
-		D3DXVECTOR3 pos = CObject3D::GetPos();	//位置設定用
+		D3DXVECTOR3 pos = CObject3D::GetPos();		//自身の位置を取得
+		D3DXVECTOR2 size = CObject3D::GetSize();	//自身のサイズを取得
 
 		/* 自身の判定用 */
-		float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//自身の左端
-		float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//自身の右端
-		float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//自身の上端
-		float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//自身の下端
+		float fLeft		= (pos.x - (size.x * 0.5f));	//自身の左端
+		float fRight	= (pos.x + (size.x * 0.5f));	//自身の右端
+		float fTop		= (pos.y + (size.y * 0.5f));	//自身の上端
+		float fBottom	= (pos.y - (size.y * 0.5f));	//自身の下端
 
 		CObject3D* pObjTarget3D = (CObject3D*)pObjectTarget;	//CObject3D型にキャスト
 
@@ -212,8 +213,11 @@ void CBullet3D::IsCollision()
 
 				if (pBoss->GetLife() > 0)
 				{//まだ生きている
+					//爆発のサイズを設定
+					D3DXVECTOR2 sizeExplosion = D3DXVECTOR2((size.x * 2.0f), (size.y * 2.0f));
+
 					//爆発の生成
-					CExplosion3D::Create(pos, CTexture::TEXTURE::explosion001);
+					CExplosion3D::Create(pos, sizeExplosion, CTexture::TEXTURE::explosion001);
 
 					//自身の解放
 					Release();
@@ -226,8 +230,11 @@ void CBullet3D::IsCollision()
 			}
 		}
 		
+		//爆発のサイズを設定
+		D3DXVECTOR2 sizeExplosion = D3DXVECTOR2((size.x * 2.0f), (size.y * 2.0f));
+
 		//爆発の生成
-		CExplosion3D::Create(pos, CTexture::TEXTURE::explosion001);
+		CExplosion3D::Create(pos, sizeExplosion, CTexture::TEXTURE::explosion001);
 
 		//対象の解放
 		pObjTarget3D->Release();
@@ -242,12 +249,13 @@ void CBullet3D::IsCollision()
 //================================================
 void CBullet3D::ReleaseOffScreen()
 {
-	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置設定用
+	D3DXVECTOR3 pos = CObject3D::GetPos();		//自身の位置を取得
+	D3DXVECTOR2 size = CObject3D::GetSize();	//自身のサイズを取得
 
-	float fLeft		= (pos.x - (BULLET_SIZE * 0.5f));	//左端
-	float fRight	= (pos.x + (BULLET_SIZE * 0.5f));	//右端
-	float fTop		= (pos.y + (BULLET_SIZE * 0.5f));	//上端
-	float fBottom	= (pos.y - (BULLET_SIZE * 0.5f));	//下端
+	float fLeft		= (pos.x - (size.x * 0.5f));	//左端
+	float fRight	= (pos.x + (size.x * 0.5f));	//右端
+	float fTop		= (pos.y + (size.y * 0.5f));	//上端
+	float fBottom	= (pos.y - (size.y * 0.5f));	//下端
 
 	//カメラ情報の取得
 	D3DXMATRIX mtxCamera = CGame::GetCamera()->GetMatrixView();

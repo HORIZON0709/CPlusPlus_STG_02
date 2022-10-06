@@ -121,7 +121,10 @@ void CPlayer3D::Update()
 	if(CObject3D::Collision(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY))
 	{//“G‚ÆÚG‚µ‚½ê‡
 		//”š”­‚Ì¶¬
-		CExplosion3D::Create(CObject3D::GetPos(), CTexture::TEXTURE::explosion001);
+		CExplosion3D::Create(
+			CObject3D::GetPos(),
+			CObject3D::GetSize(),
+			CTexture::TEXTURE::explosion001);
 
 		Release();	//‰ğ•ú
 	}

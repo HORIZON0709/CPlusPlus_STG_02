@@ -16,9 +16,7 @@
 //***************************
 //定数の定義
 //***************************
-const float CExplosion3D::EXPLOSION_SIZE = 120.0f;	//サイズ
-
-const int CExplosion3D::ANIM_SPEED = 1;		//アニメーション速度
+const int CExplosion3D::ANIM_SPEED = 1;	//アニメーション速度
 
 //***************************
 //静的メンバ変数
@@ -28,7 +26,10 @@ CTexture::TEXTURE CExplosion3D::m_tex = CTexture::TEXTURE::NONE;	//テクスチャ
 //================================================
 //生成
 //================================================
-CExplosion3D* CExplosion3D::Create(const D3DXVECTOR3 &pos, const CTexture::TEXTURE &texture)
+CExplosion3D* CExplosion3D::Create(
+	const D3DXVECTOR3 &pos,
+	const D3DXVECTOR2 &size,
+	const CTexture::TEXTURE &texture)
 {
 	CExplosion3D* pExplosion3D = nullptr;	//ポインタ
 
@@ -46,6 +47,8 @@ CExplosion3D* CExplosion3D::Create(const D3DXVECTOR3 &pos, const CTexture::TEXTU
 	pExplosion3D->Init();	//初期化
 
 	pExplosion3D->SetPos(pos);	//位置を設定
+
+	pExplosion3D->SetSize(size);	//サイズを設定
 
 	return pExplosion3D;	//動的確保したものを返す
 }
@@ -81,10 +84,6 @@ HRESULT CExplosion3D::Init()
 	//メンバ変数の初期化
 	m_nCntAnim = 0;
 	m_nPtnAnim = 0;
-
-	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(EXPLOSION_SIZE, EXPLOSION_SIZE);
-	CObject3D::SetSize(size);
 
 	//テクスチャの座標
 	CObject3D::SetTexture(m_tex);
