@@ -133,6 +133,8 @@ void CGame::ChangeGamePart()
 
 	m_pCamera->Init();	//カメラの初期化
 
+	m_pBg3D->Init();	//背景(3D)の初期化
+
 	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));	//初期位置に戻す
 
 	//***** ボスの生成 *****//

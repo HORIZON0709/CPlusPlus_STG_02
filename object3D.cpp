@@ -301,11 +301,26 @@ void CObject3D::SetTexUV(bool bDirection, float fMove)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
+	if (!bDirection)
+	{//X軸のスクロールをする場合
+		//テクスチャ座標の設定
+		pVtx[0].tex.x += fMove;
+		pVtx[1].tex.x += fMove;
+		pVtx[2].tex.x += fMove;
+		pVtx[3].tex.x += fMove;
+
+		//頂点バッファをアンロックする
+		m_pVtxBuff->Unlock();
+		return;
+	}
+	
+	/* Y軸のスクロールをする場合 */
+
 	//テクスチャ座標の設定
-	pVtx[0].tex += D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex += D3DXVECTOR2(1.0f, 0.0f);
- 	pVtx[2].tex += D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex += D3DXVECTOR2(1.0f, 1.0f);
+	pVtx[0].tex.y += fMove;
+	pVtx[1].tex.y += fMove;
+	pVtx[2].tex.y += fMove;
+	pVtx[3].tex.y += fMove;
 
 	//頂点バッファをアンロックする
 	m_pVtxBuff->Unlock();

@@ -89,13 +89,14 @@ public: /* Texture */
 		int nDivNumU ---> テクスチャの分割数( U )
 		int nDivNumV ---> テクスチャの分割数( V )
 		int nPtnAnim ---> アニメーションパターン数
+		単体画像(背景など)の場合は「1,1,0」
 	*/
 	void SetTexUV(int nDivNumU, int nDivNumV, int nPtnAnim);
 
 	/*
 		テクスチャ座標の設定(スクロール用)
 		bool bDirection ---> スクロール方向[ false : X軸 / true : Y軸 ]
-		float fMove ---> 
+		float fMove ---> 移動量
 	*/
 	void SetTexUV(bool bDirection, float fMove);
 

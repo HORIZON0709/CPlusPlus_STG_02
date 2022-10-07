@@ -75,6 +75,9 @@ HRESULT CBg3D::Init()
 	// テクスチャの設定
 	CObject3D::SetTexture(CTexture::bg000);
 
+	//テクスチャ座標の設定
+	CObject3D::SetTexUV(1, 1, 0);
+
 	return S_OK;
 }
 
@@ -95,6 +98,9 @@ void CBg3D::Update()
 
 	//移動
 	Move();
+
+	//スクロール
+	Scroll();
 }
 
 //================================================
@@ -124,5 +130,17 @@ void CBg3D::Move()
 //================================================
 void CBg3D::Scroll()
 {
+	//ゲームパートを取得
+	bool bGamePart = CGame::GetGamePart();
 
+	//カメラの速度に合わせた速度を設定
+	float fScrollSpeed = CCamera::SCROLL_SPEED * 0.01f;
+
+	if (bGamePart)
+	{//ボスパートの場合
+		fScrollSpeed *= -1.0f;	//スクロール方向を合わせる
+	}
+
+	//ゲームパートに応じた方向にスクロール
+	CObject3D::SetTexUV(bGamePart, fScrollSpeed);
 }
