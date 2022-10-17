@@ -30,7 +30,7 @@ public: /* メンバ関数 */
 	void Update();	//更新
 private:
 	/* 設定 */
-	void Set(const int &nNum, const D3DXCOLOR &Diffuse, const D3DXVECTOR3 &vecDirection);
+	void Set(int nNum, const D3DXCOLOR &Diffuse, const D3DXVECTOR3 &vecDirection);
 
 private: /* メンバ変数 */
 	D3DLIGHT9 m_aLight[MAX_LIGHT];	//ライト情報

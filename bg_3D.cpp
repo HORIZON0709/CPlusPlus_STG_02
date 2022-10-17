@@ -65,7 +65,7 @@ HRESULT CBg3D::Init()
 	CObject3D::Init();	//親クラス
 
 	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(BG_WIDTH, BG_HEIGHT);
+	D3DXVECTOR3 size = D3DXVECTOR3(BG_WIDTH, BG_HEIGHT, 0.0f);
 	CObject3D::SetSize(size);
 
 	//位置を設定

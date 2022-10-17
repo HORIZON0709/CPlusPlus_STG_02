@@ -65,7 +65,7 @@ HRESULT CEnemyStraight::Init()
 	CObject3D::SetMove(move);
 
 	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(ENEMY_SIZE, ENEMY_SIZE);
+	D3DXVECTOR3 size = D3DXVECTOR3(ENEMY_SIZE, ENEMY_SIZE, 0.0f);
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定

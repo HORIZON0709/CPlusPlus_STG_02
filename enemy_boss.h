@@ -55,9 +55,9 @@ public: /* オーバーライド関数 */
 public: /* メンバ関数 */
 	/*
 		体力の減算
-		const int nDamage ---> ダメージ量
+		int nDamage ---> ダメージ量
 	*/
-	void SubLife(const int nDamage);
+	void SubLife(int nDamage);
 
 	int GetLife();	//体力の取得
 private:

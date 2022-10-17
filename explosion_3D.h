@@ -18,18 +18,18 @@
 class CExplosion3D : public CObject3D
 {/* CObject3Dの派生クラス */
 private: /* 定数の定義 */
-	static const int ANIM_SPEED;		//アニメーション速度
+	static const int ANIM_SPEED;	//アニメーション速度
 
 public: /* 静的メンバ関数 */
 	/*
 		生成
 		const D3DXVECTOR3 &pos ---> 位置
-		const D3DXVECTOR2 &size ---> サイズ
+		const D3DXVECTOR3 &size ---> サイズ
 		const CTexture::TEXTURE &texture ---> テクスチャ
 	*/
 	static CExplosion3D* Create(
 		const D3DXVECTOR3 &pos,
-		const D3DXVECTOR2 &size,
+		const D3DXVECTOR3 &size,
 		const CTexture::TEXTURE &texture);
 
 public: /* コンストラクタ・デストラクタ */

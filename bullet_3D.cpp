@@ -83,7 +83,7 @@ HRESULT CBullet3D::Init()
 	CObject3D::Init();	//親クラス
 
 	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(BULLET_SIZE, BULLET_SIZE);
+	D3DXVECTOR3 size = D3DXVECTOR3(BULLET_SIZE, BULLET_SIZE, 0.0f);
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
@@ -214,7 +214,7 @@ void CBullet3D::IsCollision()
 				if (pBoss->GetLife() > 0)
 				{//まだ生きている
 					//爆発のサイズを設定
-					D3DXVECTOR2 sizeExplosion = D3DXVECTOR2((size.x * 2.0f), (size.y * 2.0f));
+					D3DXVECTOR3 sizeExplosion = D3DXVECTOR3((size.x * 2.0f), (size.y * 2.0f), 0.0f);
 
 					//爆発の生成
 					CExplosion3D::Create(pos, sizeExplosion, CTexture::TEXTURE::explosion001);
@@ -231,7 +231,7 @@ void CBullet3D::IsCollision()
 		}
 		
 		//爆発のサイズを設定
-		D3DXVECTOR2 sizeExplosion = D3DXVECTOR2((size.x * 2.0f), (size.y * 2.0f));
+		D3DXVECTOR3 sizeExplosion = D3DXVECTOR3((size.x * 2.0f), (size.y * 2.0f), 0.0f);
 
 		//爆発の生成
 		CExplosion3D::Create(pos, sizeExplosion, CTexture::TEXTURE::explosion001);

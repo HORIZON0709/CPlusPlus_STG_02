@@ -28,7 +28,7 @@ CTexture::TEXTURE CExplosion3D::m_tex = CTexture::TEXTURE::NONE;	//テクスチャ
 //================================================
 CExplosion3D* CExplosion3D::Create(
 	const D3DXVECTOR3 &pos,
-	const D3DXVECTOR2 &size,
+	const D3DXVECTOR3 &size,
 	const CTexture::TEXTURE &texture)
 {
 	CExplosion3D* pExplosion3D = nullptr;	//ポインタ

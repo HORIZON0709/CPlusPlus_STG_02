@@ -78,7 +78,7 @@ HRESULT CEnemyBoss::Init()
 	m_state = STATE::NORMAL;
 
 	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(ENEMY_SIZE, ENEMY_SIZE);
+	D3DXVECTOR3 size = D3DXVECTOR3(ENEMY_SIZE, ENEMY_SIZE, 0.0f);
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
@@ -143,7 +143,7 @@ void CEnemyBoss::Death()
 //================================================
 //体力の減算
 //================================================
-void CEnemyBoss::SubLife(const int nDamage)
+void CEnemyBoss::SubLife(int nDamage)
 {
 	//減算
 	m_nLife -= nDamage;

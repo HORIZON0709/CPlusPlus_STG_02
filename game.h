@@ -41,9 +41,9 @@ public: /* 静的メンバ関数 */
 
 	/*
 		敵(3D)の情報を取得
-		const int nIdx ---> 何番目か
+		int nIdx ---> 何番目か
 	*/
-	static CEnemy3D* GetEnemy3D(const int nIdx);
+	static CEnemy3D* GetEnemy3D(int nIdx);
 
 	static CBg3D* GetBg3D();	//背景(3D)の情報を取得
 
@@ -63,9 +63,9 @@ public: /* オーバーライド関数 */
 private: /* メンバ関数 */
 	/*
 		直線敵の生成
-		const float fPosY ---> 生成する位置( Y軸 )
+		float fPosY ---> 生成する位置( Y軸 )
 	*/
-	void CreateEnemyStraight(const float fPosY);
+	void CreateEnemyStraight(float fPosY);
 
 	void UpdateNormalPart();	//通常パートの更新
 	void UpdateBossPart();		//ボスパートの更新

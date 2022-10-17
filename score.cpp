@@ -131,7 +131,7 @@ void CScore::Draw()
 //================================================
 //ƒZƒbƒg
 //================================================
-void CScore::SetScore(const int nScore)
+void CScore::SetScore(int nScore)
 {
 	m_nScore = nScore;
 }

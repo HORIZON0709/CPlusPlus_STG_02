@@ -301,7 +301,7 @@ void CObject2D::SetTexture(CTexture::TEXTURE texture)
 //================================================
 //テクスチャ座標の設定(アニメーションに対応)
 //================================================
-void CObject2D::SetTexUV(const int nDivNum, const int nPtnAnim)
+void CObject2D::SetTexUV(int nDivNum, int nPtnAnim)
 {
 	VERTEX_2D *pVtx;	//頂点情報へのポインタ
 

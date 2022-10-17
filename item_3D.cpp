@@ -75,7 +75,7 @@ HRESULT CItem3D::Init()
 	m_type = CItem3D::TYPE::NONE;
 
 	//ÉTÉCÉYÇê›íË
-	D3DXVECTOR2 size = D3DXVECTOR2(ITEM_SIZE, ITEM_SIZE);
+	D3DXVECTOR3 size = D3DXVECTOR3(ITEM_SIZE, ITEM_SIZE, 0.0f);
 	CObject3D::SetSize(size);
 
 	return S_OK;

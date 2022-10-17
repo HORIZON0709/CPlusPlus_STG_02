@@ -75,7 +75,7 @@ CPlayer3D* CGame::GetPlayer3D()
 //================================================
 //“G(3D)î•ñ‚ðŽæ“¾
 //================================================
-CEnemy3D* CGame::GetEnemy3D(const int nIdx)
+CEnemy3D* CGame::GetEnemy3D(int nIdx)
 {
 	return m_apEnemy3D[nIdx];
 }
@@ -327,7 +327,7 @@ void CGame::Draw()
 //================================================
 //’¼ü“G‚Ì¶¬
 //================================================
-void CGame::CreateEnemyStraight(const float fPosY)
+void CGame::CreateEnemyStraight(float fPosY)
 {
 	//ƒJƒƒ‰î•ñ‚ÌŽæ“¾
 	D3DXMATRIX mtxCamera = m_pCamera->GetMatrixView();

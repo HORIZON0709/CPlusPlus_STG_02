@@ -73,7 +73,7 @@ void CObject::DrawAll()
 //================================================
 //オブジェクト情報の取得
 //================================================
-CObject* CObject::GetObjects(const int &nIdx)
+CObject* CObject::GetObjects(int nIdx)
 {
 	return m_apObject[nIdx];
 }
@@ -81,7 +81,7 @@ CObject* CObject::GetObjects(const int &nIdx)
 //================================================
 //オブジェクト情報の設定
 //================================================
-void CObject::SetObject(const int &nIdx, void* pObject)
+void CObject::SetObject(int nIdx, void* pObject)
 {
 	m_apObject[nIdx] = (CObject*)pObject;
 }
@@ -108,24 +108,6 @@ CObject::CObject()
 		break;
 	}
 }
-
-//================================================
-//コンストラクタ(デフォルト引数ver.)
-//================================================
-//CObject::CObject(const int &nPriority /* = 3 */)
-//{
-//	for (int i = 0; i < MAX_OBJECT; i++)
-//	{
-//		if (m_apObject[nPriority][i] != nullptr)
-//		{//NULLチェック
-//			continue;
-//		}
-//
-//		/* nullptrの場合 */
-//
-//
-//	}
-//}
 
 //================================================
 //デストラクタ

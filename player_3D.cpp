@@ -85,7 +85,7 @@ HRESULT CPlayer3D::Init()
 	CObject3D::SetPos(pos);
 
 	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(PLAYER_SIZE, PLAYER_SIZE);
+	D3DXVECTOR3 size = D3DXVECTOR3(PLAYER_SIZE, PLAYER_SIZE, 0.0f);
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定

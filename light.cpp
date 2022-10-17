@@ -66,7 +66,7 @@ void CLight::Update()
 //================================================
 //設定
 //================================================
-void CLight::Set(const int &nNum, const D3DXCOLOR &Diffuse, const D3DXVECTOR3 &vecDirection)
+void CLight::Set(int nNum, const D3DXCOLOR &Diffuse, const D3DXVECTOR3 &vecDirection)
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
