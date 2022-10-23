@@ -131,11 +131,17 @@ void CGame::ChangeGamePart()
 		CObject::SetObject(i, nullptr);
 	}
 
-	m_pCamera->Init();	//カメラの初期化
+	//カメラの初期化
+	m_pCamera->Init();
 
-	m_pBg3D->Init();	//背景(3D)の初期化
+	//背景(3D)の初期化
+	m_pBg3D->Init();
 
-	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));	//初期位置に戻す
+	//ボスパート用背景に変更
+	m_pBg3D->SetTexture(CTexture::TEXTURE::bg005);
+
+	//プレイヤーの位置を再設定
+	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//***** ボスの生成 *****//
 
@@ -205,11 +211,14 @@ HRESULT CGame::Init()
 		m_pCamera->Init();			//初期化
 	}
 
-	m_pScore = CScore::Create();	//スコア
+	//スコア
+	m_pScore = CScore::Create();
 
-	m_pBg3D = CBg3D::Create();	//背景(3D)
+	//背景(3D)
+	m_pBg3D = CBg3D::Create();
 
-	m_pPlayer3D = CPlayer3D::Create();	//プレイヤー(3D)
+	//プレイヤー(3D)
+	m_pPlayer3D = CPlayer3D::Create();
 
 	//明転
 	CApplication::GetFade()->Set(CFade::STATE::FADE_IN);

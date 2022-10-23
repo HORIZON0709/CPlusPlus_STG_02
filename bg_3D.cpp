@@ -73,7 +73,7 @@ HRESULT CBg3D::Init()
 	CObject3D::SetPos(pos);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::bg000);
+	CObject3D::SetTexture(CTexture::bg004);
 
 	//テクスチャ座標の設定
 	CObject3D::SetTexUV(1, 1, 0);
