@@ -126,7 +126,8 @@ void CPlayer3D::Update()
 			CObject3D::GetSize(),
 			CTexture::TEXTURE::explosion001);
 
-		Release();	//解放
+		//解放
+		Release();
 	}
 
 	if (m_getItem != CItem3D::TYPE::NONE)
@@ -326,12 +327,11 @@ void CPlayer3D::CreateBulletByType()
 //================================================
 void CPlayer3D::SetNormalBullet()
 {
-	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
-
-	D3DXVECTOR3 move;	//移動量設定用
+	//位置情報を取得
+	D3DXVECTOR3 pos = CObject3D::GetPos();
 
 	//移動量設定(+X方向)
-	move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);
+	D3DXVECTOR3 move = D3DXVECTOR3(SHOT_SPEED, 0.0f, 0.0f);
 
 	if (CGame::GetGamePart())
 	{//ボスパートの場合
@@ -350,7 +350,7 @@ void CPlayer3D::SetDoubleBullet()
 {
 	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
 
-	D3DXVECTOR3 move;	//移動量設定用
+	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動量設定用
 
 	if (CGame::GetGamePart())
 	{//ボスパートの場合
@@ -388,7 +388,7 @@ void CPlayer3D::SetTripleBullet()
 {
 	D3DXVECTOR3 pos = CObject3D::GetPos();	//位置情報を取得
 
-	D3DXVECTOR3 move;	//移動量設定用
+	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//移動量設定用
 	
 	/*************************** 1弾目 ***************************/
 

@@ -109,23 +109,24 @@ void CGame::ChangeGamePart()
 
 	for (int i = 0; i < CObject::MAX_OBJECT; i++)
 	{
-		CObject* pObject = CObject::GetObjects(i);	//オブジェクト情報の取得
+		//オブジェクト情報の取得
+		CObject* pObject = CObject::GetObjects(i);
 
-		if (pObject == nullptr)
-		{//NULLチェック
+		//オブジェクトの種類の取得
+		CObject::OBJ_TYPE type = pObject->GetObjType();
+
+		//nullptrかどうか
+		bool bNullptr = (pObject == nullptr);
+
+		//敵かどうか
+		bool bTypeEnemy = (type == CObject::OBJ_TYPE::ENEMY);
+
+		if (bNullptr || !bTypeEnemy)
+		{//「nullptrである」または「敵のオブジェクトではない」場合
 			continue;
 		}
 
-		/* nullptrでは無い場合 */
-
-		CObject::OBJ_TYPE type = pObject->GetObjType();	//オブジェクトの種類の取得
-
-		if (type != CObject::OBJ_TYPE::ENEMY)
-		{//敵では無い場合
-			continue;
-		}
-
-		/* 敵のオブジェクトだった場合 */
+		/* 「nullptrでは無い」かつ「敵のオブジェクト」の場合 */
 
 		//nullptrにする
 		CObject::SetObject(i, nullptr);
