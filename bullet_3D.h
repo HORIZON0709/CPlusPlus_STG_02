@@ -20,11 +20,11 @@ class CBullet3D : public CObject3D
 public: /* 列挙型の定義 */
 	enum TYPE	/* 弾の種類 */
 	{
+		NONE = -1,
 		NORMAL = 0,	//通常弾
 		DOUBLE,		//二連弾
 		TRIPLE,		//三方向各散弾
-		MAX,
-		NONE
+		MAX
 	};
 
 private: /* 定数の定義 */

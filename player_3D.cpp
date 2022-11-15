@@ -28,6 +28,7 @@ const float CPlayer3D::MOVE_SPEED = 8.0f;	//移動速度
 const float CPlayer3D::SHOT_SPEED = 12.0f;	//弾発射の速さ
 
 const int CPlayer3D::SHOT_INTERVAL = 30;	//弾の連続発射の間隔
+const int CPlayer3D::MAX_LIFE = 3;			//体力の最大値
 
 //================================================
 //生成
@@ -55,8 +56,10 @@ CPlayer3D* CPlayer3D::Create()
 //================================================
 CPlayer3D::CPlayer3D():
 	m_nTimerInterval(0),
+	m_nLife(0),
 	m_getItem(CItem3D::TYPE::NONE),
-	m_bulletType(CBullet3D::TYPE::NONE)
+	m_bulletType(CBullet3D::TYPE::NONE),
+	m_state(STATE::NONE)
 {
 	//タイプの設定
 	CObject::SetObjType(CObject::OBJ_TYPE::PLAYER);
@@ -77,6 +80,9 @@ HRESULT CPlayer3D::Init()
 	CObject3D::Init();	//親クラス
 
 	//メンバ変数の初期設定
+	m_nTimerInterval = 0;
+	m_nLife = MAX_LIFE;		//体力を設定
+
 	m_getItem = CItem3D::TYPE::NONE;		//何も取得していない
 	m_bulletType = CBullet3D::TYPE::NORMAL;	//通常弾
 
@@ -133,7 +139,7 @@ void CPlayer3D::Update()
 	if (m_getItem != CItem3D::TYPE::NONE)
 	{//何かアイテムを取得した場合
 		//所持アイテム毎の処理
-		HaveItem();
+		ProcessingByHaveItem();
 	}
 }
 
@@ -162,6 +168,22 @@ CItem3D::TYPE CPlayer3D::GetItem()
 }
 
 //================================================
+//体力の設定
+//================================================
+void CPlayer3D::SetLife(int nAdd)
+{
+	m_nLife += nAdd;
+}
+
+//================================================
+//体力の取得
+//================================================
+int CPlayer3D::GetLife()
+{
+	return m_nLife;
+}
+
+//================================================
 //移動
 //================================================
 void CPlayer3D::Move()
@@ -169,8 +191,8 @@ void CPlayer3D::Move()
 	//キーボード情報の取得
 	CInputKeyboard* pKeyboard = CApplication::GetInputKeyboard();
 
-	D3DXVECTOR3 pos = CObject3D::GetPos();		//位置を取得
-	D3DXVECTOR3 move = CObject3D::GetMove();	//移動量を取得
+	//移動量を取得
+	D3DXVECTOR3 move = CObject3D::GetMove();
 
 	if (pKeyboard->GetPress(DIK_D))
 	{//右
@@ -219,6 +241,9 @@ void CPlayer3D::Move()
 		move.y -= cosf(-D3DX_PI * 0.0f) * MOVE_SPEED;	//Y軸方向
 	}
 
+	//位置を取得
+	D3DXVECTOR3 pos = CObject3D::GetPos();
+
 	pos += move;	//位置に移動量を加算
 
 	/* 画面外への移動防止 */
@@ -230,7 +255,7 @@ void CPlayer3D::Move()
 	float fTop		= (pos.y + fSizeHalf);	//上端
 	float fBottom	= (pos.y - fSizeHalf);	//下端
 
-	//カメラ情報の取得
+	//カメラのビューマトリクスを取得
 	D3DXMATRIX mtxCamera = CGame::GetCamera()->GetMatrixView();
 	
 	//カメラの視点の位置を取得
@@ -430,7 +455,7 @@ void CPlayer3D::SetTripleBullet()
 //================================================
 //所持アイテム毎の処理
 //================================================
-void CPlayer3D::HaveItem()
+void CPlayer3D::ProcessingByHaveItem()
 {
 	switch (m_getItem)
 	{//タイプを変更
@@ -447,6 +472,28 @@ void CPlayer3D::HaveItem()
 		break;
 
 	default: /* それ以外 */
+		break;
+	}
+}
+
+//================================================
+//状態毎の処理
+//================================================
+void CPlayer3D::ProcessingByState()
+{
+	switch (m_state)
+	{
+	case STATE::NORMAL: /* 通常 */
+		break;
+
+	case STATE::HIT: /* 被弾 */
+		break;
+
+	case STATE::POP: /* 出現 */
+		break;
+
+	default:
+		assert(false);
 		break;
 	}
 }

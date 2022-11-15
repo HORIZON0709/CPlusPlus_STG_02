@@ -29,10 +29,11 @@ const float CBullet3D::BULLET_SIZE = 30.0f;	//サイズ
 //================================================
 //生成
 //================================================
-CBullet3D* CBullet3D::Create(const D3DXVECTOR3 &pos,
-							 const D3DXVECTOR3 &move,
-							 const CObject::OBJ_TYPE &haveType,
-							 const CTexture::TEXTURE &texture)
+CBullet3D* CBullet3D::Create(
+	const D3DXVECTOR3 &pos,
+	const D3DXVECTOR3 &move,
+	const CObject::OBJ_TYPE &haveType,
+	const CTexture::TEXTURE &texture)
 {
 	CBullet3D* pBullet3D = nullptr;	//ポインタ
 
