@@ -142,7 +142,7 @@ void CGame::ChangeGamePart()
 	m_pBg3D->SetTexture(CTexture::TEXTURE::bg005);
 
 	//プレイヤーの位置を再設定
-	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	m_pPlayer3D->SetPos(D3DXVECTOR3(0.0f, -20.0f, 0.0f));
 
 	//***** ボスの生成 *****//
 

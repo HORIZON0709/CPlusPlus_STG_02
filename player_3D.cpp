@@ -23,7 +23,7 @@
 //***************************
 //定数の定義
 //***************************
-const float CPlayer3D::PLAYER_SIZE = 60.0f;	//サイズ
+const float CPlayer3D::PLAYER_SIZE = 50.0f;	//サイズ
 const float CPlayer3D::MOVE_SPEED = 8.0f;	//移動速度
 const float CPlayer3D::SHOT_SPEED = 12.0f;	//弾発射の速さ
 
@@ -91,11 +91,11 @@ HRESULT CPlayer3D::Init()
 	CObject3D::SetPos(pos);
 
 	//サイズを設定
-	D3DXVECTOR3 size = D3DXVECTOR3(PLAYER_SIZE, PLAYER_SIZE, 0.0f);
+	D3DXVECTOR3 size = D3DXVECTOR3(PLAYER_SIZE * 2.0f, PLAYER_SIZE * 1.5f, 0.0f);
 	CObject3D::SetSize(size);
 
 	// テクスチャの設定
-	CObject3D::SetTexture(CTexture::player000);
+	CObject3D::SetTexture(CTexture::player001);
 
 	return S_OK;
 }

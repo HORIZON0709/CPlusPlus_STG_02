@@ -188,7 +188,7 @@ void CRenderer::Draw()
 
 #ifdef _DEBUG
 		//FPS•\¦
-		DrawFPS();
+		//DrawFPS();
 #endif //_DEBUG
 
 		//Direct3D‚É‚æ‚é•`‰æ‚ÌI—¹

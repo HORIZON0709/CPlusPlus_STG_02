@@ -60,7 +60,7 @@ HRESULT CTitle::Init()
 	m_pBg = CBg::Create();
 
 	//テクスチャの設定
-	m_pBg->SetTexture(CTexture::bg001);
+	m_pBg->SetTexture(CTexture::bg006);
 
 	//テクスチャ座標の設定
 	m_pBg->SetTexUV(1, 0);
@@ -68,17 +68,17 @@ HRESULT CTitle::Init()
 	/* タイトルロゴ */
 
 	//生成
-	m_pLogo = CObject2D::Create();
+	//m_pLogo = CObject2D::Create();
 
-	//位置を設定
-	D3DXVECTOR3 pos = D3DXVECTOR3(CRenderer::SCREEN_WIDTH * 0.5f,
-								 (CRenderer::SCREEN_HEIGHT / 3.0f),
-								  0.0f);
-	m_pLogo->SetPos(pos);
+	////位置を設定
+	//D3DXVECTOR3 pos = D3DXVECTOR3(CRenderer::SCREEN_WIDTH * 0.5f,
+	//							 (CRenderer::SCREEN_HEIGHT / 3.0f),
+	//							  0.0f);
+	//m_pLogo->SetPos(pos);
 
-	//サイズを設定
-	D3DXVECTOR2 size = D3DXVECTOR2(LOGO_WIDTH, LOGO_HEIGHT);
-	m_pLogo->SetSize(size);
+	////サイズを設定
+	//D3DXVECTOR2 size = D3DXVECTOR2(LOGO_WIDTH, LOGO_HEIGHT);
+	//m_pLogo->SetSize(size);
 
 	//明転
 	CApplication::GetFade()->Set(CFade::STATE::FADE_IN);

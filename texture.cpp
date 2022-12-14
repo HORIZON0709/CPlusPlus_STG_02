@@ -22,6 +22,7 @@ const char* CTexture::s_FileName[] =
 {// テクスチャのパス
 	/* プレイヤー */
 	"data/TEXTURE/player000.jpg",	//モチモチの余さん(仮)
+	"data/TEXTURE/player001.png",	//ドラゴン
 
 	/* 弾 */
 	"data/TEXTURE/bullet000.png",	//桜のサークル(仮)
@@ -49,6 +50,7 @@ const char* CTexture::s_FileName[] =
 	"data/TEXTURE/bg003.png",	//仮背景：リザルト2
 	"data/TEXTURE/bg004.png",	//通常パート背景
 	"data/TEXTURE/bg005.png",	//ボスパート背景
+	"data/TEXTURE/bg006.png",	//タイトル背景
 
 	/* アイテム */
 	"data/TEXTURE/item000.png",	//三角形(仮)
